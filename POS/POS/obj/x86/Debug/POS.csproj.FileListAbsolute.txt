@@ -25,3 +25,4 @@ C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.MainForm.resour
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.csproj.GenerateResource.Cache
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.exe
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.pdb
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.csprojResolveAssemblyReference.cache
