@@ -14,13 +14,26 @@ namespace POS.Models
 
         public string Code { get; set; }
 
-        [NonPersistent]
-        public bool IsValid { get { return Validate(this); } }
+        public bool IsValid
+        {
+            get
+            {
+                return Validate(this);
+            }
+        }
+
         public DateTime ExpireDate { get; set; }
 
-        [NonPersistent]
-        public bool IsExpired { get { return DateTime.Today <= ExpireDate; } }
+        public bool IsExpired
+        {
+            get
+            {
+                return DateTime.Today <= ExpireDate;
+            }
+        }
+
         public CouponType Type { get; set; }
+
         public decimal Value { get; set; }
 
         public static Coupon NewCoupon()
