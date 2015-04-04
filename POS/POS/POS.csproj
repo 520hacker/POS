@@ -534,6 +534,7 @@
     <Compile Include="Internals\Json\Utilities\StringUtils.cs" />
     <Compile Include="Internals\Json\Utilities\ThreadSafeStore.cs" />
     <Compile Include="Internals\Json\Utilities\ValidationUtils.cs" />
+    <Compile Include="Internals\QrCoder.cs" />
     <Compile Include="Internals\XmlRpc\Internals\Logger.cs" />
     <Compile Include="Internals\XmlRpc\Internals\SimpleHttpRequest.cs" />
     <Compile Include="Internals\XmlRpc\Internals\XML\XmlRpcBoxcarRequest.cs" />
@@ -565,6 +566,7 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="QrCodeDialog.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

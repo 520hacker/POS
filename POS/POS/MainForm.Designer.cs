@@ -36,8 +36,10 @@
             this.ProductsPage = new Telerik.WinControls.UI.RadPageViewPage();
             this.SettingsPage = new Telerik.WinControls.UI.RadPageViewPage();
             this.radDesktopAlert1 = new Telerik.WinControls.UI.RadDesktopAlert(this.components);
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.radPageView1)).BeginInit();
             this.radPageView1.SuspendLayout();
+            this.HomePage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -64,6 +66,7 @@
             // 
             // HomePage
             // 
+            this.HomePage.Controls.Add(this.button1);
             this.HomePage.Image = global::POS.Properties.Resources.home;
             this.HomePage.Location = new System.Drawing.Point(5, 46);
             this.HomePage.Name = "HomePage";
@@ -95,6 +98,16 @@
             this.radDesktopAlert1.ShowPinButton = false;
             this.radDesktopAlert1.ThemeName = "TelerikMetroTouch";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(137, 37);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 45);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -113,6 +126,7 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.radPageView1)).EndInit();
             this.radPageView1.ResumeLayout(false);
+            this.HomePage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
 
@@ -126,5 +140,6 @@
         private Telerik.WinControls.UI.RadDesktopAlert radDesktopAlert1;
         private Telerik.WinControls.UI.RadPageViewPage ProductsPage;
         private Telerik.WinControls.UI.RadPageViewPage SettingsPage;
+        private System.Windows.Forms.Button button1;
     }
 }
