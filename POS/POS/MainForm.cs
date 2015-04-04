@@ -8,10 +8,8 @@ namespace POS
         public MainForm()
         {
             InitializeComponent();
-            
-#if !DEBUG
+
             Cursor.Hide();
-#endif
         }
     }
 }
