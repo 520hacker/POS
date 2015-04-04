@@ -1,0 +1,287 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6FC93089-6F1D-49DA-B94B-D64E7B020355}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>POS</RootNamespace>
+    <AssemblyName>POS</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Telerik.WinControls, Version=2013.3.1016.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+      <HintPath>..\lib\RCWF\2013.3.1016.40\Telerik.WinControls.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.WinControls.Themes.TelerikMetroTouch, Version=2013.3.1016.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+      <HintPath>..\lib\RCWF\2013.3.1016.40\Telerik.WinControls.Themes.TelerikMetroTouch.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.WinControls.UI, Version=2013.3.1016.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="TelerikCommon, Version=2013.3.1016.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+      <HintPath>..\lib\RCWF\2013.3.1016.40\TelerikCommon.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Internals\Bitcoin\APIException.cs" />
+    <Compile Include="Internals\Bitcoin\BlockExplorer\Address.cs" />
+    <Compile Include="Internals\Bitcoin\BlockExplorer\Block.cs" />
+    <Compile Include="Internals\Bitcoin\BlockExplorer\BlockExplorer.cs" />
+    <Compile Include="Internals\Bitcoin\BlockExplorer\Input.cs" />
+    <Compile Include="Internals\Bitcoin\BlockExplorer\InventoryData.cs" />
+    <Compile Include="Internals\Bitcoin\BlockExplorer\LatestBlock.cs" />
+    <Compile Include="Internals\Bitcoin\BlockExplorer\Output.cs" />
+    <Compile Include="Internals\Bitcoin\BlockExplorer\SimpleBlock.cs" />
+    <Compile Include="Internals\Bitcoin\BlockExplorer\Transaction.cs" />
+    <Compile Include="Internals\Bitcoin\BlockExplorer\UnspentOutput.cs" />
+    <Compile Include="Internals\Bitcoin\CreateWallet\CreateWallet.cs" />
+    <Compile Include="Internals\Bitcoin\CreateWallet\CreateWalletResponse.cs" />
+    <Compile Include="Internals\Bitcoin\ExchangeRates\Currency.cs" />
+    <Compile Include="Internals\Bitcoin\ExchangeRates\ExchangeRates.cs" />
+    <Compile Include="Internals\Bitcoin\HttpClient.cs" />
+    <Compile Include="Internals\Bitcoin\PushTx\PushTx.cs" />
+    <Compile Include="Internals\Bitcoin\Receive\Receive.cs" />
+    <Compile Include="Internals\Bitcoin\Receive\ReceiveResponse.cs" />
+    <Compile Include="Internals\Bitcoin\Statistics\Statistics.cs" />
+    <Compile Include="Internals\Bitcoin\Statistics\StatisticsResponse.cs" />
+    <Compile Include="Internals\Bitcoin\Wallet\Address.cs" />
+    <Compile Include="Internals\Bitcoin\Wallet\PaymentResponse.cs" />
+    <Compile Include="Internals\Bitcoin\Wallet\Wallet.cs" />
+    <Compile Include="Internals\Json\Bson\BsonBinaryType.cs" />
+    <Compile Include="Internals\Json\Bson\BsonBinaryWriter.cs" />
+    <Compile Include="Internals\Json\Bson\BsonObjectId.cs" />
+    <Compile Include="Internals\Json\Bson\BsonReader.cs" />
+    <Compile Include="Internals\Json\Bson\BsonToken.cs" />
+    <Compile Include="Internals\Json\Bson\BsonType.cs" />
+    <Compile Include="Internals\Json\Bson\BsonWriter.cs" />
+    <Compile Include="Internals\Json\ConstructorHandling.cs" />
+    <Compile Include="Internals\Json\Converters\BinaryConverter.cs" />
+    <Compile Include="Internals\Json\Converters\BsonObjectIdConverter.cs" />
+    <Compile Include="Internals\Json\Converters\CustomCreationConverter.cs" />
+    <Compile Include="Internals\Json\Converters\DataSetConverter.cs" />
+    <Compile Include="Internals\Json\Converters\DataTableConverter.cs" />
+    <Compile Include="Internals\Json\Converters\DateTimeConverterBase.cs" />
+    <Compile Include="Internals\Json\Converters\EntityKeyMemberConverter.cs" />
+    <Compile Include="Internals\Json\Converters\ExpandoObjectConverter.cs" />
+    <Compile Include="Internals\Json\Converters\IsoDateTimeConverter.cs" />
+    <Compile Include="Internals\Json\Converters\JavaScriptDateTimeConverter.cs" />
+    <Compile Include="Internals\Json\Converters\JsonDateTimeSerializationMode.cs" />
+    <Compile Include="Internals\Json\Converters\KeyValuePairConverter.cs" />
+    <Compile Include="Internals\Json\Converters\RegexConverter.cs" />
+    <Compile Include="Internals\Json\Converters\StringEnumConverter.cs" />
+    <Compile Include="Internals\Json\Converters\VersionConverter.cs" />
+    <Compile Include="Internals\Json\Converters\XmlNodeConverter.cs" />
+    <Compile Include="Internals\Json\DefaultValueHandling.cs" />
+    <Compile Include="Internals\Json\IJsonLineInfo.cs" />
+    <Compile Include="Internals\Json\JsonArrayAttribute.cs" />
+    <Compile Include="Internals\Json\JsonConstructorAttribute.cs" />
+    <Compile Include="Internals\Json\JsonContainerAttribute.cs" />
+    <Compile Include="Internals\Json\JsonConvert.cs" />
+    <Compile Include="Internals\Json\JsonConverter.cs" />
+    <Compile Include="Internals\Json\JsonConverterAttribute.cs" />
+    <Compile Include="Internals\Json\JsonConverterCollection.cs" />
+    <Compile Include="Internals\Json\JsonIgnoreAttribute.cs" />
+    <Compile Include="Internals\Json\JsonObjectAttribute.cs" />
+    <Compile Include="Internals\Json\JsonPropertyAttribute.cs" />
+    <Compile Include="Internals\Json\JsonReader.cs" />
+    <Compile Include="Internals\Json\JsonReaderException.cs" />
+    <Compile Include="Internals\Json\JsonSerializationException.cs" />
+    <Compile Include="Internals\Json\JsonSerializer.cs" />
+    <Compile Include="Internals\Json\JsonSerializerSettings.cs" />
+    <Compile Include="Internals\Json\JsonTextReader.cs" />
+    <Compile Include="Internals\Json\JsonTextWriter.cs" />
+    <Compile Include="Internals\Json\JsonToken.cs" />
+    <Compile Include="Internals\Json\JsonValidatingReader.cs" />
+    <Compile Include="Internals\Json\JsonWriter.cs" />
+    <Compile Include="Internals\Json\JsonWriterException.cs" />
+    <Compile Include="Internals\Json\Linq\Extensions.cs" />
+    <Compile Include="Internals\Json\Linq\IJEnumerable.cs" />
+    <Compile Include="Internals\Json\Linq\JArray.cs" />
+    <Compile Include="Internals\Json\Linq\JConstructor.cs" />
+    <Compile Include="Internals\Json\Linq\JContainer.cs" />
+    <Compile Include="Internals\Json\Linq\JEnumerable.cs" />
+    <Compile Include="Internals\Json\Linq\JObject.cs" />
+    <Compile Include="Internals\Json\Linq\JPath.cs" />
+    <Compile Include="Internals\Json\Linq\JProperty.cs" />
+    <Compile Include="Internals\Json\Linq\JPropertyDescriptor.cs" />
+    <Compile Include="Internals\Json\Linq\JRaw.cs" />
+    <Compile Include="Internals\Json\Linq\JToken.cs" />
+    <Compile Include="Internals\Json\Linq\JTokenEqualityComparer.cs" />
+    <Compile Include="Internals\Json\Linq\JTokenReader.cs" />
+    <Compile Include="Internals\Json\Linq\JTokenType.cs" />
+    <Compile Include="Internals\Json\Linq\JTokenWriter.cs" />
+    <Compile Include="Internals\Json\Linq\JValue.cs" />
+    <Compile Include="Internals\Json\MemberSerialization.cs" />
+    <Compile Include="Internals\Json\MissingMemberHandling.cs" />
+    <Compile Include="Internals\Json\NullValueHandling.cs" />
+    <Compile Include="Internals\Json\ObjectCreationHandling.cs" />
+    <Compile Include="Internals\Json\PreserveReferencesHandling.cs" />
+    <Compile Include="Internals\Json\ReferenceLoopHandling.cs" />
+    <Compile Include="Internals\Json\Required.cs" />
+    <Compile Include="Internals\Json\Schema\Extensions.cs" />
+    <Compile Include="Internals\Json\Schema\JsonSchema.cs" />
+    <Compile Include="Internals\Json\Schema\JsonSchemaBuilder.cs" />
+    <Compile Include="Internals\Json\Schema\JsonSchemaConstants.cs" />
+    <Compile Include="Internals\Json\Schema\JsonSchemaException.cs" />
+    <Compile Include="Internals\Json\Schema\JsonSchemaGenerator.cs" />
+    <Compile Include="Internals\Json\Schema\JsonSchemaModel.cs" />
+    <Compile Include="Internals\Json\Schema\JsonSchemaModelBuilder.cs" />
+    <Compile Include="Internals\Json\Schema\JsonSchemaNode.cs" />
+    <Compile Include="Internals\Json\Schema\JsonSchemaNodeCollection.cs" />
+    <Compile Include="Internals\Json\Schema\JsonSchemaResolver.cs" />
+    <Compile Include="Internals\Json\Schema\JsonSchemaType.cs" />
+    <Compile Include="Internals\Json\Schema\JsonSchemaWriter.cs" />
+    <Compile Include="Internals\Json\Schema\UndefinedSchemaIdHandling.cs" />
+    <Compile Include="Internals\Json\Schema\ValidationEventArgs.cs" />
+    <Compile Include="Internals\Json\Schema\ValidationEventHandler.cs" />
+    <Compile Include="Internals\Json\SerializationBinder.cs" />
+    <Compile Include="Internals\Json\Serialization\CachedAttributeGetter.cs" />
+    <Compile Include="Internals\Json\Serialization\CamelCasePropertyNamesContractResolver.cs" />
+    <Compile Include="Internals\Json\Serialization\DefaultContractResolver.cs" />
+    <Compile Include="Internals\Json\Serialization\DefaultReferenceResolver.cs" />
+    <Compile Include="Internals\Json\Serialization\DefaultSerializationBinder.cs" />
+    <Compile Include="Internals\Json\Serialization\DynamicValueProvider.cs" />
+    <Compile Include="Internals\Json\Serialization\ErrorContext.cs" />
+    <Compile Include="Internals\Json\Serialization\ErrorEventArgs.cs" />
+    <Compile Include="Internals\Json\Serialization\IContractResolver.cs" />
+    <Compile Include="Internals\Json\Serialization\IReferenceResolver.cs" />
+    <Compile Include="Internals\Json\Serialization\IValueProvider.cs" />
+    <Compile Include="Internals\Json\Serialization\JsonArrayContract.cs" />
+    <Compile Include="Internals\Json\Serialization\JsonContract.cs" />
+    <Compile Include="Internals\Json\Serialization\JsonDictionaryContract.cs" />
+    <Compile Include="Internals\Json\Serialization\JsonDynamicContract.cs" />
+    <Compile Include="Internals\Json\Serialization\JsonFormatterConverter.cs" />
+    <Compile Include="Internals\Json\Serialization\JsonISerializableContract.cs" />
+    <Compile Include="Internals\Json\Serialization\JsonLinqContract.cs" />
+    <Compile Include="Internals\Json\Serialization\JsonObjectContract.cs" />
+    <Compile Include="Internals\Json\Serialization\JsonPrimitiveContract.cs" />
+    <Compile Include="Internals\Json\Serialization\JsonProperty.cs" />
+    <Compile Include="Internals\Json\Serialization\JsonPropertyCollection.cs" />
+    <Compile Include="Internals\Json\Serialization\JsonSerializerInternalBase.cs" />
+    <Compile Include="Internals\Json\Serialization\JsonSerializerInternalReader.cs" />
+    <Compile Include="Internals\Json\Serialization\JsonSerializerInternalWriter.cs" />
+    <Compile Include="Internals\Json\Serialization\JsonSerializerProxy.cs" />
+    <Compile Include="Internals\Json\Serialization\JsonStringContract.cs" />
+    <Compile Include="Internals\Json\Serialization\JsonTypeReflector.cs" />
+    <Compile Include="Internals\Json\Serialization\LateBoundMetadataTypeAttribute.cs" />
+    <Compile Include="Internals\Json\Serialization\ObjectConstructor.cs" />
+    <Compile Include="Internals\Json\Serialization\OnErrorAttribute.cs" />
+    <Compile Include="Internals\Json\Serialization\ReflectionValueProvider.cs" />
+    <Compile Include="Internals\Json\StreamingContext.cs" />
+    <Compile Include="Internals\Json\TypeNameHandling.cs" />
+    <Compile Include="Internals\Json\Utilities\Base64Encoder.cs" />
+    <Compile Include="Internals\Json\Utilities\BidirectionalDictionary.cs" />
+    <Compile Include="Internals\Json\Utilities\CollectionUtils.cs" />
+    <Compile Include="Internals\Json\Utilities\CollectionWrapper.cs" />
+    <Compile Include="Internals\Json\Utilities\ConvertUtils.cs" />
+    <Compile Include="Internals\Json\Utilities\DateTimeUtils.cs" />
+    <Compile Include="Internals\Json\Utilities\DictionaryWrapper.cs" />
+    <Compile Include="Internals\Json\Utilities\DynamicProxy.cs" />
+    <Compile Include="Internals\Json\Utilities\DynamicProxyMetaObject.cs" />
+    <Compile Include="Internals\Json\Utilities\DynamicReflectionDelegateFactory.cs" />
+    <Compile Include="Internals\Json\Utilities\DynamicUtils.cs" />
+    <Compile Include="Internals\Json\Utilities\DynamicWrapper.cs" />
+    <Compile Include="Internals\Json\Utilities\EnumUtils.cs" />
+    <Compile Include="Internals\Json\Utilities\EnumValue.cs" />
+    <Compile Include="Internals\Json\Utilities\EnumValues.cs" />
+    <Compile Include="Internals\Json\Utilities\ILGeneratorExtensions.cs" />
+    <Compile Include="Internals\Json\Utilities\JavaScriptUtils.cs" />
+    <Compile Include="Internals\Json\Utilities\LateBoundReflectionDelegateFactory.cs" />
+    <Compile Include="Internals\Json\Utilities\LinqBridge.cs" />
+    <Compile Include="Internals\Json\Utilities\ListWrapper.cs" />
+    <Compile Include="Internals\Json\Utilities\MathUtils.cs" />
+    <Compile Include="Internals\Json\Utilities\MethodCall.cs" />
+    <Compile Include="Internals\Json\Utilities\MiscellaneousUtils.cs" />
+    <Compile Include="Internals\Json\Utilities\ReflectionDelegateFactory.cs" />
+    <Compile Include="Internals\Json\Utilities\ReflectionUtils.cs" />
+    <Compile Include="Internals\Json\Utilities\StringBuffer.cs" />
+    <Compile Include="Internals\Json\Utilities\StringReference.cs" />
+    <Compile Include="Internals\Json\Utilities\StringUtils.cs" />
+    <Compile Include="Internals\Json\Utilities\ThreadSafeStore.cs" />
+    <Compile Include="Internals\Json\Utilities\ValidationUtils.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Internals\Database\" />
+    <Folder Include="Internals\XmlRpc\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

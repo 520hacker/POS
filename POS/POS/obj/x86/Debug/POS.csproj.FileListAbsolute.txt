@@ -1,0 +1,16 @@
+c:\users\filmee24\documents\visual studio 2013\Projects\POS\POS\bin\Debug\POS.exe
+c:\users\filmee24\documents\visual studio 2013\Projects\POS\POS\bin\Debug\POS.pdb
+c:\users\filmee24\documents\visual studio 2013\Projects\POS\POS\bin\Debug\Telerik.WinControls.dll
+c:\users\filmee24\documents\visual studio 2013\Projects\POS\POS\bin\Debug\Telerik.WinControls.Themes.TelerikMetroTouch.dll
+c:\users\filmee24\documents\visual studio 2013\Projects\POS\POS\bin\Debug\TelerikCommon.dll
+c:\users\filmee24\documents\visual studio 2013\Projects\POS\POS\bin\Debug\Telerik.WinControls.xml
+c:\users\filmee24\documents\visual studio 2013\Projects\POS\POS\obj\x86\Debug\POS.csprojResolveAssemblyReference.cache
+c:\users\filmee24\documents\visual studio 2013\Projects\POS\POS\obj\x86\Debug\POS.Properties.Resources.resources
+c:\users\filmee24\documents\visual studio 2013\Projects\POS\POS\obj\x86\Debug\POS.csproj.GenerateResource.Cache
+c:\users\filmee24\documents\visual studio 2013\Projects\POS\POS\obj\x86\Debug\POS.exe
+c:\users\filmee24\documents\visual studio 2013\Projects\POS\POS\obj\x86\Debug\POS.pdb
+c:\users\filmee24\documents\visual studio 2013\Projects\POS\POS\bin\Debug\POS.exe.config
+C:\Users\filmee24\Documents\Visual Studio 2013\Projects\POS\POS\obj\x86\Debug\POS.MainForm.resources
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\POS.exe.config
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.exe
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.pdb
