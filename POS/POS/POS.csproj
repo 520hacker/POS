@@ -640,6 +640,13 @@
     <Compile Include="Internals\Serializer\Serializing\TypeInfoCollection.cs" />
     <Compile Include="Internals\Serializer\SharpSerializer.cs" />
     <Compile Include="Internals\Serializer\SharpSerializerBinarySettings.cs" />
+    <Compile Include="Internals\UndoRedo\Change.cs" />
+    <Compile Include="Internals\UndoRedo\Collections\Generic\UndoRedoDictionary.cs" />
+    <Compile Include="Internals\UndoRedo\Collections\Generic\UndoRedoList.cs" />
+    <Compile Include="Internals\UndoRedo\Command.cs" />
+    <Compile Include="Internals\UndoRedo\IUndoRedoMember.cs" />
+    <Compile Include="Internals\UndoRedo\UndoRedoManager.cs" />
+    <Compile Include="Internals\UndoRedo\UndoRedoProperty.cs" />
     <Compile Include="Internals\XmlRpc\Internals\Logger.cs" />
     <Compile Include="Internals\XmlRpc\Internals\SimpleHttpRequest.cs" />
     <Compile Include="Internals\XmlRpc\Internals\XML\XmlRpcBoxcarRequest.cs" />

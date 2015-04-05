@@ -1,20 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using Polenter.Serialization;
+using Pos.Internals.UndoRedo.Collections.Generic;
 
 namespace POS
 {
     public static class Settings
     {
-        private static Dictionary<string, object> _data = new Dictionary<string, object>();
+        private static UndoRedoDictionary<string, object> _data = new UndoRedoDictionary<string, object>();
 
         public static void Load()
         {
             var s = new SharpSerializer();
 
             if (File.Exists("settings.dat"))
-                _data = (Dictionary<string, object>)s.Deserialize("settings.dat");
+                _data = (UndoRedoDictionary<string, object>)s.Deserialize("settings.dat");
         }
 
         public static T Get<T>(string name)
