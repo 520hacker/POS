@@ -55,6 +55,8 @@
     <Compile Include="Architecture\Runnable\IRunnablePlugIn.cs" />
     <Compile Include="Architecture\Runnable\RunnablePlugIn.cs" />
     <Compile Include="Architecture\Runnable\RunnablePlugInBasedApplication.cs" />
+    <Compile Include="IPosApplication.cs" />
+    <Compile Include="IPosPlugIn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Reflection;
-using Creek.Plugins.Internal.Tools;
 
 namespace POS.Contracts.Architecture
 {
@@ -101,19 +100,6 @@ namespace POS.Contracts.Architecture
             var b = wc.DownloadData(uri);
 
             LoadPlugIn(Assembly.Load(b));
-        }
-        public void LoadPlugIns(Uri uri)
-        {
-            string baseURL = uri.ToString();
-            var client = new WebClient();
-            string content = client.DownloadString(baseURL);
-
-            foreach (LinkItem i in LinkFinder.Find(content, uri.ToString()))
-            {
-                if (i.Href.EndsWith(".dll"))
-                    LoadPlugIn(new Uri(i.Href));
-            }
-
         }
 
         /// <summary>

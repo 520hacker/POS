@@ -69,6 +69,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PlugInManager.cs" />
     <Compile Include="Internals\Bitcoin\APIException.cs" />
     <Compile Include="Internals\Bitcoin\BlockExplorer\Address.cs" />
     <Compile Include="Internals\Bitcoin\BlockExplorer\Block.cs" />
@@ -736,6 +737,12 @@
     <None Include="Resources\home.ico" />
     <None Include="Resources\box.ico" />
     <None Include="Resources\application_x_desktop.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\POS.Contracts\POS.Contracts.csproj">
+      <Project>{F481A8B5-16F1-455F-8FA0-E4636AC1529F}</Project>
+      <Name>POS.Contracts</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
