@@ -6,15 +6,23 @@ namespace POS.Internals.Designer
 {
     public partial class DesignerHost : UserControl
     {
-        private readonly Control parent;
+        public Control Parent { get; set; }
 
         public event EventHandler SelectionChanged;
 
         private RuntimeDesigner rd;
 
-        private DesignerHost(Control parent)
+        public DesignerHost()
         {
-            this.parent = parent;
+            InitializeComponent();
+
+            rd = new RuntimeDesigner();
+        }
+
+        public DesignerHost(Control parent)
+        {
+            this.Parent = parent;
+
             InitializeComponent();
 
             rd = new RuntimeDesigner();
@@ -29,13 +37,13 @@ namespace POS.Internals.Designer
 
             rd.EnableMoveResize(c);
 
-            parent.Controls.Add(c);
+            Parent.Controls.Add(c);
         }
 
 
         public string GetDefinition()
         {
-            return XamlServices.Save(parent);   
+            return XamlServices.Save(Parent);   
         }
 
         public static DesignerHost CreateHost(string definition, DragEventHandler dragdrop, EventHandler selected)
@@ -43,7 +51,7 @@ namespace POS.Internals.Designer
             return CreateHost((Control)XamlServices.Parse(definition), dragdrop, selected);
         }
 
-        public static DesignerHost CreateHost(Control parent, DragEventHandler dragdrop, EventHandler selected)
+        public static DesignerHost CreateHost(Control parent, DragEventHandler dragdrop, EventHandler selected, bool moveparent = true)
         {
             var n = new DesignerHost(parent);
 
@@ -63,6 +71,7 @@ namespace POS.Internals.Designer
             parent.AllowDrop = true;
 
             n.Controls.Add(parent);
+
             n.rd.EnableResizing(parent);
 
             return n;
