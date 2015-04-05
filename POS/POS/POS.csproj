@@ -384,6 +384,17 @@
     <Compile Include="Internals\Database\TypeResolution\TypeRegistry.cs" />
     <Compile Include="Internals\Database\TypeResolution\TypeResolutionUtils.cs" />
     <Compile Include="Internals\Database\TypeResolution\TypeResolver.cs" />
+    <Compile Include="Internals\DialogBuilder\Attributes\DisplaySettingsAttribute.cs" />
+    <Compile Include="Internals\DialogBuilder\Attributes\NumericSettingsAttribute.cs" />
+    <Compile Include="Internals\DialogBuilder\Attributes\RequiredFieldAttribute.cs" />
+    <Compile Include="Internals\DialogBuilder\ControlFactory.cs" />
+    <Compile Include="Internals\DialogBuilder\ControlTag.cs" />
+    <Compile Include="Internals\DialogBuilder\DialogBuilder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Internals\DialogBuilder\DialogBuilder.designer.cs">
+      <DependentUpon>DialogBuilder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Internals\I18N\BaseCatalog.cs" />
     <Compile Include="Internals\I18N\Catalog.cs" />
     <Compile Include="Internals\I18N\ICatalog.cs" />
@@ -640,6 +651,7 @@
     <Compile Include="Internals\Serializer\Serializing\TypeInfoCollection.cs" />
     <Compile Include="Internals\Serializer\SharpSerializer.cs" />
     <Compile Include="Internals\Serializer\SharpSerializerBinarySettings.cs" />
+    <Compile Include="Internals\Taskbar.cs" />
     <Compile Include="Internals\UndoRedo\Change.cs" />
     <Compile Include="Internals\UndoRedo\Collections\Generic\UndoRedoDictionary.cs" />
     <Compile Include="Internals\UndoRedo\Collections\Generic\UndoRedoList.cs" />
@@ -688,6 +700,9 @@
     <Compile Include="SplashScreen.designer.cs">
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Internals\DialogBuilder\DialogBuilder.resx">
+      <DependentUpon>DialogBuilder.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
