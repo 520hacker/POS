@@ -32,3 +32,4 @@ C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\POS.Contracts.dll
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\POS.Contracts.pdb
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\Facebook.dll
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\Facebook.xml
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.Internals.Designer.DesignerHost.resources

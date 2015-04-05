@@ -48,6 +48,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -74,6 +75,25 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Internals\Designer\DesignerHost.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Internals\Designer\DesignerHost.Designer.cs">
+      <DependentUpon>DesignerHost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Internals\Designer\Internal\ControlExtension.cs" />
+    <Compile Include="Internals\Designer\Internal\ControlMover.cs" />
+    <Compile Include="Internals\Designer\Internal\Resizer.cs" />
+    <Compile Include="Internals\Designer\Internal\SmartTag.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Internals\Designer\Internal\SmartTag.Designer.cs">
+      <DependentUpon>SmartTag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Internals\Designer\Internal\SmartTagButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Internals\Designer\RuntimeDesigner.cs" />
     <Compile Include="Internals\SizeFormatter.cs" />
     <Compile Include="PlugInManager.cs" />
     <Compile Include="Internals\Bitcoin\APIException.cs" />
@@ -707,6 +727,9 @@
     <Compile Include="SplashScreen.designer.cs">
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Internals\Designer\DesignerHost.resx">
+      <DependentUpon>DesignerHost.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Internals\DialogBuilder\DialogBuilder.resx">
       <DependentUpon>DialogBuilder.cs</DependentUpon>
     </EmbeddedResource>
@@ -741,6 +764,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="currency_dollar_red.ico" />
+    <None Include="Resources\smarttag.PNG" />
+    <None Include="Resources\smarttag_hover.PNG" />
     <None Include="Resources\home.ico" />
     <None Include="Resources\box.ico" />
     <None Include="Resources\application_x_desktop.ico" />
