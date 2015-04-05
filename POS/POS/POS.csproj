@@ -39,10 +39,15 @@
     <ApplicationIcon>currency_dollar_red.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
+      <HintPath>..\packages\Facebook.6.8.0\lib\net40-client\Facebook.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -69,6 +74,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Internals\SizeFormatter.cs" />
     <Compile Include="PlugInManager.cs" />
     <Compile Include="Internals\Bitcoin\APIException.cs" />
     <Compile Include="Internals\Bitcoin\BlockExplorer\Address.cs" />
@@ -722,6 +728,7 @@
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Internals\Database\Meta\ODBType.cs.orig" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
