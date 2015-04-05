@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -65,6 +66,7 @@
       <HintPath>..\lib\RCWF\2013.3.1016.40\TelerikCommon.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Internals\Bitcoin\APIException.cs" />
@@ -382,6 +384,11 @@
     <Compile Include="Internals\Database\TypeResolution\TypeRegistry.cs" />
     <Compile Include="Internals\Database\TypeResolution\TypeResolutionUtils.cs" />
     <Compile Include="Internals\Database\TypeResolution\TypeResolver.cs" />
+    <Compile Include="Internals\I18N\BaseCatalog.cs" />
+    <Compile Include="Internals\I18N\Catalog.cs" />
+    <Compile Include="Internals\I18N\ICatalog.cs" />
+    <Compile Include="Internals\I18N\Loaders\MoFileParser.cs" />
+    <Compile Include="Internals\I18N\Plural\PluralFormProcessor.cs" />
     <Compile Include="Internals\Json\Bson\BsonBinaryType.cs" />
     <Compile Include="Internals\Json\Bson\BsonBinaryWriter.cs" />
     <Compile Include="Internals\Json\Bson\BsonObjectId.cs" />
@@ -535,29 +542,83 @@
     <Compile Include="Internals\Json\Utilities\ThreadSafeStore.cs" />
     <Compile Include="Internals\Json\Utilities\ValidationUtils.cs" />
     <Compile Include="Internals\QrCoder.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\BindSignature.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\ByRefArg.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\ContinuationCallback.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\DelegateFactory.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\DelegateFactory.Generated.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\ExtensionMethods.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\HostEvent.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\HostFunctions.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\HostIndexedProperty.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\HostItem.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\HostItem.InvokeMethod.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\HostItem.Members.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\HostItemFlags.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\HostMethod.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\HostObject.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\HostTarget.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\HostTargetFlags.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\HostType.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\HostTypeCollection.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\HostVariable.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\IScriptableObject.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\IScriptEngineException.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\NoScriptAccessAttribute.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\PropertyBag.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\ScriptAccess.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\ScriptEngine.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\ScriptEngineException.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\ScriptInterruptedException.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\ScriptItem.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\ScriptMemberAttribute.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\ScriptMemberFlags.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\ScriptMethod.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\ScriptUsageAttribute.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\Undefined.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\Util\ArrayHelpers.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\Util\AssemblyHelpers.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\Util\ConcurrentWeakSet.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\Util\DynamicHelpers.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\Util\EnumerableHelpers.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\Util\IDynamic.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\Util\InvokeHelpers.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\Util\IScriptMarshalWrapper.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\Util\MemberHelpers.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\Util\MiscHelpers.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\Util\Nonexistent.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\Util\ObjectHelpers.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\Util\RawCOMHelpers.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\Util\SpecialMemberNames.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\Util\SpecialParamNames.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\Util\TypeHelpers.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\Util\UniqueNameManager.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\VoidResult.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\Windows\ActiveXDebugging.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\Windows\ActiveXScripting.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\Windows\ActiveXWrappers.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\Windows\WindowsScriptEngine.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\Windows\WindowsScriptEngine.Debug.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\Windows\WindowsScriptEngine.Site.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\Windows\WindowsScriptEngineFlags.cs" />
+    <Compile Include="Internals\Scripting\Clearscript\Windows\WindowsScriptItem.cs" />
+    <Compile Include="Internals\Scripting\JScriptEngine.cs" />
+    <Compile Include="Internals\Scripting\VBScriptEngine.cs" />
     <Compile Include="Internals\Serializer\Advanced\BinaryPropertyDeserializer.cs" />
     <Compile Include="Internals\Serializer\Advanced\BinaryPropertySerializer.cs" />
     <Compile Include="Internals\Serializer\Advanced\Binary\IBinaryReader.cs" />
     <Compile Include="Internals\Serializer\Advanced\Binary\IBinaryWriter.cs" />
     <Compile Include="Internals\Serializer\Advanced\BurstBinaryReader.cs" />
     <Compile Include="Internals\Serializer\Advanced\BurstBinaryWriter.cs" />
-    <Compile Include="Internals\Serializer\Advanced\DefaultXmlReader.cs" />
-    <Compile Include="Internals\Serializer\Advanced\DefaultXmlWriter.cs" />
     <Compile Include="Internals\Serializer\Advanced\Deserializing\IPropertyDeserializer.cs" />
     <Compile Include="Internals\Serializer\Advanced\PropertyCache.cs" />
     <Compile Include="Internals\Serializer\Advanced\PropertyProvider.cs" />
     <Compile Include="Internals\Serializer\Advanced\Serializing\IPropertySerializer.cs" />
     <Compile Include="Internals\Serializer\Advanced\Serializing\ITypeNameConverter.cs" />
     <Compile Include="Internals\Serializer\Advanced\Serializing\PropertySerializer.cs" />
-    <Compile Include="Internals\Serializer\Advanced\SimpleValueConverter.cs" />
     <Compile Include="Internals\Serializer\Advanced\SizeOptimizedBinaryReader.cs" />
     <Compile Include="Internals\Serializer\Advanced\SizeOptimizedBinaryWriter.cs" />
     <Compile Include="Internals\Serializer\Advanced\TypeNameConverter.cs" />
-    <Compile Include="Internals\Serializer\Advanced\XmlPropertyDeserializer.cs" />
-    <Compile Include="Internals\Serializer\Advanced\XmlPropertySerializer.cs" />
-    <Compile Include="Internals\Serializer\Advanced\Xml\ISimpleValueConverter.cs" />
-    <Compile Include="Internals\Serializer\Advanced\Xml\IXmlReader.cs" />
-    <Compile Include="Internals\Serializer\Advanced\Xml\IXmlWriter.cs" />
     <Compile Include="Internals\Serializer\BinarySerializationMode.cs" />
     <Compile Include="Internals\Serializer\Core\ArrayAnalyzer.cs" />
     <Compile Include="Internals\Serializer\Core\Binary\BinaryReaderTools.cs" />
@@ -571,7 +632,6 @@
     <Compile Include="Internals\Serializer\Core\SharpSerializerSettings.cs" />
     <Compile Include="Internals\Serializer\Core\SimpleValueParsingException.cs" />
     <Compile Include="Internals\Serializer\Core\Tools.cs" />
-    <Compile Include="Internals\Serializer\Core\Xml\Elements.cs" />
     <Compile Include="Internals\Serializer\Deserializing\ObjectFactory.cs" />
     <Compile Include="Internals\Serializer\ExcludeFromSerializationAttribute.cs" />
     <Compile Include="Internals\Serializer\Serializing\PropertyFactory.cs" />
@@ -580,7 +640,6 @@
     <Compile Include="Internals\Serializer\Serializing\TypeInfoCollection.cs" />
     <Compile Include="Internals\Serializer\SharpSerializer.cs" />
     <Compile Include="Internals\Serializer\SharpSerializerBinarySettings.cs" />
-    <Compile Include="Internals\Serializer\SharpSerializerXmlSettings.cs" />
     <Compile Include="Internals\XmlRpc\Internals\Logger.cs" />
     <Compile Include="Internals\XmlRpc\Internals\SimpleHttpRequest.cs" />
     <Compile Include="Internals\XmlRpc\Internals\XML\XmlRpcBoxcarRequest.cs" />
@@ -615,6 +674,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="QrCodeDialog.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="SplashScreen.cs">
       <SubType>Form</SubType>
     </Compile>

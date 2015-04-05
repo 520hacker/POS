@@ -26,12 +26,10 @@
 
 #endregion
 
-using System.Globalization;
 using System.Text;
 using System.Xml;
 using Polenter.Serialization.Advanced;
 using Polenter.Serialization.Advanced.Serializing;
-using Polenter.Serialization.Advanced.Xml;
 
 namespace Polenter.Serialization.Core
 {
@@ -69,9 +67,5 @@ namespace Polenter.Serialization.Core
             return new TypeNameConverter(includeAssemblyVersion, includeCulture, includePublicKeyToken);
         }
 
-        public static ISimpleValueConverter GetSimpleValueConverter(CultureInfo cultureInfo, ITypeNameConverter typeNameConverter)
-        {
-            return new SimpleValueConverter(cultureInfo, typeNameConverter);
-        }
     }
 }

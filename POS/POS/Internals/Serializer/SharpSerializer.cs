@@ -1,3 +1,4 @@
+
 #region Copyright © 2010 Pawel Idzikowski [idzikowski@sharpserializer.com]
 
 //  ***********************************************************************
@@ -33,7 +34,6 @@ using Polenter.Serialization.Advanced;
 using Polenter.Serialization.Advanced.Binary;
 using Polenter.Serialization.Advanced.Deserializing;
 using Polenter.Serialization.Advanced.Serializing;
-using Polenter.Serialization.Advanced.Xml;
 using Polenter.Serialization.Core;
 using Polenter.Serialization.Deserializing;
 using Polenter.Serialization.Serializing;
@@ -50,51 +50,23 @@ namespace Polenter.Serialization
         private PropertyProvider _propertyProvider;
         private string _rootName;
         private IPropertySerializer _serializer;
-
-        /// <summary>
-        ///   Standard Constructor. Default is Xml serializing
-        /// </summary>
+        
         public SharpSerializer()
         {
-            initialize(new SharpSerializerXmlSettings());
+            initialize(new SharpSerializerBinarySettings());
         }
-
-        /// <summary>
-        ///   Overloaded constructor
-        /// </summary>
-        /// <param name = "binarySerialization">true - binary serialization with SizeOptimized mode, false - xml. For more options use other overloaded constructors.</param>
-        public SharpSerializer(bool binarySerialization)
-        {
-            if (binarySerialization)
-            {
-                initialize(new SharpSerializerBinarySettings());
-            }
-            else
-            {
-                initialize(new SharpSerializerXmlSettings());
-            }
-        }
-
-        /// <summary>
-        ///   Xml serialization with custom settings
-        /// </summary>
-        /// <param name = "settings"></param>
-        public SharpSerializer(SharpSerializerXmlSettings settings)
-        {
-            if (settings == null) throw new ArgumentNullException("settings");
-            initialize(settings);
-        }
-
+        
         /// <summary>
         ///   Binary serialization with custom settings
         /// </summary>
         /// <param name = "settings"></param>
         public SharpSerializer(SharpSerializerBinarySettings settings)
         {
-            if (settings == null) throw new ArgumentNullException("settings");
+            if (settings == null)
+                throw new ArgumentNullException("settings");
             initialize(settings);
         }
-
+        
         /// <summary>
         ///   Custom serializer and deserializer
         /// </summary>
@@ -102,12 +74,14 @@ namespace Polenter.Serialization
         /// <param name = "deserializer"></param>
         public SharpSerializer(IPropertySerializer serializer, IPropertyDeserializer deserializer)
         {
-            if (serializer == null) throw new ArgumentNullException("serializer");
-            if (deserializer == null) throw new ArgumentNullException("deserializer");
+            if (serializer == null)
+                throw new ArgumentNullException("serializer");
+            if (deserializer == null)
+                throw new ArgumentNullException("deserializer");
             _serializer = serializer;
             _deserializer = deserializer;
         }
-
+        
         /// <summary>
         ///   Default it is an instance of PropertyProvider. It provides all properties to serialize.
         ///   You can use an Ihneritor and overwrite its GetAllProperties and IgnoreProperty methods to implement your custom rules.
@@ -116,12 +90,16 @@ namespace Polenter.Serialization
         {
             get
             {
-                if (_propertyProvider == null) _propertyProvider = new PropertyProvider();
+                if (_propertyProvider == null)
+                    _propertyProvider = new PropertyProvider();
                 return _propertyProvider;
             }
-            set { _propertyProvider = value; }
+            set
+            {
+                _propertyProvider = value;
+            }
         }
-
+        
         /// <summary>
         ///   What name should have the root property. Default is "Root".
         /// </summary>
@@ -129,58 +107,32 @@ namespace Polenter.Serialization
         {
             get
             {
-                if (_rootName == null) _rootName = "Root";
+                if (_rootName == null)
+                    _rootName = "Root";
                 return _rootName;
             }
-            set { _rootName = value; }
+            set
+            {
+                _rootName = value;
+            }
         }
-
-        private void initialize(SharpSerializerXmlSettings settings)
-        {
-            // PropertiesToIgnore
-            PropertyProvider.PropertiesToIgnore = settings.AdvancedSettings.PropertiesToIgnore;
-            PropertyProvider.AttributesToIgnore = settings.AdvancedSettings.AttributesToIgnore;
-            //RootName
-            RootName = settings.AdvancedSettings.RootName;
-            // TypeNameConverter)
-            ITypeNameConverter typeNameConverter = settings.AdvancedSettings.TypeNameConverter ??
-                                                   DefaultInitializer.GetTypeNameConverter(
-                                                       settings.IncludeAssemblyVersionInTypeName,
-                                                       settings.IncludeCultureInTypeName,
-                                                       settings.IncludePublicKeyTokenInTypeName);
-            // SimpleValueConverter
-            ISimpleValueConverter simpleValueConverter = settings.AdvancedSettings.SimpleValueConverter ??
-                                                         DefaultInitializer.GetSimpleValueConverter(settings.Culture, typeNameConverter);
-            // XmlWriterSettings
-            XmlWriterSettings xmlWriterSettings = DefaultInitializer.GetXmlWriterSettings(settings.Encoding);
-            // XmlReaderSettings
-            XmlReaderSettings xmlReaderSettings = DefaultInitializer.GetXmlReaderSettings();
-
-            // Create Serializer and Deserializer
-            var reader = new DefaultXmlReader(typeNameConverter, simpleValueConverter, xmlReaderSettings);
-            var writer = new DefaultXmlWriter(typeNameConverter, simpleValueConverter, xmlWriterSettings);
-
-            _serializer = new XmlPropertySerializer(writer);
-            _deserializer = new XmlPropertyDeserializer(reader);
-        }
-
+        
         private void initialize(SharpSerializerBinarySettings settings)
         {
             // PropertiesToIgnore
             PropertyProvider.PropertiesToIgnore = settings.AdvancedSettings.PropertiesToIgnore;
             PropertyProvider.AttributesToIgnore = settings.AdvancedSettings.AttributesToIgnore;
-
+            
             //RootName
             RootName = settings.AdvancedSettings.RootName;
-
+            
             // TypeNameConverter)
             ITypeNameConverter typeNameConverter = settings.AdvancedSettings.TypeNameConverter ??
                                                    DefaultInitializer.GetTypeNameConverter(
                                                        settings.IncludeAssemblyVersionInTypeName,
                                                        settings.IncludeCultureInTypeName,
                                                        settings.IncludePublicKeyTokenInTypeName);
-
-
+            
             // Create Serializer and Deserializer
             Polenter.Serialization.Advanced.Binary.IBinaryReader reader = null;
             Polenter.Serialization.Advanced.Binary.IBinaryWriter writer = null;
@@ -196,14 +148,14 @@ namespace Polenter.Serialization
                 writer = new SizeOptimizedBinaryWriter(typeNameConverter, settings.Encoding);
                 reader = new SizeOptimizedBinaryReader(typeNameConverter, settings.Encoding);
             }
-
+            
             _deserializer = new BinaryPropertyDeserializer(reader);
             _serializer = new BinaryPropertySerializer(writer);
         }
-
+        
         #region Serializing/Deserializing methods
-
-#if !PORTABLE
+        
+        #if !PORTABLE
         /// <summary>
         ///   Serializing to a file. File will be always new created and closed after the serialization.
         /// </summary>
@@ -218,7 +170,7 @@ namespace Polenter.Serialization
                 Serialize(data, stream);
             }
         }
-
+        
         private void createDirectoryIfNeccessary(string filename)
         {
             var directory = Path.GetDirectoryName(filename);
@@ -227,24 +179,26 @@ namespace Polenter.Serialization
                 Directory.CreateDirectory(directory);
             }
         }
-#endif
-
+        
+        #endif
+        
         /// <summary>
         ///   Serializing to the stream. After serialization the stream will NOT be closed.
         /// </summary>
         /// <param name = "data"></param>
         /// <param name = "stream"></param>
-#if !PORTABLE
+        #if !PORTABLE
         [MethodImpl(MethodImplOptions.Synchronized)]
-#endif
+        #endif
         public void Serialize(object data, Stream stream)
         {
-            if (data == null) throw new ArgumentNullException("data");
-
+            if (data == null)
+                throw new ArgumentNullException("data");
+            
             var factory = new PropertyFactory(PropertyProvider);
-
+            
             Property property = factory.CreateProperty(RootName, data);
-
+            
             try
             {
                 _serializer.Open(stream);
@@ -255,7 +209,8 @@ namespace Polenter.Serialization
                 _serializer.Close();
             }
         }
-#if !PORTABLE
+        
+        #if !PORTABLE
         /// <summary>
         ///   Deserializing from the file. After deserialization the file will be closed.
         /// </summary>
@@ -269,15 +224,16 @@ namespace Polenter.Serialization
                 return Deserialize(stream);
             }
         }
-#endif
+        
+        #endif
         /// <summary>
         ///   Deserialization from the stream. After deserialization the stream will NOT be closed.
         /// </summary>
         /// <param name = "stream"></param>
         /// <returns></returns>
-#if !PORTABLE
+        #if !PORTABLE
         [MethodImpl(MethodImplOptions.Synchronized)]
-#endif
+        #endif
         public object Deserialize(Stream stream)
         {
             try
@@ -286,7 +242,7 @@ namespace Polenter.Serialization
                 _deserializer.Open(stream);
                 Property property = _deserializer.Deserialize();
                 _deserializer.Close();
-
+                
                 // create object from Property
                 var factory = new ObjectFactory();
                 return factory.CreateObject(property);
@@ -298,7 +254,7 @@ namespace Polenter.Serialization
                     "An error occured during the deserialization. Details are in the inner exception.", exception);
             }
         }
-
+    
         #endregion
     }
 }
