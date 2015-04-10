@@ -46,12 +46,18 @@
             this.commandBarSeparator1 = new Telerik.WinControls.UI.CommandBarSeparator();
             this.PropertiesBtn = new Telerik.WinControls.UI.CommandBarButton();
             this.radDesktopAlert1 = new Telerik.WinControls.UI.RadDesktopAlert(this.components);
+            this.ProductsView = new Telerik.WinControls.UI.RadPanorama();
+            this.tileGroupElement1 = new Telerik.WinControls.UI.TileGroupElement();
+            this.radTileElement1 = new Telerik.WinControls.UI.RadTileElement();
+            this.radTileElement2 = new Telerik.WinControls.UI.RadTileElement();
             ((System.ComponentModel.ISupportInitialize)(this.radPageView1)).BeginInit();
             this.radPageView1.SuspendLayout();
+            this.HomePage.SuspendLayout();
             this.BonDesignerPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radPanel1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.propertyGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AddImageBtn)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ProductsView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -65,7 +71,7 @@
             this.radPageView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radPageView1.Location = new System.Drawing.Point(0, 0);
             this.radPageView1.Name = "radPageView1";
-            this.radPageView1.SelectedPage = this.BonDesignerPage;
+            this.radPageView1.SelectedPage = this.HomePage;
             this.radPageView1.Size = new System.Drawing.Size(926, 409);
             this.radPageView1.TabIndex = 0;
             this.radPageView1.Text = "radPageView1";
@@ -74,6 +80,7 @@
             // 
             // HomePage
             // 
+            this.HomePage.Controls.Add(this.ProductsView);
             this.HomePage.Image = global::POS.Properties.Resources.home;
             this.HomePage.Location = new System.Drawing.Point(205, 4);
             this.HomePage.Name = "HomePage";
@@ -212,6 +219,47 @@
             this.radDesktopAlert1.ShowPinButton = false;
             this.radDesktopAlert1.ThemeName = "TelerikMetroTouch";
             // 
+            // ProductsView
+            // 
+            this.ProductsView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ProductsView.Groups.AddRange(new Telerik.WinControls.RadItem[] {
+            this.tileGroupElement1});
+            this.ProductsView.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.radTileElement2});
+            this.ProductsView.Location = new System.Drawing.Point(0, 0);
+            this.ProductsView.Name = "ProductsView";
+            this.ProductsView.ScrollBarThickness = 36;
+            this.ProductsView.ShowGroups = true;
+            this.ProductsView.Size = new System.Drawing.Size(717, 401);
+            this.ProductsView.TabIndex = 0;
+            this.ProductsView.ThemeName = "TelerikMetroTouch";
+            // 
+            // tileGroupElement1
+            // 
+            this.tileGroupElement1.AccessibleDescription = "Category";
+            this.tileGroupElement1.AccessibleName = "Category";
+            this.tileGroupElement1.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.radTileElement1});
+            this.tileGroupElement1.Name = "tileGroupElement1";
+            this.tileGroupElement1.Text = "Category";
+            this.tileGroupElement1.Visibility = Telerik.WinControls.ElementVisibility.Visible;
+            // 
+            // radTileElement1
+            // 
+            this.radTileElement1.AccessibleDescription = "Product";
+            this.radTileElement1.AccessibleName = "Product";
+            this.radTileElement1.Name = "radTileElement1";
+            this.radTileElement1.Text = "Product";
+            this.radTileElement1.Visibility = Telerik.WinControls.ElementVisibility.Visible;
+            // 
+            // radTileElement2
+            // 
+            this.radTileElement2.AccessibleDescription = "Product";
+            this.radTileElement2.AccessibleName = "Product";
+            this.radTileElement2.Name = "radTileElement2";
+            this.radTileElement2.Text = "Product";
+            this.radTileElement2.Visibility = Telerik.WinControls.ElementVisibility.Visible;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -232,11 +280,13 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.radPageView1)).EndInit();
             this.radPageView1.ResumeLayout(false);
+            this.HomePage.ResumeLayout(false);
             this.BonDesignerPage.ResumeLayout(false);
             this.BonDesignerPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radPanel1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.propertyGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.AddImageBtn)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ProductsView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
 
@@ -260,5 +310,9 @@
         private Telerik.WinControls.UI.CommandBarSeparator commandBarSeparator1;
         private Telerik.WinControls.UI.CommandBarButton PropertiesBtn;
         private Telerik.WinControls.UI.RadPanel radPanel1;
+        private Telerik.WinControls.UI.RadPanorama ProductsView;
+        private Telerik.WinControls.UI.TileGroupElement tileGroupElement1;
+        private Telerik.WinControls.UI.RadTileElement radTileElement1;
+        private Telerik.WinControls.UI.RadTileElement radTileElement2;
     }
 }
