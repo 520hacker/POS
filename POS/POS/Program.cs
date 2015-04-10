@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
+using POS.Internals;
 using Telerik.WinControls;
 
 namespace POS
@@ -29,6 +30,10 @@ namespace POS
                 {
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
+
+                    var id = VoucherID.NewID();
+                    var res = VoucherID.TryParse(id.ToString(), out id);
+
                     Application.Run(new SplashScreen());
                 }
                 else

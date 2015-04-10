@@ -27,6 +27,9 @@ namespace POS.Internals.Designer.Internal
         {
             bool Dragging = false;
             Point DragStart = Point.Empty;
+
+            control.MouseHover += (s, e) => control.Cursor = Cursors.Hand;
+
             control.MouseDown += delegate(object sender, MouseEventArgs e)
             {
                 Dragging = true;

@@ -26,6 +26,7 @@
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <RunCodeAnalysis>false</RunCodeAnalysis>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -96,7 +97,73 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Internals\Designer\RuntimeDesigner.cs" />
+    <Compile Include="Internals\Extensions\ArrayExtension.cs" />
+    <Compile Include="Internals\Extensions\BooleanExtensions.cs" />
+    <Compile Include="Internals\Extensions\ButtonExtension.cs" />
+    <Compile Include="Internals\Extensions\ByteArrayExtensions.cs" />
+    <Compile Include="Internals\Extensions\CollectionExtensions.cs" />
+    <Compile Include="Internals\Extensions\ColorExtensions.cs" />
+    <Compile Include="Internals\Extensions\CombinedException.cs" />
+    <Compile Include="Internals\Extensions\ComboBoxExtensions.cs" />
+    <Compile Include="Internals\Extensions\ComparableExtensions.cs" />
+    <Compile Include="Internals\Extensions\ComponentExtensions.cs" />
+    <Compile Include="Internals\Extensions\ConstructorExtensions.cs" />
+    <Compile Include="Internals\Extensions\ControlExtensions.cs" />
+    <Compile Include="Internals\Extensions\Cultures.cs" />
+    <Compile Include="Internals\Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Internals\Extensions\DateTimeOffsetExtensions.cs" />
+    <Compile Include="Internals\Extensions\DbConnectionExtensions.cs" />
+    <Compile Include="Internals\Extensions\DecimalExtensions.cs" />
+    <Compile Include="Internals\Extensions\DictionaryExtensions.cs" />
+    <Compile Include="Internals\Extensions\DirectoryInfoExtensions.cs" />
+    <Compile Include="Internals\Extensions\DisplayStringAttribute.cs" />
+    <Compile Include="Internals\Extensions\DoubleExtensions.cs" />
+    <Compile Include="Internals\Extensions\DrawingExtensions.cs" />
+    <Compile Include="Internals\Extensions\EnumExtensions.cs" />
+    <Compile Include="Internals\Extensions\EventHandlerExtenders.cs" />
+    <Compile Include="Internals\Extensions\ExceptionExtensions.cs" />
+    <Compile Include="Internals\Extensions\Extension.cs" />
+    <Compile Include="Internals\Extensions\ExtensionMethodSetting.cs" />
+    <Compile Include="Internals\Extensions\Extensions.cs" />
+    <Compile Include="Internals\Extensions\FloatExtensions.cs" />
+    <Compile Include="Internals\Extensions\HotKeysEventArgs.cs" />
+    <Compile Include="Internals\Extensions\HotKeysManager.cs" />
+    <Compile Include="Internals\Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Internals\Extensions\ImageExtensions.cs" />
+    <Compile Include="Internals\Extensions\IntExtensions.cs" />
+    <Compile Include="Internals\Extensions\IOExtensions.cs" />
+    <Compile Include="Internals\Extensions\IQueryableExtensions.cs" />
+    <Compile Include="Internals\Extensions\ListExtensions.cs" />
+    <Compile Include="Internals\Extensions\LongExtensions.cs" />
+    <Compile Include="Internals\Extensions\MathExtensions.cs" />
+    <Compile Include="Internals\Extensions\NativeMethods.cs" />
+    <Compile Include="Internals\Extensions\NetworkingExtensions.cs" />
+    <Compile Include="Internals\Extensions\NumberExtensions.cs" />
+    <Compile Include="Internals\Extensions\ObjectExtensions.cs" />
+    <Compile Include="Internals\Extensions\PropertyGridExtensions.cs" />
+    <Compile Include="Internals\Extensions\SecurityExtensions.cs" />
+    <Compile Include="Internals\Extensions\ShellThumbnail.cs" />
+    <Compile Include="Internals\Extensions\SocketExtensions.cs" />
+    <Compile Include="Internals\Extensions\StreamExtensions.cs" />
+    <Compile Include="Internals\Extensions\StringArrayExtensions.cs" />
+    <Compile Include="Internals\Extensions\StringBuilderExtensions.cs" />
+    <Compile Include="Internals\Extensions\StringConverter.cs" />
+    <Compile Include="Internals\Extensions\StringExtensions.cs" />
+    <Compile Include="Internals\Extensions\StringUtilities.cs" />
+    <Compile Include="Internals\Extensions\SysImageList.cs" />
+    <Compile Include="Internals\Extensions\SysImageListHelper.cs" />
+    <Compile Include="Internals\Extensions\SystemUtilities.cs" />
+    <Compile Include="Internals\Extensions\TabControlExtensions.cs" />
+    <Compile Include="Internals\Extensions\TabPageExtensions.cs" />
+    <Compile Include="Internals\Extensions\TextReaderExtensions.cs" />
+    <Compile Include="Internals\Extensions\TimeSpanExtensions.cs" />
+    <Compile Include="Internals\Extensions\Tools.cs" />
+    <Compile Include="Internals\Extensions\TypeExtensions.cs" />
+    <Compile Include="Internals\Extensions\XmlExtensions.cs" />
+    <Compile Include="Internals\Extensions\XmlSerializeExtensions.cs" />
     <Compile Include="Internals\SizeFormatter.cs" />
+    <Compile Include="Internals\Taskbar.cs" />
+    <Compile Include="Internals\VoucherID.cs" />
     <Compile Include="PlugInManager.cs" />
     <Compile Include="Internals\Bitcoin\APIException.cs" />
     <Compile Include="Internals\Bitcoin\BlockExplorer\Address.cs" />
@@ -680,7 +747,6 @@
     <Compile Include="Internals\Serializer\Serializing\TypeInfoCollection.cs" />
     <Compile Include="Internals\Serializer\SharpSerializer.cs" />
     <Compile Include="Internals\Serializer\SharpSerializerBinarySettings.cs" />
-    <Compile Include="Internals\Taskbar.cs" />
     <Compile Include="Internals\UndoRedo\Change.cs" />
     <Compile Include="Internals\UndoRedo\Collections\Generic\UndoRedoDictionary.cs" />
     <Compile Include="Internals\UndoRedo\Collections\Generic\UndoRedoList.cs" />
@@ -710,7 +776,6 @@
     <Compile Include="Internals\XmlRpc\IRpcProxy.cs" />
     <Compile Include="Internals\XmlRpc\Proxy.cs" />
     <Compile Include="Internals\XmlRpc\RpcClient.cs" />
-    <Compile Include="Internals\XmlRpc\RpcServer.cs" />
     <Compile Include="Models\Coupon.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Program.cs" />
@@ -781,6 +846,7 @@
       <Name>POS.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

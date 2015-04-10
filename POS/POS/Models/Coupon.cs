@@ -1,5 +1,6 @@
 ﻿using System;
 using Creek.Database.Api;
+using POS.Internals;
 
 namespace POS.Models
 {
@@ -12,7 +13,7 @@ namespace POS.Models
             Special
         }
 
-        public string Code { get; set; }
+        public VoucherID Code { get; set; }
 
         public bool IsValid
         {
@@ -38,14 +39,14 @@ namespace POS.Models
 
         public static Coupon NewCoupon()
         {
-            return new Coupon { Code = Guid.NewGuid().ToString("N") };
+            return new Coupon { Code = VoucherID.NewID() };
         }
 
         public static bool Validate(Coupon c)
         {
-            Guid result;
+            VoucherID result;
 
-            return Guid.TryParseExact(c.Code, "N", out result);
+            return VoucherID.TryParse(c.Code.ToString(), out result);
         }
     }
 }

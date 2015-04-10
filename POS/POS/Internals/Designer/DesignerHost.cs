@@ -1,6 +1,9 @@
 ﻿using System;
+using System.IO;
+using System.Text;
 using System.Windows.Forms;
 using System.Xaml;
+using Polenter.Serialization;
 
 namespace POS.Internals.Designer
 {
@@ -40,11 +43,6 @@ namespace POS.Internals.Designer
             Parent.Controls.Add(c);
         }
 
-
-        public string GetDefinition()
-        {
-            return XamlServices.Save(Parent);   
-        }
 
         public static DesignerHost CreateHost(string definition, DragEventHandler dragdrop, EventHandler selected)
         {

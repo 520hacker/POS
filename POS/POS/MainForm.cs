@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using POS.Internals.Designer;
+using Telerik.WinControls.UI;
 
 namespace POS
 {
@@ -18,7 +20,7 @@ namespace POS
 
             host = DesignerHost.CreateHost(f, null, (sender, e) => { propertyGrid.SelectedObject = sender; }, false);
 
-            host.AddControl(new PropertyGrid());
+            host.AddControl(new Button());
 
             radPanel1.Controls.Add(host);
 
@@ -40,5 +42,21 @@ namespace POS
             propertyGrid.Visible = !propertyGrid.Visible;
         }
 
+        private void ImageBtn_Click(object sender, EventArgs e)
+        {
+            
+                OpenFileDialog f = new OpenFileDialog();
+                f.Filter = "(*.txt)|*.txt";
+
+                if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    var img = Image.FromFile(f.FileName);
+                    var pb = new PictureBox();
+                    pb.Image = img;
+
+                    host.AddControl(pb);
+                }
+            
+        }
     }
 }
