@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using POS.Internals.Designer;
+using POS.Internals.UndoRedo;
 using POS.Properties;
 using Telerik.WinControls.UI;
 
@@ -23,16 +24,24 @@ namespace POS
             undoBtn.Image = Resources.Undo_icon;
             undoBtn.Name = "undoBtn";
             undoBtn.ShowBorder = false;
+            undoBtn.Enabled = false;
+            undoBtn.Click += (s, e) => UndoRedoManager.Undo();
 
             var redoBtn = new RadButtonElement();
             redoBtn.Image = Resources.Redo_icon;
             redoBtn.Name = "redoBtn";
             redoBtn.ShowBorder = false;
+            redoBtn.Enabled = false;
+            redoBtn.Click += (s, e) => UndoRedoManager.Redo();
+
+            UndoRedoManager.CommandDone += (s, e) =>
+            {
+                undoBtn.Enabled = UndoRedoManager.CanUndo;
+                redoBtn.Enabled = UndoRedoManager.CanRedo;
+            };
 
             this.FormElement.TitleBar.SystemButtons.Children.Insert(0, undoBtn);
             this.FormElement.TitleBar.SystemButtons.Children.Insert(1, redoBtn);
-
-            this.FormElement.TitleBar.Children.Insert(1, redoBtn);
 
             host = DesignerHost.CreateHost(f, null, (sender, e) => { propertyGrid.SelectedObject = sender; }, false);
 

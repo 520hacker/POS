@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using POS.Internals.UndoRedo;
 
 namespace POS.Internals.UndoRedo
 {
