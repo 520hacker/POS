@@ -2,31 +2,9 @@
 
 namespace POS.Internals
 {
-    public class VoucherID
+    public struct VoucherID
     {
-        private string _id = "";
-
-        public override bool Equals(object obj)
-        {
-            VoucherID temp = obj as VoucherID;
-            if (temp == null)
-                return false;
-            return this.Equals(temp);
-        }
-
-        public bool Equals(VoucherID value)
-        {
-            if (ReferenceEquals(null, value))
-            {
-                return false;
-            }
-            if (ReferenceEquals(this, value))
-            {
-                return true;
-            }
-
-            return Equals(this._id, value._id);
-        }
+        private string _id;
 
         public static VoucherID Empty
         {
@@ -76,15 +54,9 @@ namespace POS.Internals
                 return true;
             }
 
-            result = null;
+            result = Empty;
 
             return false;
-        }
-
-
-        public override int GetHashCode()
-        {
-            return _id.GetHashCode();
         }
 
         public static explicit operator String(VoucherID id)

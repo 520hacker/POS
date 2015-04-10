@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using POS.Internals.Designer;
+using POS.Properties;
 using Telerik.WinControls.UI;
 
 namespace POS
@@ -17,6 +18,21 @@ namespace POS
             var f = new Panel();
             f.BorderStyle = BorderStyle.FixedSingle;
             f.Visible = true;
+
+            var undoBtn = new RadButtonElement();
+            undoBtn.Image = Resources.Undo_icon;
+            undoBtn.Name = "undoBtn";
+            undoBtn.ShowBorder = false;
+
+            var redoBtn = new RadButtonElement();
+            redoBtn.Image = Resources.Redo_icon;
+            redoBtn.Name = "redoBtn";
+            redoBtn.ShowBorder = false;
+
+            this.FormElement.TitleBar.SystemButtons.Children.Insert(0, undoBtn);
+            this.FormElement.TitleBar.SystemButtons.Children.Insert(1, redoBtn);
+
+            this.FormElement.TitleBar.Children.Insert(1, redoBtn);
 
             host = DesignerHost.CreateHost(f, null, (sender, e) => { propertyGrid.SelectedObject = sender; }, false);
 

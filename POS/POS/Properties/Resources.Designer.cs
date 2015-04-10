@@ -123,6 +123,16 @@ namespace POS.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Redo_icon {
+            get {
+                object obj = ResourceManager.GetObject("Redo_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap smarttag {
             get {
                 object obj = ResourceManager.GetObject("smarttag", resourceCulture);
@@ -146,6 +156,16 @@ namespace POS.Properties {
         internal static System.Drawing.Bitmap stock_folder_properties {
             get {
                 object obj = ResourceManager.GetObject("stock_folder_properties", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Undo_icon {
+            get {
+                object obj = ResourceManager.GetObject("Undo_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
