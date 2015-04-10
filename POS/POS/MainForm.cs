@@ -71,7 +71,7 @@ namespace POS
         {
             
                 OpenFileDialog f = new OpenFileDialog();
-                f.Filter = "(*.txt)|*.txt";
+                f.Filter = "(*.png)|*.png";
 
                 if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
@@ -79,7 +79,14 @@ namespace POS
                     var pb = new PictureBox();
                     pb.Image = img;
 
-                    host.AddControl(pb);
+                    using (UndoRedoManager.Start("BonDesigner: Added Image"))
+                    {
+                        host.AddControl(pb);
+
+                        UndoRedoManager.Commit();
+                    }
+
+                    
                 }
             
         }

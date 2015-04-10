@@ -161,6 +161,10 @@
     <Compile Include="Internals\Extensions\TypeExtensions.cs" />
     <Compile Include="Internals\Extensions\XmlExtensions.cs" />
     <Compile Include="Internals\Extensions\XmlSerializeExtensions.cs" />
+    <Compile Include="Internals\FilterBuilder\FilterBuilder.cs" />
+    <Compile Include="Internals\FilterBuilder\FilterGroup.cs" />
+    <Compile Include="Internals\FilterBuilder\Helpers.cs" />
+    <Compile Include="Internals\FilterBuilder\SystemFileType.cs" />
     <Compile Include="Internals\SizeFormatter.cs" />
     <Compile Include="Internals\Taskbar.cs" />
     <Compile Include="Internals\VoucherID.cs" />
