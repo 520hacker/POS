@@ -1,12 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Text;
 using System.Windows.Forms;
+using POS.Internals.UI;
 
-namespace Owf.Controls
+namespace POS.Internals.UI
 {
 	public partial class DigitalDisplayControl : UserControl
 	{
@@ -143,7 +141,7 @@ namespace Owf.Controls
 			Point[][] dotPoints = new Point[1][];
 
 			dotPoints[0] = new Point[] {new Point( 2, 64), new Point( 6, 61),
-                                new Point(10, 64), new Point( 6, 69)};
+								new Point(10, 64), new Point( 6, 69)};
 
 			for (int cnt = 0; cnt < dotPoints.Length; cnt++)
 			{

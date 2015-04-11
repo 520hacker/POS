@@ -85,5 +85,10 @@ namespace POS
                 host.AddControl(pb);
             }
         }
+
+        private void ProductsView_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

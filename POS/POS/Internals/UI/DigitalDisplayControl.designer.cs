@@ -1,4 +1,4 @@
-namespace Owf.Controls
+namespace POS.Internals.UI
 {
 	partial class DigitalDisplayControl
 	{
