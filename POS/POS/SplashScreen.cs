@@ -38,9 +38,11 @@ namespace POS
             if (!Directory.Exists(p + "\\themes"))
                 Directory.CreateDirectory(p + "\\themes");
 
-            foreach (var f in Directory.GetFiles(p + "\\themes", "*.xml", SearchOption.AllDirectories))
+            foreach (var f in Directory.GetFiles(p + "\\themes", "*.tssp", SearchOption.AllDirectories))
             {
-                ServiceLocator.ThemeManager.LoadedThemes.Add(new Telerik.WinControls.ThemeSource() { StorageType = Telerik.WinControls.ThemeStorageType.File, ThemeLocation = f });
+                ThemeResolutionService.LoadPackageFile(f);
+
+                ThemeResolutionService.ApplicationThemeName = "Office2013Light";
             }
 
             var frm = new MainForm();

@@ -71,7 +71,7 @@
             this.radPageView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radPageView1.Location = new System.Drawing.Point(0, 0);
             this.radPageView1.Name = "radPageView1";
-            this.radPageView1.SelectedPage = this.HomePage;
+            this.radPageView1.SelectedPage = this.SettingsPage;
             this.radPageView1.Size = new System.Drawing.Size(926, 409);
             this.radPageView1.TabIndex = 0;
             this.radPageView1.Text = "radPageView1";
@@ -171,9 +171,9 @@
             // radPanel1
             // 
             this.radPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.radPanel1.Location = new System.Drawing.Point(0, 1);
+            this.radPanel1.Location = new System.Drawing.Point(0, 73);
             this.radPanel1.Name = "radPanel1";
-            this.radPanel1.Size = new System.Drawing.Size(456, 400);
+            this.radPanel1.Size = new System.Drawing.Size(456, 328);
             this.radPanel1.TabIndex = 3;
             this.radPanel1.ThemeName = "TelerikMetroTouch";
             // 
@@ -185,10 +185,10 @@
             this.propertyGrid.HelpVisible = false;
             this.propertyGrid.ItemHeight = 40;
             this.propertyGrid.ItemIndent = 40;
-            this.propertyGrid.Location = new System.Drawing.Point(456, 1);
+            this.propertyGrid.Location = new System.Drawing.Point(456, 73);
             this.propertyGrid.Name = "propertyGrid";
             this.propertyGrid.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
-            this.propertyGrid.Size = new System.Drawing.Size(261, 400);
+            this.propertyGrid.Size = new System.Drawing.Size(261, 328);
             this.propertyGrid.SortOrder = System.Windows.Forms.SortOrder.Ascending;
             this.propertyGrid.TabIndex = 2;
             this.propertyGrid.Text = "radPropertyGrid1";
@@ -203,7 +203,7 @@
             this.AddImageBtn.Name = "AddImageBtn";
             this.AddImageBtn.Rows.AddRange(new Telerik.WinControls.UI.CommandBarRowElement[] {
             this.commandBarRowElement1});
-            this.AddImageBtn.Size = new System.Drawing.Size(717, 1);
+            this.AddImageBtn.Size = new System.Drawing.Size(717, 73);
             this.AddImageBtn.TabIndex = 1;
             this.AddImageBtn.Text = "Bild";
             this.AddImageBtn.ThemeName = "TelerikMetroTouch";
