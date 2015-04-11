@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XmlTheme xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ThemeName="Office2013Light" ThemeVersion="2.0">
+  <BuilderRegistrations>
+    <XmlStyleBuilderRegistration>
+      <BuilderData xsi:type="XmlStyleSheet" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <PropertySettingGroups>
+          <XmlPropertySettingGroup BasedOn="FillSolid(255;255;255),ForeColor(38;38;38)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="RadPageViewExplorerBarElement" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="ForeColor(0;114;198)">
+            <Selectors>
+              <XmlClassSelector ElementClass="PageViewHeader" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="BorderAppMenuBottomContent(171;171;171),Padding(3;2;3;2)">
+            <Selectors>
+              <XmlClassSelector ElementClass="PageViewFooter" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(255;255;255),BorderSolid(171;171;171),ForeColor(38;38;38)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="RadPageViewStackItem" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(205;230;247),BorderSolid(205;230;247),ForeColor(38;38;38)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="RadPageViewStackItem.MouseOver" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(146;192;224),BorderSolid(146;192;224),ForeColor(0;114;198)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="RadPageViewStackItem.Selected" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(146;192;224),BorderSolid(205;230;247),ForeColor(38;38;38)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="RadPageViewStackItem.Selected.MouseOver" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+        </PropertySettingGroups>
+      </BuilderData>
+      <StylesheetRelations>
+        <RadStylesheetRelation ControlType="Telerik.WinControls.UI.RadPageView" ElementType="Telerik.WinControls.UI.RadPageViewExplorerBarElement" />
+      </StylesheetRelations>
+    </XmlStyleBuilderRegistration>
+  </BuilderRegistrations>
+</XmlTheme>

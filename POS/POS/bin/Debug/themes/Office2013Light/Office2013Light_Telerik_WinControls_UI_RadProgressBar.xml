@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XmlTheme xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ThemeName="Office2013Light" ThemeVersion="2.0">
+  <BuilderRegistrations>
+    <XmlStyleBuilderRegistration>
+      <BuilderData xsi:type="XmlStyleSheet" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <PropertySettingGroups>
+          <XmlPropertySettingGroup BasedOn="BorderSolid(217;217;217),FillSolid(217;217;217),Margin(-1;-1;-1;-1),ForeColor(38;38;38)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="RadProgressBarElement" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="BorderSolid(217;217;217),FillSolid(217;217;217),Margin(-1;-1;-1;-1),ForeColor(38;38;38)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="RadProgressBarElement.IsVertical" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(6;176;37)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="UpperProgressIndicatorElement.IsVertical" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(6;176;37)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="UpperProgressIndicatorElement" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FontSegoeUI9">
+            <Selectors>
+              <XmlTypeSelector ElementType="Telerik.WinControls.RootRadElement" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(0;128;23)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="ProgressIndicatorElement.IsVertical" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(0;128;23)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="ProgressIndicatorElement" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+        </PropertySettingGroups>
+      </BuilderData>
+      <StylesheetRelations>
+        <RadStylesheetRelation ControlType="Telerik.WinControls.UI.RadProgressBar" ElementType="Telerik.WinControls.RootRadElement" />
+        <RadStylesheetRelation RegistrationType="ElementTypeDefault" ElementType="Telerik.WinControls.UI.RadProgressBarElement" />
+      </StylesheetRelations>
+    </XmlStyleBuilderRegistration>
+  </BuilderRegistrations>
+</XmlTheme>

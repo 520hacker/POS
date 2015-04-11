@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XmlTheme xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ThemeName="Office2013Light" ThemeVersion="2.0">
+  <BuilderRegistrations>
+    <XmlStyleBuilderRegistration>
+      <BuilderData xsi:type="XmlStyleSheet" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <PropertySettingGroups>
+          <XmlPropertySettingGroup BasedOn="ForeColor(38;38;38),FillSolid(255;255;255),BorderSolid(171;171;171)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="RadPageViewOutlookElement" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(255;255;255)">
+            <Selectors>
+              <XmlTypeSelector ElementType="Telerik.WinControls.UI.RadPageViewContentAreaElement" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FontSegoeUI12,ForeColor(0;114;198)">
+            <Selectors>
+              <XmlClassSelector ElementClass="PageViewHeader" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="BorderAppMenuBottomContent(171;171;171)">
+            <Selectors>
+              <XmlClassSelector ElementClass="PageViewFooter" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(217;217;217),ImageResizeNS">
+            <PropertySettings>
+              <XmlPropertySetting Property="Telerik.WinControls.RadElement.MaxSize" Value="0, 5" />
+              <XmlPropertySetting Property="Telerik.WinControls.RadElement.MinSize" Value="0, 5" />
+            </PropertySettings>
+            <Selectors>
+              <XmlTypeSelector ElementType="Telerik.WinControls.UI.OutlookViewOverflowGrip" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="BorderAppMenuBottomContent(171;171;171)">
+            <PropertySettings>
+              <XmlPropertySetting Property="Telerik.WinControls.RadElement.MinSize" Value="0, 20" />
+            </PropertySettings>
+            <Selectors>
+              <XmlTypeSelector ElementType="Telerik.WinControls.UI.OverflowItemsContainer" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(255;255;255),BorderSolid(255;255;255)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="ItemAssociatedButton" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(205;230;247),BorderSolid(205;230;247)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="ItemAssociatedButton.MouseOver" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(146;192;224),BorderSolid(146;192;224)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="ItemAssociatedButton.MouseDown" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="BorderSolid(146;192;224),FillSolid(146;192;224)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="OverflowMenuButton.MouseDown" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="BorderSolid(205;230;247),FillSolid(205;230;247)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="OverflowMenuButton.MouseOver" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="BorderSolid(255;255;255),FillSolid(255;255;255),ImageArrowDown,Padding(3;2;3;2)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="OverflowMenuButton" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(255;255;255),BorderSolid(171;171;171),ForeColor(38;38;38)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="RadPageViewOutlookItem" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(205;230;247),BorderSolid(146;192;224),ForeColor(38;38;38)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="RadPageViewOutlookItem.MouseOver" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(146;192;224),BorderSolid(0;114;198),ForeColor(0;114;198)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="RadPageViewOutlookItem.Selected" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(205;230;247),BorderSolid(146;192;224),ForeColor(38;38;38)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="RadPageViewOutlookItem.Selected.MouseOver" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(146;192;224),BorderSolid(146;192;224)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="ItemAssociatedButton.AssociatedItemSelected" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+        </PropertySettingGroups>
+      </BuilderData>
+      <StylesheetRelations>
+        <RadStylesheetRelation ControlType="Telerik.WinControls.UI.RadPageView" ElementType="Telerik.WinControls.UI.RadPageViewOutlookElement" />
+      </StylesheetRelations>
+    </XmlStyleBuilderRegistration>
+  </BuilderRegistrations>
+</XmlTheme>

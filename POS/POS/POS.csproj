@@ -438,6 +438,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="QrCodeDialog.cs" />
+    <Compile Include="ServiceLocator.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SplashScreen.cs">
       <SubType>Form</SubType>

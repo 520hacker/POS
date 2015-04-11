@@ -7,8 +7,8 @@ namespace POS
 {
     public class DataStorage
     {
-        const string ProductsPath = "\\data\\products.bin";
-        const string CouponsPath = "\\data\\coupons.bin";
+        public const string ProductsPath = "\\data\\products.bin";
+        public const string CouponsPath = "\\data\\coupons.bin";
 
         public static Product[] ReadProducts()
         {

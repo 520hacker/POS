@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XmlTheme xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ThemeName="Office2013Light" ThemeVersion="2.0">
+  <BuilderRegistrations>
+    <XmlStyleBuilderRegistration>
+      <BuilderData xsi:type="XmlStyleSheet" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <PropertySettingGroups>
+          <XmlPropertySettingGroup BasedOn="FontSegoeUI9">
+            <Selectors>
+              <XmlTypeSelector ElementType="Telerik.WinControls.RootRadElement" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="ForeColor(38;38;38),FillSolid(255;255;255),BorderSolid(171;171;171)">
+            <Selectors>
+              <XmlTypeSelector ElementType="Telerik.WinControls.UI.RadTimePickerContentElement" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(217;217;217),BorderSolid(217;217;217),Padding(0;2;0;1)">
+            <Selectors>
+              <XmlClassSelector ElementClass="ClockHeaderElement" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(217;217;217)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="TimePickerContainerHoursHeader" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="ImageArrowLeft">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="TimeTableHeaderElementLeftArrow" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="ImageArrowRight">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="TimeTableHeaderElementRightArrow" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(255;255;255),BorderSolid(255;255;255)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="TimeTableVisualElement" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(225;242;250),BorderSolid(225;242;250)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="TimeTableVisualElement.MouseOver" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(205;230;247),BorderSolid(205;230;247)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="TimeTableVisualElement.Selected" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(217;217;217)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="TimePickerContainerMinutesHeader" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="BorderAppMenuBottomContent(171;171;171),Padding(6;6;6;6)">
+            <Selectors>
+              <XmlTypeSelector ElementType="Telerik.WinControls.UI.TimePickerDoneButtonElement" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="BorderRightOnly(171;171;171)">
+            <Selectors>
+              <XmlClassSelector ElementClass="TimePickerClockStack" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(205;230;247),BorderSolid(205;230;247)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="TimeTableVisualElement.Active" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+        </PropertySettingGroups>
+      </BuilderData>
+      <StylesheetRelations>
+        <RadStylesheetRelation ControlType="Telerik.WinControls.UI.RadTimePickerContent" ElementType="Telerik.WinControls.RootRadElement" />
+        <RadStylesheetRelation RegistrationType="ElementTypeDefault" ElementType="Telerik.WinControls.UI.RadTimePickerContentElement" />
+      </StylesheetRelations>
+    </XmlStyleBuilderRegistration>
+  </BuilderRegistrations>
+</XmlTheme>

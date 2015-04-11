@@ -31,9 +31,6 @@ namespace POS
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
 
-                    var id = VoucherID.NewID();
-                    var res = VoucherID.TryParse(id.ToString(), out id);
-
                     Application.Run(new SplashScreen());
                 }
                 else

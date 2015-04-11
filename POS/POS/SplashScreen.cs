@@ -3,6 +3,7 @@ using System.IO;
 using System.Resources;
 using System.Windows.Forms;
 using System.Reflection;
+using Telerik.WinControls;
 
 namespace POS
 {
@@ -29,8 +30,18 @@ namespace POS
         private void tmr_Tick(object sender, EventArgs e)
         {
             tmr.Stop();
-            // Get a reference to the entry assembly (Startup.exe)
-            Assembly exe = typeof(Program).Assembly;
+
+            var p = Application.StartupPath;
+
+            if (!Directory.Exists(p + "\\data"))
+                Directory.CreateDirectory(p + "\\data");
+            if (!Directory.Exists(p + "\\themes"))
+                Directory.CreateDirectory(p + "\\themes");
+
+            foreach (var f in Directory.GetFiles(p + "\\themes", "*.xml", SearchOption.AllDirectories))
+            {
+                ServiceLocator.ThemeManager.LoadedThemes.Add(new Telerik.WinControls.ThemeSource() { StorageType = Telerik.WinControls.ThemeStorageType.File, ThemeLocation = f });
+            }
 
             var frm = new MainForm();
             frm.Show();

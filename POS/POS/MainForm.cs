@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using POS.Internals.Designer;
+using POS.Internals.FilterBuilder;
 using POS.Internals.UndoRedo;
 using POS.Properties;
 using Telerik.WinControls.UI;
@@ -49,11 +50,11 @@ namespace POS
 
             radPanel1.Controls.Add(host);
 
-#if DEBUG
+            #if DEBUG
             Cursor.Show();
-#else
+            #else
             Cursor.Hide();
-#endif
+            #endif
 
         }
 
@@ -69,26 +70,20 @@ namespace POS
 
         private void ImageBtn_Click(object sender, EventArgs e)
         {
-            
-                OpenFileDialog f = new OpenFileDialog();
-                f.Filter = "(*.png)|*.png";
+            var fb = new FilterBuilder();
+            fb.Add(FilterBuilder.Filters.AllImageFiles);
 
-                if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    var img = Image.FromFile(f.FileName);
-                    var pb = new PictureBox();
-                    pb.Image = img;
+            OpenFileDialog f = new OpenFileDialog();
+            f.Filter = fb.ToString();
 
-                    using (UndoRedoManager.Start("BonDesigner: Added Image"))
-                    {
-                        host.AddControl(pb);
+            if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                var img = Image.FromFile(f.FileName);
+                var pb = new PictureBox();
+                pb.Image = img;
 
-                        UndoRedoManager.Commit();
-                    }
-
-                    
-                }
-            
+                host.AddControl(pb);
+            }
         }
     }
 }

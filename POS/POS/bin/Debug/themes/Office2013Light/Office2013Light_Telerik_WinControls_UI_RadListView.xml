@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XmlTheme xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ThemeName="Office2013Light" ThemeVersion="2.0">
+  <BuilderRegistrations>
+    <XmlStyleBuilderRegistration>
+      <BuilderData xsi:type="XmlStyleSheet" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <PropertySettingGroups>
+          <XmlPropertySettingGroup BasedOn="FontSegoeUI9">
+            <Selectors>
+              <XmlTypeSelector ElementType="Telerik.WinControls.RootRadElement" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="ForeColor(38;38;38)">
+            <Selectors>
+              <XmlTypeSelector ElementType="Telerik.WinControls.UI.RadListViewElement" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(255;255;255),BorderSolid(171;171;171)">
+            <PropertySettings>
+              <XmlPropertySetting Property="Telerik.WinControls.UI.BaseListViewElement.DragHint" Value="77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48UmFkSW1hZ2VTaGFwZSB4bWxuczp4c2Q9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hIiB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIj48UGFpbnRNb2RlPlRpbGU8L1BhaW50TW9kZT48SW1hZ2VTdHJlYW0+UWsxR0FBQUFBQUFBQURZQUFBQW9BQUFBQWdBQUFBSUFBQUFCQUNBQUFBQUFBQUFBQUFERURnQUF4QTRBQUFBQUFBQUFBQUFBQUFBQS93QUFBUDhBQUFEL0FBQUEvdz09PC9JbWFnZVN0cmVhbT48L1JhZEltYWdlU2hhcGU+" />
+            </PropertySettings>
+            <Selectors>
+              <XmlVisualStateSelector VisualState="SimpleListViewElement" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(217;217;217),BorderSolid(217;217;217)">
+            <PropertySettings>
+              <XmlPropertySetting Property="Telerik.WinControls.UI.LightVisualElement.ShowHorizontalLine" Value="False" />
+            </PropertySettings>
+            <Selectors>
+              <XmlVisualStateSelector VisualState="SimpleListViewGroupVisualItem" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(225;242;250),BorderSolid(225;242;250)">
+            <PropertySettings>
+              <XmlPropertySetting Property="Telerik.WinControls.UI.LightVisualElement.ShowHorizontalLine" Value="False" />
+            </PropertySettings>
+            <Selectors>
+              <XmlVisualStateSelector VisualState="SimpleListViewGroupVisualItem.MouseOver" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(255;255;255),BorderSolid(255;255;255)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="SimpleListViewVisualItem" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(225;242;250),BorderSolid(225;242;250)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="SimpleListViewVisualItem.MouseOver" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="BorderSolid(0;114;198),FillSolid(255;255;255)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="SimpleListViewVisualItem.Current" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(146;192;224),BorderSolid(146;192;224)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="SimpleListViewVisualItem.Current.Selected" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="ImageExpanderCollapsedNormal">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="ListViewGroupToggleButton" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="ImageExpanderExpandedNormal">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="ListViewGroupToggleButton.ToggleState=On" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="ImageExpanderCollapsedHover">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="ListViewGroupToggleButton.MouseOver" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="ImageExpanderExpandedHover">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="ListViewGroupToggleButton.ToggleState=On.MouseOver" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillTransparent">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="ListViewGroupToggleButton.ToggleState=On">
+                <ChildSelector xsi:type="XmlClassSelector" ElementClass="ToggleButtonFill" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+              </XmlVisualStateSelector>
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillTransparent">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="ListViewGroupToggleButton">
+                <ChildSelector xsi:type="XmlClassSelector" ElementClass="ToggleButtonFill" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+              </XmlVisualStateSelector>
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="BorderTransparent">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="ListViewGroupToggleButton">
+                <ChildSelector xsi:type="XmlClassSelector" ElementClass="ButtonBorder" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+              </XmlVisualStateSelector>
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="BorderTransparent">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="ListViewGroupToggleButton.ToggleState=On">
+                <ChildSelector xsi:type="XmlClassSelector" ElementClass="ButtonBorder" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+              </XmlVisualStateSelector>
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(255;255;255),BorderSolid(171;171;171)">
+            <PropertySettings>
+              <XmlPropertySetting Property="Telerik.WinControls.UI.BaseListViewElement.DragHint" Value="77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48UmFkSW1hZ2VTaGFwZSB4bWxuczp4c2Q9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hIiB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIj48UGFpbnRNb2RlPlRpbGU8L1BhaW50TW9kZT48SW1hZ2VTdHJlYW0+UWsxR0FBQUFBQUFBQURZQUFBQW9BQUFBQWdBQUFBSUFBQUFCQUNBQUFBQUFBQUFBQUFERURnQUF4QTRBQUFBQUFBQUFBQUFBQUFBQS93QUFBUDhBQUFEL0FBQUEvdz09PC9JbWFnZVN0cmVhbT48L1JhZEltYWdlU2hhcGU+" />
+            </PropertySettings>
+            <Selectors>
+              <XmlVisualStateSelector VisualState="IconListViewElement" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(217;217;217),BorderSolid(217;217;217)">
+            <PropertySettings>
+              <XmlPropertySetting Property="Telerik.WinControls.UI.LightVisualElement.ShowHorizontalLine" Value="False" />
+            </PropertySettings>
+            <Selectors>
+              <XmlVisualStateSelector VisualState="IconListViewGroupVisualItem" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(225;242;250),BorderSolid(225;242;250)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="IconListViewGroupVisualItem.MouseOver" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(225;242;250),BorderSolid(225;242;250)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="IconListViewVisualItem.MouseOver" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(255;255;255),BorderSolid(255;255;255)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="IconListViewVisualItem" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(255;255;255),BorderSolid(0;114;198)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="IconListViewVisualItem.Current" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(146;192;224),BorderSolid(146;192;224)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="IconListViewVisualItem.Current.Selected" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(255;255;255),BorderSolid(171;171;171)">
+            <PropertySettings>
+              <XmlPropertySetting Property="Telerik.WinControls.UI.DetailListViewElement.ColumnDragHint" Value="77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48UmFkSW1hZ2VTaGFwZSB4bWxuczp4c2Q9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hIiB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIj48UGFpbnRNb2RlPkNlbnRlclhTdHJldGNoWTwvUGFpbnRNb2RlPjxJbWFnZVN0cmVhbT5RazIyQWdBQUFBQUFBRFlBQUFBb0FBQUFFQUFBQUFvQUFBQUJBQ0FBQUFBQUFBQUFBQURFRGdBQXhBNEFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQVA4QUFBRC9BQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFEL0FBQUEvd0FBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQS93QUFBUDhBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFQOEFBQUQvQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFCYUFBQUFBQUFBQUFBQUFBRC9BQUFBL3dBQUFBQUFBQUFBQUFBQVpnQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBOEFBQUNsQUFBQS93QUFBQUFBQUFBQUFBQUEvd0FBQVA4QUFBQUFBQUFBQUFBQUFQOEFBQUN4QUFBQUZRQUFBQUFBQUFBQUFBQUFBQUFBQUR3QUFBRGVBQUFBL3dBQUFQOEFBQUFBQUFBQUFBQUFBUDhBQUFEL0FBQUFBQUFBQUFBQUFBRC9BQUFBL3dBQUFPb0FBQUJMQUFBQUFBQUFBQUFBQUFDRUFBQUEvQUFBQVA4QUFBRC9BQUFBQUFBQUFBQUFBQUQvQUFBQS93QUFBQUFBQUFBQUFBQUEvd0FBQVA4QUFBRDhBQUFBZXdBQUFBQUFBQUFBQUFBQUFBQUFBRGtBQUFEZUFBQUEvd0FBQUFBQUFBQUFBQUFBL3dBQUFQOEFBQUFBQUFBQUFBQUFBUDhBQUFEZUFBQUFPUUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQURBQUFBSndBQUFBQUFBQUFBQUFBQVA4QUFBRC9BQUFBQUFBQUFBQUFBQUNpQUFBQUR3QUFBQUFBQUFBQUFBQUFBQT09PC9JbWFnZVN0cmVhbT48TWFyZ2lucz48QWxsPi0xPC9BbGw+PEJvdHRvbT4wPC9Cb3R0b20+PExlZnQ+MDwvTGVmdD48UmlnaHQ+MDwvUmlnaHQ+PFRvcD42PC9Ub3A+PC9NYXJnaW5zPjxQYWRkaW5nPjxBbGw+LTE8L0FsbD48Qm90dG9tPi02MDwvQm90dG9tPjxMZWZ0PjA8L0xlZnQ+PFJpZ2h0PjA8L1JpZ2h0PjxUb3A+NjwvVG9wPjwvUGFkZGluZz48L1JhZEltYWdlU2hhcGU+" />
+              <XmlPropertySetting Property="Telerik.WinControls.UI.BaseListViewElement.DragHint" Value="77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48UmFkSW1hZ2VTaGFwZSB4bWxuczp4c2Q9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hIiB4bWxuczp4c2k9Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvWE1MU2NoZW1hLWluc3RhbmNlIj48UGFpbnRNb2RlPlRpbGU8L1BhaW50TW9kZT48SW1hZ2VTdHJlYW0+UWsxR0FBQUFBQUFBQURZQUFBQW9BQUFBQWdBQUFBSUFBQUFCQUNBQUFBQUFBQUFBQUFERURnQUF4QTRBQUFBQUFBQUFBQUFBQUFBQS93QUFBUDhBQUFEL0FBQUEvdz09PC9JbWFnZVN0cmVhbT48L1JhZEltYWdlU2hhcGU+" />
+            </PropertySettings>
+            <Selectors>
+              <XmlVisualStateSelector VisualState="DetailListViewElement" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="BorderSolid(217;217;217),FillSolid(217;217;217)">
+            <PropertySettings>
+              <XmlPropertySetting Property="Telerik.WinControls.UI.LightVisualElement.ShowHorizontalLine" Value="False" />
+            </PropertySettings>
+            <Selectors>
+              <XmlVisualStateSelector VisualState="DetailListViewGroupVisualItem" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(225;242;250),BorderSolid(225;242;250)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="DetailListViewGroupVisualItem.MouseOver" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(225;242;250),BorderSolid(225;242;250)">
+            <PropertySettings>
+              <XmlPropertySetting Property="Telerik.WinControls.RadElement.ZIndex" Value="1" />
+            </PropertySettings>
+            <Selectors>
+              <XmlVisualStateSelector VisualState="DetailListViewVisualItem.MouseOver" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(255;255;255),BorderSolid(255;255;255)">
+            <PropertySettings>
+              <XmlPropertySetting Property="Telerik.WinControls.RadElement.ZIndex" Value="0" />
+            </PropertySettings>
+            <Selectors>
+              <XmlVisualStateSelector VisualState="DetailListViewVisualItem" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(146;192;224),BorderSolid(146;192;224)">
+            <PropertySettings>
+              <XmlPropertySetting Property="Telerik.WinControls.RadElement.ZIndex" Value="2" />
+            </PropertySettings>
+            <Selectors>
+              <XmlVisualStateSelector VisualState="DetailListViewVisualItem.Current.Selected" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="BorderSolid(0;114;198),FillSolid(255;255;255)">
+            <PropertySettings>
+              <XmlPropertySetting Property="Telerik.WinControls.RadElement.ZIndex" Value="2" />
+            </PropertySettings>
+            <Selectors>
+              <XmlVisualStateSelector VisualState="DetailListViewVisualItem.Current" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillTransparent,BorderTransparent">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="DetailListViewDataCellElement" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(255;255;255),BorderGridGroupIndent(171;171;171)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="DetailListViewHeaderCellElement" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(205;230;247),BorderSolid(205;230;247)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="DetailListViewHeaderCellElement.MouseOver" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="FillSolid(146;192;224),BorderSolid(146;192;224)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="DetailListViewHeaderCellElement.MouseDown" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="">
+            <PropertySettings>
+              <XmlPropertySetting Property="Telerik.WinControls.VisualElement.ForeColor" Value="0, 114, 198" />
+            </PropertySettings>
+            <Selectors>
+              <XmlVisualStateSelector VisualState="DetailListViewHeaderCellElement">
+                <ChildSelector xsi:type="XmlTypeSelector" ElementType="Telerik.WinControls.Primitives.ArrowPrimitive" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+              </XmlVisualStateSelector>
+            </Selectors>
+          </XmlPropertySettingGroup>
+          <XmlPropertySettingGroup BasedOn="BorderSolid(0;114;198)">
+            <Selectors>
+              <XmlVisualStateSelector VisualState="DetailListViewDataCellElement.Current.Selected.CurrentRow" />
+            </Selectors>
+          </XmlPropertySettingGroup>
+        </PropertySettingGroups>
+      </BuilderData>
+      <StylesheetRelations>
+        <RadStylesheetRelation ControlType="Telerik.WinControls.UI.RadListView" ElementType="Telerik.WinControls.RootRadElement" />
+        <RadStylesheetRelation RegistrationType="ElementTypeDefault" ElementType="Telerik.WinControls.UI.RadListViewElement" />
+      </StylesheetRelations>
+    </XmlStyleBuilderRegistration>
+  </BuilderRegistrations>
+</XmlTheme>
