@@ -167,6 +167,12 @@
     <Compile Include="Internals\FilterBuilder\SystemFileType.cs" />
     <Compile Include="Internals\SizeFormatter.cs" />
     <Compile Include="Internals\Taskbar.cs" />
+    <Compile Include="Internals\UI\DigitalDisplayControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Internals\UI\DigitalDisplayControl.designer.cs">
+      <DependentUpon>DigitalDisplayControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Internals\VoucherID.cs" />
     <Compile Include="PlugInManager.cs" />
     <Compile Include="Internals\Bitcoin\APIException.cs" />
@@ -451,6 +457,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Internals\DialogBuilder\DialogBuilder.resx">
       <DependentUpon>DialogBuilder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Internals\UI\DigitalDisplayControl.resx">
+      <DependentUpon>DigitalDisplayControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
