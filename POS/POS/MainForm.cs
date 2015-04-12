@@ -54,7 +54,11 @@ namespace POS
 
             ProductsView.Groups.Clear();
 
-            Price.PriceChanged += (s, e) => { priceLbl.DigitText = Price.Value; };
+            Price.PriceChanged += (s, e) =>
+            {
+                priceLbl.DigitText = Price.Value; 
+                historyView1.Invalidate();
+            };
 
             foreach (var pc in ServiceLocator.ProductCategories)
             {
@@ -67,6 +71,7 @@ namespace POS
                     tmpItem.Click += (s, e) =>
                     {
                         Price.Add(p);
+                        ServiceLocator.ProductHistory.Add(p);
                     };
 
                     tmp.Items.Add(tmpItem);
@@ -80,7 +85,6 @@ namespace POS
             #else
             Cursor.Hide();
             #endif
-
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -114,6 +118,7 @@ namespace POS
         private void radButton1_Click(object sender, EventArgs e)
         {
             Price.RemoveLast();
+            ServiceLocator.ProductHistory.RemoveLast();
         }
     }
 }

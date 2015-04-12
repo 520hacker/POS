@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using POS.Internals;
 using POS.Models;
 
 namespace POS
@@ -8,6 +9,8 @@ namespace POS
     {
         public static ProductCategory[] ProductCategories { get; set; }
         public static Product[] Products { get; set; }
+
+        public static History<Product> ProductHistory = new History<Product>();
 
         public static string DataPath
         {

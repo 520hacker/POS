@@ -165,6 +165,7 @@
     <Compile Include="Internals\FilterBuilder\FilterGroup.cs" />
     <Compile Include="Internals\FilterBuilder\Helpers.cs" />
     <Compile Include="Internals\FilterBuilder\SystemFileType.cs" />
+    <Compile Include="Internals\History.cs" />
     <Compile Include="Internals\SizeFormatter.cs" />
     <Compile Include="Internals\Taskbar.cs" />
     <Compile Include="Internals\UI\DigitalDisplayControl.cs">
@@ -172,6 +173,9 @@
     </Compile>
     <Compile Include="Internals\UI\DigitalDisplayControl.designer.cs">
       <DependentUpon>DigitalDisplayControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Internals\UI\HistoryView.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Internals\VoucherID.cs" />
     <Compile Include="Models\ProductCategory.cs" />
