@@ -10,6 +10,7 @@ namespace POS
         public static string ProductsPath = ServiceLocator.DataPath + "\\products.bin";
         public static string ProductCategoriesPath = ServiceLocator.DataPath + "\\productCategories.bin";
         public static string CouponsPath = ServiceLocator.DataPath + "\\coupons.bin";
+        public static string InvoicesPath = ServiceLocator.DataPath + "\\invoices.bin";
 
         public static Product[] ReadProducts()
         {
@@ -45,6 +46,18 @@ namespace POS
         public static void WriteProductCategories(ProductCategory[] prodcts)
         {
             DatabaseWriter.Write(ProductCategoriesPath, prodcts);
+        }
+
+        public static Invoice[] ReadInvoices()
+        {
+            if (File.Exists(InvoicesPath))
+                return DatabaseReader.Read<Invoice[]>(InvoicesPath);
+            return new Invoice[0];
+        }
+
+        public static void WriteCoupons(Invoice[] invoices)
+        {
+            DatabaseWriter.Write(InvoicesPath, invoices);
         }
     }
 }

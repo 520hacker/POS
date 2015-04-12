@@ -36,6 +36,8 @@ namespace POS
             
             _data.Add(name, value);
 
+            Save();
+
             return;
         }
 

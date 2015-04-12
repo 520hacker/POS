@@ -39,6 +39,8 @@ namespace POS
 
             if (!Directory.Exists(p + "\\data"))
                 Directory.CreateDirectory(p + "\\data");
+            if (!Directory.Exists(p + "\\data\\invoices"))
+                Directory.CreateDirectory(p + "\\data\\invoices");
             if (!Directory.Exists(p + "\\themes"))
                 Directory.CreateDirectory(p + "\\themes");
 
@@ -51,6 +53,7 @@ namespace POS
 
             ServiceLocator.ProductCategories = DataStorage.ReadProductCategories();
             ServiceLocator.Products = DataStorage.ReadProducts();
+            ServiceLocator.Invoices = DataStorage.ReadInvoices();
 
             var t = new List<Product>(ServiceLocator.Products);
             t.Add(new Product { Category = 0, ID = "Rose", Price = 0.81, Tax = 0.19, Image = Resources.box.ToBytes(ImageFormat.Png) });

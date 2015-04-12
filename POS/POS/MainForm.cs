@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -6,6 +7,7 @@ using POS.Internals;
 using POS.Internals.Designer;
 using POS.Internals.FilterBuilder;
 using POS.Internals.UndoRedo;
+using POS.Models;
 using POS.Properties;
 using Telerik.WinControls.UI;
 
@@ -123,5 +125,57 @@ namespace POS
             Price.RemoveLast();
             ServiceLocator.ProductHistory.RemoveLast();
         }
+
+        private void paywithEuroBtn_Click(object sender, EventArgs e)
+        {
+            var inv = Invoice.New();
+            inv.Products = new List<Product>(ServiceLocator.Products);
+            inv.TotalPrice = Price.NumberValue;
+            inv.Currency = Invoice.InvoiceCurrency.EUR;
+
+            var i = new List<Invoice>();
+            i.Add(inv);
+
+            ServiceLocator.Invoices = i.ToArray();
+
+            ServiceLocator.ProductHistory.Clear();
+            Price.Clear();
+        }
+
+        private async void paywithBTCBtn_Click(object sender, EventArgs e)
+        {
+            var inv = Invoice.New();
+            inv.Products = new List<Product>(ServiceLocator.Products);
+            inv.TotalPrice = Price.NumberValue;
+            inv.Currency = Invoice.InvoiceCurrency.BTC;
+
+            var i = new List<Invoice>();
+            i.Add(inv);
+
+            var addr = Info.Blockchain.API.Receive.Receive.ReceiveFunds("1HaWUwi5oYQo2RXB5k5JLgJA8MTigNuLeY", "").DestinationAddress;
+            var btc = Info.Blockchain.API.ExchangeRates.ExchangeRates.ToBTC("EUR", Price.NumberValue);
+
+            QrCodeDialog.Show("bitcoin:" + addr + "?" + btc, null);
+
+            if (await BitcoinPayer.CheckPaymentAsync(addr, btc))
+            {
+                notifyIcon1.ShowBalloonTip(5000, "Bitcoin", "Betrag wurde gezahlt", ToolTipIcon.Info);
+
+                ServiceLocator.Invoices = i.ToArray();
+
+                ServiceLocator.ProductHistory.Clear();
+                Price.Clear();
+            }
+            else
+            {
+                notifyIcon1.ShowBalloonTip(5000, "Bitcoin", "Betrag wurde nicht gezahlt", ToolTipIcon.Error);
+            }
+        }
+
+        private void btcddressTb_TextChanged(object sender, EventArgs e)
+        {
+            Settings.Set("bitcoinaddress", "1HaWUwi5oYQo2RXB5k5JLgJA8MTigNuLeY"); //btcddressTb.Text);
+        }
+        
     }
 }

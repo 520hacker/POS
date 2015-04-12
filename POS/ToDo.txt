@@ -3,3 +3,4 @@ add customcontrolattribute to dialogbuilder
 Gutscheinsystem einbauen 
 
 add multilanguage
+add save invoices in seperate folder per day

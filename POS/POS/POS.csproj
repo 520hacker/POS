@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>POS</RootNamespace>
     <AssemblyName>POS</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -27,6 +27,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -36,6 +37,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>currency_dollar_red.ico</ApplicationIcon>
@@ -77,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataStorage.cs" />
+    <Compile Include="Internals\BitcoinPayer.cs" />
     <Compile Include="Internals\Database\DatabaseReader.cs" />
     <Compile Include="Internals\Database\DatabaseWriter.cs" />
     <Compile Include="Internals\Database\StreamStorage.cs" />
@@ -180,6 +183,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Internals\VoucherID.cs" />
+    <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\ProductCategory.cs" />
     <Compile Include="PlugInManager.cs" />
     <Compile Include="Internals\Bitcoin\APIException.cs" />
