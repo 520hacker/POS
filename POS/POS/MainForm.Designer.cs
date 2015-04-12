@@ -38,9 +38,12 @@
             this.radTileElement1 = new Telerik.WinControls.UI.RadTileElement();
             this.radTileElement2 = new Telerik.WinControls.UI.RadTileElement();
             this.radPanel2 = new Telerik.WinControls.UI.RadPanel();
+            this.historyView1 = new POS.Internals.UI.HistoryView();
             this.radButton1 = new Telerik.WinControls.UI.RadButton();
             this.currencyLbl = new Telerik.WinControls.UI.RadLabel();
+            this.priceLbl = new POS.Internals.UI.DigitalDisplayControl();
             this.ProductsPage = new Telerik.WinControls.UI.RadPageViewPage();
+            this.productsView1 = new Telerik.WinControls.UI.RadGridView();
             this.SettingsPage = new Telerik.WinControls.UI.RadPageViewPage();
             this.radPageViewItemPage1 = new Telerik.WinControls.UI.RadPageViewItemPage();
             this.BonDesignerPage = new Telerik.WinControls.UI.RadPageViewPage();
@@ -53,8 +56,6 @@
             this.commandBarSeparator1 = new Telerik.WinControls.UI.CommandBarSeparator();
             this.PropertiesBtn = new Telerik.WinControls.UI.CommandBarButton();
             this.radDesktopAlert1 = new Telerik.WinControls.UI.RadDesktopAlert(this.components);
-            this.historyView1 = new POS.Internals.UI.HistoryView();
-            this.priceLbl = new POS.Internals.UI.DigitalDisplayControl();
             ((System.ComponentModel.ISupportInitialize)(this.radPageView1)).BeginInit();
             this.radPageView1.SuspendLayout();
             this.HomePage.SuspendLayout();
@@ -63,6 +64,9 @@
             this.radPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radButton1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.currencyLbl)).BeginInit();
+            this.ProductsPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.productsView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.productsView1.MasterTemplate)).BeginInit();
             this.BonDesignerPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radPanel1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.propertyGrid)).BeginInit();
@@ -80,7 +84,7 @@
             this.radPageView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radPageView1.Location = new System.Drawing.Point(0, 0);
             this.radPageView1.Name = "radPageView1";
-            this.radPageView1.SelectedPage = this.HomePage;
+            this.radPageView1.SelectedPage = this.ProductsPage;
             this.radPageView1.Size = new System.Drawing.Size(926, 409);
             this.radPageView1.TabIndex = 0;
             this.radPageView1.Text = "radPageView1";
@@ -152,6 +156,14 @@
             this.radPanel2.TabIndex = 1;
             this.radPanel2.ThemeName = "TelerikMetroTouch";
             // 
+            // historyView1
+            // 
+            this.historyView1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.historyView1.Location = new System.Drawing.Point(48, 0);
+            this.historyView1.Name = "historyView1";
+            this.historyView1.Size = new System.Drawing.Size(398, 58);
+            this.historyView1.TabIndex = 4;
+            // 
             // radButton1
             // 
             this.radButton1.Dock = System.Windows.Forms.DockStyle.Left;
@@ -175,14 +187,46 @@
             this.currencyLbl.Text = "€";
             this.currencyLbl.ThemeName = "TelerikMetroTouch";
             // 
+            // priceLbl
+            // 
+            this.priceLbl.BackColor = System.Drawing.Color.Transparent;
+            this.priceLbl.DigitColor = System.Drawing.Color.Black;
+            this.priceLbl.DigitText = "0.00";
+            this.priceLbl.Dock = System.Windows.Forms.DockStyle.Right;
+            this.priceLbl.Location = new System.Drawing.Point(624, 0);
+            this.priceLbl.Name = "priceLbl";
+            this.priceLbl.Size = new System.Drawing.Size(93, 58);
+            this.priceLbl.TabIndex = 1;
+            // 
             // ProductsPage
             // 
+            this.ProductsPage.Controls.Add(this.productsView1);
             this.ProductsPage.Image = global::POS.Properties.Resources.box;
             this.ProductsPage.Location = new System.Drawing.Point(205, 4);
             this.ProductsPage.Name = "ProductsPage";
             this.ProductsPage.Size = new System.Drawing.Size(717, 401);
             this.ProductsPage.Text = "Produkte";
             this.ProductsPage.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // productsView1
+            // 
+            this.productsView1.BackColor = System.Drawing.Color.Transparent;
+            this.productsView1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.productsView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.productsView1.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.productsView1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.productsView1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.productsView1.Location = new System.Drawing.Point(0, 0);
+            // 
+            // productsView1
+            // 
+            this.productsView1.MasterTemplate.AllowColumnReorder = false;
+            this.productsView1.Name = "productsView1";
+            this.productsView1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.productsView1.ShowGroupPanel = false;
+            this.productsView1.Size = new System.Drawing.Size(717, 401);
+            this.productsView1.TabIndex = 0;
+            this.productsView1.ThemeName = "TelerikMetroTouch";
             // 
             // SettingsPage
             // 
@@ -217,9 +261,9 @@
             // radPanel1
             // 
             this.radPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.radPanel1.Location = new System.Drawing.Point(0, 73);
+            this.radPanel1.Location = new System.Drawing.Point(0, 1);
             this.radPanel1.Name = "radPanel1";
-            this.radPanel1.Size = new System.Drawing.Size(456, 328);
+            this.radPanel1.Size = new System.Drawing.Size(456, 400);
             this.radPanel1.TabIndex = 3;
             this.radPanel1.ThemeName = "TelerikMetroTouch";
             // 
@@ -231,10 +275,10 @@
             this.propertyGrid.HelpVisible = false;
             this.propertyGrid.ItemHeight = 40;
             this.propertyGrid.ItemIndent = 40;
-            this.propertyGrid.Location = new System.Drawing.Point(456, 73);
+            this.propertyGrid.Location = new System.Drawing.Point(456, 1);
             this.propertyGrid.Name = "propertyGrid";
             this.propertyGrid.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
-            this.propertyGrid.Size = new System.Drawing.Size(261, 328);
+            this.propertyGrid.Size = new System.Drawing.Size(261, 400);
             this.propertyGrid.SortOrder = System.Windows.Forms.SortOrder.Ascending;
             this.propertyGrid.TabIndex = 2;
             this.propertyGrid.Text = "radPropertyGrid1";
@@ -249,7 +293,7 @@
             this.AddImageBtn.Name = "AddImageBtn";
             this.AddImageBtn.Rows.AddRange(new Telerik.WinControls.UI.CommandBarRowElement[] {
             this.commandBarRowElement1});
-            this.AddImageBtn.Size = new System.Drawing.Size(717, 73);
+            this.AddImageBtn.Size = new System.Drawing.Size(717, 1);
             this.AddImageBtn.TabIndex = 1;
             this.AddImageBtn.Text = "Bild";
             this.AddImageBtn.ThemeName = "TelerikMetroTouch";
@@ -306,25 +350,6 @@
             this.radDesktopAlert1.ShowPinButton = false;
             this.radDesktopAlert1.ThemeName = "TelerikMetroTouch";
             // 
-            // historyView1
-            // 
-            this.historyView1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.historyView1.Location = new System.Drawing.Point(48, 0);
-            this.historyView1.Name = "historyView1";
-            this.historyView1.Size = new System.Drawing.Size(398, 58);
-            this.historyView1.TabIndex = 4;
-            // 
-            // priceLbl
-            // 
-            this.priceLbl.BackColor = System.Drawing.Color.Transparent;
-            this.priceLbl.DigitColor = System.Drawing.Color.Black;
-            this.priceLbl.DigitText = "0.00";
-            this.priceLbl.Dock = System.Windows.Forms.DockStyle.Right;
-            this.priceLbl.Location = new System.Drawing.Point(624, 0);
-            this.priceLbl.Name = "priceLbl";
-            this.priceLbl.Size = new System.Drawing.Size(93, 58);
-            this.priceLbl.TabIndex = 1;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -352,6 +377,9 @@
             this.radPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radButton1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.currencyLbl)).EndInit();
+            this.ProductsPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.productsView1.MasterTemplate)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.productsView1)).EndInit();
             this.BonDesignerPage.ResumeLayout(false);
             this.BonDesignerPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radPanel1)).EndInit();
@@ -389,5 +417,6 @@
         private POS.Internals.UI.DigitalDisplayControl priceLbl;
         private Telerik.WinControls.UI.RadButton radButton1;
         private Internals.UI.HistoryView historyView1;
+        private Telerik.WinControls.UI.RadGridView productsView1;
     }
 }

@@ -60,6 +60,9 @@ namespace POS
                 historyView1.Invalidate();
             };
 
+            productsView1.DataSource = ServiceLocator.Products;
+            productsView1.BestFitColumns();
+
             foreach (var pc in ServiceLocator.ProductCategories)
             {
                 var tmp = new TileGroupElement() { Name = pc.Name, Visibility = Telerik.WinControls.ElementVisibility.Visible, Text = pc.Name, Tag = pc.id };
