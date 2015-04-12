@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing.Imaging;
 using System.IO;
-using System.Resources;
+using System.Linq;
 using System.Windows.Forms;
-using System.Reflection;
+using POS.Models;
+using POS.Properties;
+using Pos.Internals.Extensions;
 using Telerik.WinControls;
 
 namespace POS
@@ -44,6 +48,14 @@ namespace POS
 
                 ThemeResolutionService.ApplicationThemeName = "Office2013Light";
             }
+
+            ServiceLocator.ProductCategories = DataStorage.ReadProductCategories();
+            ServiceLocator.Products = DataStorage.ReadProducts();
+
+            var t = new List<Product>(ServiceLocator.Products);
+            t.Add(new Product { Category = 0, ID = "Rose", Price = 0.81, Tax = 0.19, Image = Resources.box.ToBytes(ImageFormat.Png) });
+
+            ServiceLocator.Products = t.ToArray();
 
             var frm = new MainForm();
             frm.Show();

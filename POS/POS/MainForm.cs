@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
+using POS.Internals;
 using POS.Internals.Designer;
 using POS.Internals.FilterBuilder;
 using POS.Internals.UndoRedo;
@@ -50,6 +52,29 @@ namespace POS
 
             radPanel1.Controls.Add(host);
 
+            ProductsView.Groups.Clear();
+
+            Price.PriceChanged += (s, e) => { priceLbl.DigitText = Price.Value; };
+
+            foreach (var pc in ServiceLocator.ProductCategories)
+            {
+                var tmp = new TileGroupElement() { Name = pc.Name, Visibility = Telerik.WinControls.ElementVisibility.Visible, Text = pc.Name, Tag = pc.id };
+
+                foreach (var p in ServiceLocator.Products)
+                {
+                    var tmpItem = new RadTileElement() { Text = p.ID, Image = Image.FromStream(new MemoryStream(p.Image)), Name = p.ID, Tag = p.TotalPrice, Visibility = Telerik.WinControls.ElementVisibility.Visible };
+
+                    tmpItem.Click += (s, e) =>
+                    {
+                        Price.Add(p);
+                    };
+
+                    tmp.Items.Add(tmpItem);
+                }
+
+                ProductsView.Groups.Add(tmp);
+            }
+
             #if DEBUG
             Cursor.Show();
             #else
@@ -86,9 +111,9 @@ namespace POS
             }
         }
 
-        private void ProductsView_Click(object sender, EventArgs e)
+        private void radButton1_Click(object sender, EventArgs e)
         {
-
+            Price.RemoveLast();
         }
     }
 }
