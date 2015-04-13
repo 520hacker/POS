@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using ICSharpCode.SharpZipLib.Zip;
 
-namespace POS.Internals.FileSystem
+namespace Pos.Internals.FileSystem
 {
     public class SharpZipLibFileSystem : SharpFileSystem.IFileSystem
     {
@@ -84,14 +84,6 @@ namespace POS.Internals.FileSystem
         public void Delete(SharpFileSystem.FileSystemPath path)
         {
             ZipFile.Delete(ToEntryPath(path));
-        }
-
-        public class MemoryZipEntry: MemoryFileSystem.MemoryFile, IStaticDataSource
-        {
-            public Stream GetSource()
-            {
-                return new MemoryFileSystem.MemoryFileStream(this);
-            }
         }
     }
 }

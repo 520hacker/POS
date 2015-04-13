@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace POS.Internals.FileSystem
+namespace Pos.Internals.FileSystem
 {
     public class EmbeddedResourceFileSystem : SharpFileSystem.IFileSystem
     {
