@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 using POS.Contracts.Architecture;
 using POS.Contracts;
 
@@ -10,13 +11,22 @@ namespace POS
     [PlugInApplication("POS")]
     internal class PlugInManager : PlugInBasedApplication<IPosPlugIn>, IPosApplication
     {
-        /// <summary>
-        /// This method can be called by plugins to show a message to the user if needed.
-        /// </summary>
-        /// <param name="message">The message to be shown</param>
-        public void ShowMessage(string message)
+        private MainForm _mf;
+
+        public PlugInManager(MainForm mf)
         {
-            MessageBox.Show(message);
+            _mf = mf;
+        }
+
+        public void AddPayButton()
+        {
+            // TODO: Implement this method
+            throw new NotImplementedException();
+        }
+
+        public void ShowAlert(string content, ToolTipIcon icon)
+        {
+            _mf.notifyIcon1.ShowBalloonTip(5000, "POS", content, icon);
         }
     }
 }

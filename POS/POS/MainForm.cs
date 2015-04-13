@@ -16,11 +16,12 @@ namespace POS
     public partial class MainForm : Telerik.WinControls.UI.RadForm
     {
         DesignerHost host;
+        PlugInManager _pm;
 
         public MainForm()
         {
             InitializeComponent();
-
+            
             var f = new Panel();
             f.BorderStyle = BorderStyle.FixedSingle;
             f.Visible = true;
@@ -90,6 +91,22 @@ namespace POS
             #else
             Cursor.Hide();
             #endif
+
+            _pm = new PlugInManager(this);
+
+            _pm.PlugInFolder = Application.StartupPath + "\\Plugins";
+
+            if (!Directory.Exists(_pm.PlugInFolder))
+            {
+                Directory.CreateDirectory(_pm.PlugInFolder);
+            }
+
+            _pm.LoadPlugIns();
+
+            foreach (var p in _pm.PlugIns)
+            {
+                p.PlugInProxy.Load();
+            }
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -176,6 +193,5 @@ namespace POS
         {
             Settings.Set("bitcoinaddress", "1HaWUwi5oYQo2RXB5k5JLgJA8MTigNuLeY"); //btcddressTb.Text);
         }
-        
     }
 }
