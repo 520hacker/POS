@@ -167,8 +167,9 @@
     <Compile Include="Internals\Extensions\TypeExtensions.cs" />
     <Compile Include="Internals\Extensions\XmlExtensions.cs" />
     <Compile Include="Internals\Extensions\XmlSerializeExtensions.cs" />
-    <Compile Include="Internals\FileSystem\Filesystems\EmbeddedResourceFileSystem.cs" />
-    <Compile Include="Internals\FileSystem\Filesystems\SharpZipLibFileSystem.cs" />
+    <Compile Include="Internals\FileSystem\EmbeddedResourceFileSystem.cs" />
+    <Compile Include="Internals\FileSystem\MemoryFileSystem.cs" />
+    <Compile Include="Internals\FileSystem\SharpZipLibFileSystem.cs" />
     <Compile Include="Internals\FileSystem\SharpFileSystem\Collections\EnumerableCollection.cs" />
     <Compile Include="Internals\FileSystem\SharpFileSystem\Collections\InverseComparer.cs" />
     <Compile Include="Internals\FileSystem\SharpFileSystem\Collections\TypeCombinationDictionary.cs" />

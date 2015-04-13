@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ICSharpCode.SharpZipLib.Zip;
-using SharpFileSystem.FileSystems;
 
-namespace SharpFileSystem.SharpZipLib
+namespace POS.Internals.FileSystem
 {
-    public class SharpZipLibFileSystem: IFileSystem
+    public class SharpZipLibFileSystem : SharpFileSystem.IFileSystem
     {
         public ZipFile ZipFile { get; set; }
 
@@ -33,17 +32,17 @@ namespace SharpFileSystem.SharpZipLib
             ZipFile.Close();
         }
 
-        protected FileSystemPath ToPath(ZipEntry entry)
+        protected SharpFileSystem.FileSystemPath ToPath(ZipEntry entry)
         {
-            return FileSystemPath.Parse(entry.Name);
+            return SharpFileSystem.FileSystemPath.Parse(entry.Name);
         }
 
-        protected string ToEntryPath(FileSystemPath path)
+        protected string ToEntryPath(SharpFileSystem.FileSystemPath path)
         {
             return path.ToString();
         }
 
-        protected ZipEntry ToEntry(FileSystemPath path)
+        protected ZipEntry ToEntry(SharpFileSystem.FileSystemPath path)
         {
             return ZipFile.GetEntry(ToEntryPath(path));
         }
@@ -53,36 +52,36 @@ namespace SharpFileSystem.SharpZipLib
             return ZipFile.Cast<ZipEntry>();
         }
 
-        public ICollection<FileSystemPath> GetEntities(FileSystemPath path)
+        public ICollection<SharpFileSystem.FileSystemPath> GetEntities(SharpFileSystem.FileSystemPath path)
         {
             return GetZipEntries().Select(e => ToPath(e)).Where(p => p.ParentPath == path).ToList();
         }
 
-        public bool Exists(FileSystemPath path)
+        public bool Exists(SharpFileSystem.FileSystemPath path)
         {
             return ToEntry(path) != null;
         }
 
-        public Stream CreateFile(FileSystemPath path)
+        public Stream CreateFile(SharpFileSystem.FileSystemPath path)
         {
             var entry = new MemoryZipEntry();
             ZipFile.Add(entry, ToEntryPath(path));
             return entry.GetSource();
         }
 
-        public Stream OpenFile(FileSystemPath path, FileAccess access)
+        public Stream OpenFile(SharpFileSystem.FileSystemPath path, FileAccess access)
         {
             if (access != FileAccess.Read)
                 throw new NotSupportedException();
             return ZipFile.GetInputStream(ToEntry(path));
         }
 
-        public void CreateDirectory(FileSystemPath path)
+        public void CreateDirectory(SharpFileSystem.FileSystemPath path)
         {
             ZipFile.AddDirectory(ToEntryPath(path));
         }
 
-        public void Delete(FileSystemPath path)
+        public void Delete(SharpFileSystem.FileSystemPath path)
         {
             ZipFile.Delete(ToEntryPath(path));
         }
