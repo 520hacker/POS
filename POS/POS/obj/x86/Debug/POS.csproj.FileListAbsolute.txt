@@ -19,7 +19,6 @@ C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\Telerik.WinControls.The
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\Telerik.WinControls.UI.dll
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\TelerikCommon.dll
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\Telerik.WinControls.xml
-C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\Telerik.WinControls.UI.xml
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.Properties.Resources.resources
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.MainForm.resources
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.csproj.GenerateResource.Cache

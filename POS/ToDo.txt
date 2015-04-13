@@ -4,3 +4,5 @@ Gutscheinsystem einbauen
 
 add multilanguage
 add save invoices in seperate folder per day
+add custom file format for models
+	add append function to writer

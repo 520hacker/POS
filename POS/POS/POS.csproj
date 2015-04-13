@@ -82,6 +82,7 @@
     <Compile Include="Internals\BitcoinPayer.cs" />
     <Compile Include="Internals\Database\DatabaseReader.cs" />
     <Compile Include="Internals\Database\DatabaseWriter.cs" />
+    <Compile Include="Internals\Database\ObjectDB.cs" />
     <Compile Include="Internals\Database\StreamStorage.cs" />
     <Compile Include="Internals\Designer\DesignerHost.cs">
       <SubType>UserControl</SubType>
