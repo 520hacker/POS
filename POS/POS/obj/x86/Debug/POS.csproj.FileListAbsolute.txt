@@ -31,3 +31,7 @@ C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\POS.Contracts.dll
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\POS.Contracts.pdb
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.Internals.Designer.DesignerHost.resources
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.Internals.UI.DigitalDisplayControl.resources
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\log4net.dll
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\SharpHsql.dll
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\log4net.xml
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\SharpHsql.xml
