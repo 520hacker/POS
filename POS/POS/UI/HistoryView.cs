@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace POS.Internals.UI
+namespace POS.UI
 {
     public class HistoryView : Control
     {

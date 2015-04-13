@@ -1,6 +1,4 @@
 ﻿using System;
-using System.CodeDom;
-using System.CodeDom.Compiler;
 using System.Linq;
 using Rpc.Internals;
 
@@ -17,8 +15,6 @@ namespace Rpc
         public dynamic CreateProxy<T>()
             where T : IRpcProxy
         {
-            Type t = typeof(T);
-            
             return new Proxy(typeof(T), this, typeof(T).Name);
         }
 

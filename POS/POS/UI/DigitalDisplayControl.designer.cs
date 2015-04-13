@@ -1,4 +1,4 @@
-namespace POS.Internals.UI
+namespace POS.UI
 {
 	partial class DigitalDisplayControl
 	{

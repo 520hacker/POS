@@ -2,9 +2,8 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using POS.Internals.UI;
 
-namespace POS.Internals.UI
+namespace POS.UI
 {
 	public partial class DigitalDisplayControl : UserControl
 	{

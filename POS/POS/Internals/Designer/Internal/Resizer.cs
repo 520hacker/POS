@@ -23,24 +23,15 @@ namespace POS.Internals.Designer.Internal
             controltobeResized.Controls.Add(pictureBox1);
             controltobeResized.Controls.Add(pictureBox2);
             controltobeResized.Controls.Add(pictureBox3);
-
-            controltobeResized.Controls.Add(smarttagButton);
         }
 
         private System.Windows.Forms.PictureBox pictureBox1 = new PictureBox();
         private System.Windows.Forms.PictureBox pictureBox2 = new PictureBox();
         private System.Windows.Forms.PictureBox pictureBox3 = new PictureBox();
-        private SmartTagButton smarttagButton = new SmartTagButton();
 
 
         private void InitializeComponent()
         {
-
-            //
-            // smarttagButton
-            //
-            //smarttagButton.Location = new System.Drawing.Point(controltobeResized.Width, 0);
-            smarttagButton.Dock = DockStyle.Right;
             // 
             // pictureBox1
             // 

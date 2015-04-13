@@ -61,8 +61,8 @@
             this.PropertiesBtn = new Telerik.WinControls.UI.CommandBarButton();
             this.radDesktopAlert1 = new Telerik.WinControls.UI.RadDesktopAlert(this.components);
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.historyView1 = new POS.Internals.UI.HistoryView();
-            this.priceLbl = new POS.Internals.UI.DigitalDisplayControl();
+            this.historyView1 = new POS.UI.HistoryView();
+            this.priceLbl = new POS.UI.DigitalDisplayControl();
             ((System.ComponentModel.ISupportInitialize)(this.radPageView1)).BeginInit();
             this.radPageView1.SuspendLayout();
             this.HomePage.SuspendLayout();
@@ -511,9 +511,9 @@
         private Telerik.WinControls.UI.RadTileElement radTileElement2;
         private Telerik.WinControls.UI.RadPanel radPanel2;
         private Telerik.WinControls.UI.RadLabel currencyLbl;
-        private POS.Internals.UI.DigitalDisplayControl priceLbl;
+        private POS.UI.DigitalDisplayControl priceLbl;
         private Telerik.WinControls.UI.RadButton radButton1;
-        private Internals.UI.HistoryView historyView1;
+        private POS.UI.HistoryView historyView1;
         private Telerik.WinControls.UI.RadGridView productsView1;
         private Telerik.WinControls.UI.RadTextBox btcddressTb;
         private Telerik.WinControls.UI.RadLabel radLabel1;

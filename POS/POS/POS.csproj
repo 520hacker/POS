@@ -100,15 +100,6 @@
     <Compile Include="Internals\Designer\Internal\ControlExtension.cs" />
     <Compile Include="Internals\Designer\Internal\ControlMover.cs" />
     <Compile Include="Internals\Designer\Internal\Resizer.cs" />
-    <Compile Include="Internals\Designer\Internal\SmartTag.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Internals\Designer\Internal\SmartTag.Designer.cs">
-      <DependentUpon>SmartTag.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Internals\Designer\Internal\SmartTagButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Internals\Designer\RuntimeDesigner.cs" />
     <Compile Include="Internals\Extensions\ArrayExtension.cs" />
     <Compile Include="Internals\Extensions\BooleanExtensions.cs" />
@@ -182,13 +173,13 @@
     <Compile Include="Internals\SqlHelper.cs" />
     <Compile Include="Internals\SizeFormatter.cs" />
     <Compile Include="Internals\Taskbar.cs" />
-    <Compile Include="Internals\UI\DigitalDisplayControl.cs">
+    <Compile Include="UI\DigitalDisplayControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Internals\UI\DigitalDisplayControl.designer.cs">
+    <Compile Include="UI\DigitalDisplayControl.designer.cs">
       <DependentUpon>DigitalDisplayControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Internals\UI\HistoryView.cs">
+    <Compile Include="UI\HistoryView.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Internals\VoucherID.cs" />
@@ -455,6 +446,11 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="QrCodeDialog.cs" />
     <Compile Include="ServiceLocator.cs" />
     <Compile Include="Settings.cs" />
@@ -470,19 +466,14 @@
     <EmbeddedResource Include="Internals\DialogBuilder\DialogBuilder.resx">
       <DependentUpon>DialogBuilder.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Internals\UI\DigitalDisplayControl.resx">
+    <EmbeddedResource Include="UI\DigitalDisplayControl.resx">
       <DependentUpon>DigitalDisplayControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -508,8 +499,6 @@
     <None Include="Resources\stock_folder_properties.ico" />
     <None Include="Resources\images.ico" />
     <None Include="Resources\designer.ico" />
-    <None Include="Resources\smarttag.PNG" />
-    <None Include="Resources\smarttag_hover.PNG" />
     <None Include="Resources\home.ico" />
     <None Include="Resources\box.ico" />
     <None Include="Resources\application_x_desktop.ico" />
