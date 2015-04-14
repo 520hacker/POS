@@ -8,3 +8,9 @@ add custom file format for models
 continue plugin system
 retruct to #hsql
 continue DbContext
+
+change pluginsystem to js,vb
+
+implement moduleattribute
+add moduleloader for scriptengine(js, vb)
+create standardlib
