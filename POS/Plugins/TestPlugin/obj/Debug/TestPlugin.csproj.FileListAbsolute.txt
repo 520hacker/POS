@@ -1,7 +1,0 @@
-C:\Users\filmee24\Documents\GitHub\POS\POS\Plugins\TestPlugin\bin\Debug\TestPlugin.dll
-C:\Users\filmee24\Documents\GitHub\POS\POS\Plugins\TestPlugin\bin\Debug\TestPlugin.pdb
-C:\Users\filmee24\Documents\GitHub\POS\POS\Plugins\TestPlugin\bin\Debug\POS.Contracts.dll
-C:\Users\filmee24\Documents\GitHub\POS\POS\Plugins\TestPlugin\bin\Debug\POS.Contracts.pdb
-C:\Users\filmee24\Documents\GitHub\POS\POS\Plugins\TestPlugin\obj\Debug\TestPlugin.csprojResolveAssemblyReference.cache
-C:\Users\filmee24\Documents\GitHub\POS\POS\Plugins\TestPlugin\obj\Debug\TestPlugin.dll
-C:\Users\filmee24\Documents\GitHub\POS\POS\Plugins\TestPlugin\obj\Debug\TestPlugin.pdb

@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Microsoft.ClearScript;
 using Microsoft.ClearScript.Util;
 using Microsoft.ClearScript.Windows;
 
-namespace POS.Internals.JSEngine
+namespace POS.Internals.ScriptEngine
 {
     /// <summary>
     /// Represents an instance of the JScript engine.

@@ -11,6 +11,4 @@ continue DbContext
 
 change pluginsystem to js,vb
 
-implement moduleattribute
-add moduleloader for scriptengine(js, vb)
 create standardlib

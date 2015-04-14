@@ -11,27 +11,27 @@ c:\users\filmee24\documents\visual studio 2013\Projects\POS\POS\obj\x86\Debug\PO
 c:\users\filmee24\documents\visual studio 2013\Projects\POS\POS\obj\x86\Debug\POS.pdb
 c:\users\filmee24\documents\visual studio 2013\Projects\POS\POS\bin\Debug\POS.exe.config
 C:\Users\filmee24\Documents\Visual Studio 2013\Projects\POS\POS\obj\x86\Debug\POS.MainForm.resources
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.csprojResolveAssemblyReference.cache
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.Internals.Designer.DesignerHost.resources
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.Internals.DialogBuilder.DialogBuilder.resources
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.UI.DigitalDisplayControl.resources
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.Properties.Resources.resources
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.MainForm.resources
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.SplashScreen.resources
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.csproj.GenerateResource.Cache
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\POS.exe.config
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\POS.exe
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\POS.pdb
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\log4net.dll
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\POS.Contracts.dll
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\SharpHsql.dll
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\Telerik.WinControls.dll
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\Telerik.WinControls.Themes.TelerikMetroTouch.dll
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\Telerik.WinControls.UI.dll
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\TelerikCommon.dll
-C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\Telerik.WinControls.xml
-C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.Properties.Resources.resources
-C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.MainForm.resources
-C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.csproj.GenerateResource.Cache
-C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.exe
-C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.pdb
-C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.csprojResolveAssemblyReference.cache
-C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.SplashScreen.resources
-C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.Internals.DialogBuilder.DialogBuilder.resources
-C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\POS.Contracts.dll
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\POS.Contracts.pdb
-C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.Internals.Designer.DesignerHost.resources
-C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\log4net.dll
-C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\SharpHsql.dll
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\log4net.xml
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\SharpHsql.xml
-C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.UI.DigitalDisplayControl.resources
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\Telerik.WinControls.xml
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.exe
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.pdb
