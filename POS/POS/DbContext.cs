@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using POS.Internals;
 
 namespace POS
@@ -28,6 +27,11 @@ namespace POS
             return sqlsc.Substring(0, sqlsc.Length - 1) + ")";
         }
 
+        public static void Add<T>(T obj)
+        {
+            SqlHelper.query("INSERT INTO " + typeof(T).Name + "s VALUES ()");
+        }
+
         public static IEnumerable<T> GetItems<T>()
             where T : new()
         {
@@ -45,14 +49,44 @@ namespace POS
                     {
                         if (prop.Name.ToLower() == item.Key.ToLower())
                         {
-                            var v = item.Value;
+                            if (item.Value != null)
+                            {
+                                object v;
 
-                            if(prop.CanWrite)
-                                prop.SetValue(tmp, v);
+                                if (prop.PropertyType.Name == typeof(byte[]).Name)
+                                {
+                                    try
+                                    {
+                                        v = Convert.FromBase64String(item.Value.ToString());
+                                    }
+                                    catch
+                                    {
+                                        v = item.Value;
+                                    }
+                                }
+                                if (prop.PropertyType.Name == typeof(double).Name)
+                                {
+                                    try
+                                    {
+                                        v = double.Parse(item.Value.ToString());
+                                    }
+                                    catch
+                                    {
+                                        v = item.Value;
+                                    }
+                                }
+                                else
+                                {
+                                    v = item.Value;
+                                }
+
+                                if (prop.CanWrite)
+                                    prop.SetValue(tmp, v);
+                            }
                         }
                     }
 
-                    if(!ret.Contains(tmp))
+                    if (!ret.Contains(tmp))
                         ret.Add(tmp);
                 }
             }

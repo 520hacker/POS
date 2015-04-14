@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
+using POS.Internals.DialogBuilder.Attributes;
 
 namespace POS.Internals.DialogBuilder
 {
@@ -11,6 +12,15 @@ namespace POS.Internals.DialogBuilder
         {
             Control ctrl = null;
             Type type = property.PropertyType;
+
+            var ca = property.GetCustomAttribute<CustomControlAttribute>(true);
+
+            if (ca != null)
+            {
+                ctrl = (Control)Activator.CreateInstance(ca.Type);
+
+                return ctrl;
+            }
 
             // The control depends on the property type
             if (type == typeof (string))

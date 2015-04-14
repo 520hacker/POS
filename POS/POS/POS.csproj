@@ -102,6 +102,7 @@
     <Compile Include="Internals\Designer\Internal\ControlMover.cs" />
     <Compile Include="Internals\Designer\Internal\Resizer.cs" />
     <Compile Include="Internals\Designer\RuntimeDesigner.cs" />
+    <Compile Include="Internals\DialogBuilder\Attributes\CustomControlAttribute.cs" />
     <Compile Include="Internals\Extensions\ArrayExtension.cs" />
     <Compile Include="Internals\Extensions\BooleanExtensions.cs" />
     <Compile Include="Internals\Extensions\ButtonExtension.cs" />

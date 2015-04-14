@@ -1,5 +1,3 @@
-add customcontrolattribute to dialogbuilder
-
 Gutscheinsystem einbauen 
 
 add multilanguage
@@ -9,3 +7,4 @@ add custom file format for models
 
 continue plugin system
 retruct to #hsql
+continue DbContext
