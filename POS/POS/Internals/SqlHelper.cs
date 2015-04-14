@@ -106,7 +106,7 @@ namespace POS.Internals
         private static string readableString(string src)
         {
             char[] charArray = src.ToLower().ToCharArray();
-            charArray[0] = Convert.ToChar(charArray[0].ToString().ToUpper());
+            charArray[0] = Convert.ToChar(char.ToUpper(charArray[0]));
             return new string(charArray);
         }
 

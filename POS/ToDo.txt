@@ -13,3 +13,5 @@ change pluginsystem to js,vb
 add pluginloader
 
 create standardlib
+
+add Pluginmanager
