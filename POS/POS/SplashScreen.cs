@@ -4,6 +4,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using POS.Internals;
 using POS.Models;
 using POS.Properties;
 using Pos.Internals.Extensions;
@@ -59,6 +60,20 @@ namespace POS
             t.Add(new Product { Category = 0, ID = "Rose", Price = 0.81, Tax = 0.19, Image = Resources.box.ToBytes(ImageFormat.Png) });
 
             ServiceLocator.Products = t.ToArray();
+
+            SqlHelper.select_db(ServiceLocator.DataPath + "data");
+            SqlHelper.connect("sa", "");
+
+            var pr = DbContext.AddTable<Product>();
+            
+            SqlHelper.query(pr);
+            SqlHelper.query("INSERT INTO Products VALUES (0, null, 1.23, null,null)");
+
+            SqlHelper.commit();
+
+            var r = DbContext.GetItems<Product>();
+
+            SqlHelper.close();
 
             var frm = new MainForm();
             frm.Show();

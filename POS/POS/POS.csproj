@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataStorage.cs" />
+    <Compile Include="DbContext.cs" />
     <Compile Include="Internals\BitcoinPayer.cs" />
     <Compile Include="Internals\Database\DatabaseReader.cs" />
     <Compile Include="Internals\Database\DatabaseWriter.cs" />

@@ -7,49 +7,45 @@ using SharpHsql;
 
 namespace POS.Internals
 {
-    public class SqlHelper
+    public static class SqlHelper
     {
-        private SharpHsql.Database db;
+        private static SharpHsql.Database db;
+        private static Channel myChannel;
 
-        private string errormsg;
+        private static string errormsg;
 
-        public SqlHelper()
+        public static void auto_commit(bool b)
         {
-
+            myChannel.SetAutoCommit(b);
         }
 
-        public void auto_commit(Channel mc, bool b)
+        public static void close()
         {
-            mc.SetAutoCommit(b);
-        }
-
-        public void close(Channel myChannel)
-        {
-            this.db.Execute("shutdown", myChannel);
+            db.Execute("shutdown", myChannel);
             myChannel.Disconnect();
         }
 
-        public void commit(Channel myChannel)
+        public static void commit()
         {
             myChannel.Commit();
         }
 
-        public Channel connect(string username, string password)
+        public static void connect(string username, string password)
         {
-            return this.db.Connect(username, password);
+            myChannel = db.Connect(username, password);
         }
 
-        public string error()
+        public static string error()
         {
-            return this.errormsg;
+            return errormsg;
         }
 
-        public string escape_string(string s)
+        public static string escape_string(string s)
         {
             return Regex.Escape(s);
         }
 
-        public List<Dictionary<string, object>> fetch_array(Result rs)
+        public static List<Dictionary<string, object>> fetch_array(Result rs)
         {
             List<Dictionary<string, object>> dictionaries = new List<Dictionary<string, object>>();
             if (rs.Root != null)
@@ -59,7 +55,7 @@ namespace POS.Internals
                     Dictionary<string, object> strs = new Dictionary<string, object>();
                     for (int j = 0; j < (int)rs.Label.Length; j++)
                     {
-                        string str = this.readableString(rs.Label[j]);
+                        string str = readableString(rs.Label[j]);
                         strs[str] = i.Data[j];
                     }
                     dictionaries.Add(strs);
@@ -68,10 +64,10 @@ namespace POS.Internals
             return dictionaries;
         }
 
-        public List<dynamic> fetch_object(Result rs)
+        public static List<dynamic> fetch_object(Result rs)
         {
             List<object> objs = new List<object>();
-            foreach (Dictionary<string, object> strs in this.fetch_array(rs))
+            foreach (Dictionary<string, object> strs in fetch_array(rs))
             {
                 ExpandoObject expandoObjects = new ExpandoObject();
                 ICollection<KeyValuePair<string, object>> keyValuePairs = expandoObjects;
@@ -84,44 +80,46 @@ namespace POS.Internals
             return objs;
         }
 
-        public string[] list_fields(Result rs)
+        public static string[] list_fields(Result rs)
         {
-            string[] array = rs.Label.Select<string, string>(new Func<string, string>(this.readableString)).ToArray<string>();
+            string[] array = rs.Label.Select<string, string>(new Func<string, string>(readableString)).ToArray<string>();
             return array;
         }
 
-        public int num_fields(Result rs)
+        public static int num_fields(Result rs)
         {
             return (int)rs.Label.Length;
         }
 
-        public int num_rows(Result rs)
+        public static int num_rows(Result rs)
         {
             return (int)rs.Root.Data.Length;
         }
 
-        public Result query(Channel myChannel, string query)
+        public static Result query(string query)
         {
-            Result result = this.db.Execute(query, myChannel);
-            this.errormsg = result.Error;
+            Result result = db.Execute(query, myChannel);
+            errormsg = result.Error;
             return result;
         }
 
-        private string readableString(string src)
+        private static string readableString(string src)
         {
             char[] charArray = src.ToLower().ToCharArray();
             charArray[0] = Convert.ToChar(charArray[0].ToString().ToUpper());
             return new string(charArray);
         }
 
-        public void rollback(Channel mc)
+        public static void rollback(Channel mc)
         {
             mc.Rollback();
         }
 
-        public void select_db(string name)
+        public static SharpHsql.Database select_db(string name)
         {
-            this.db = new SharpHsql.Database(name);
+            db = new SharpHsql.Database(name);
+
+            return db;
         }
     }
 }
