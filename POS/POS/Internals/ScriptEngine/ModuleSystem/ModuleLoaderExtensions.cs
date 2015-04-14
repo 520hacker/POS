@@ -12,7 +12,8 @@ namespace POS.Internals.ScriptEngine.ModuleSystem
         {
             var ca = t.GetCustomAttribute<ScriptModuleAttribute>();
 
-            se.AddHostType(t.Name, t);
+            if(ca.AsType)
+                se.AddHostType(ca.Name != null ? ca.Name : t.Name, t);
 
             if (ca != null)
             {
@@ -21,7 +22,7 @@ namespace POS.Internals.ScriptEngine.ModuleSystem
                     var meca = me.GetCustomAttribute<ScriptFunctionAttribute>();
                     if (meca != null)
                     {
-                        se.AddHostObject(me.Name, Delegate.CreateDelegate(t, me));
+                        se.AddHostObject(meca.Name != null ? meca.Name : me.Name, Delegate.CreateDelegate(t, me));
                     }
                 }
                 foreach (var me in t.GetProperties())
@@ -31,7 +32,7 @@ namespace POS.Internals.ScriptEngine.ModuleSystem
                     {
                         var tmp = Activator.CreateInstance(t);
 
-                        se.AddHostObject(me.Name, me.GetValue(tmp, null));
+                        se.AddHostObject(meca.Name != null ? meca.Name : me.Name, me.GetValue(tmp, null));
                     }
                 }
             }
