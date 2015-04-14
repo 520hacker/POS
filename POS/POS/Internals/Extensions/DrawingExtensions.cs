@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.IO;
 using System.Drawing.Imaging;
+using System.IO;
 
 namespace Pos.Internals.Extensions
 {
@@ -42,24 +42,24 @@ namespace Pos.Internals.Extensions
                 for (int i = 0; i < count; i++)
                 {
                     using (MemoryStream destStream = new MemoryStream())
-                    using (BinaryWriter writer = new BinaryWriter(destStream))
-                    {
-                        // Copy ICONDIR and ICONDIRENTRY.
-                        writer.Write(srcBuf, 0, sICONDIR - 2);
-                        writer.Write((short)1);    // ICONDIR.idCount == 1;
+                        using (BinaryWriter writer = new BinaryWriter(destStream))
+                        {
+                            // Copy ICONDIR and ICONDIRENTRY.
+                            writer.Write(srcBuf, 0, sICONDIR - 2);
+                            writer.Write((short)1);    // ICONDIR.idCount == 1;
 
-                        writer.Write(srcBuf, sICONDIR + sICONDIRENTRY * i, sICONDIRENTRY - 4);
-                        writer.Write(sICONDIR + sICONDIRENTRY);    // ICONDIRENTRY.dwImageOffset = sizeof(ICONDIR) + sizeof(ICONDIRENTRY)
+                            writer.Write(srcBuf, sICONDIR + sICONDIRENTRY * i, sICONDIRENTRY - 4);
+                            writer.Write(sICONDIR + sICONDIRENTRY);    // ICONDIRENTRY.dwImageOffset = sizeof(ICONDIR) + sizeof(ICONDIRENTRY)
 
-                        // Copy picture and mask data.
-                        int imgSize = BitConverter.ToInt32(srcBuf, sICONDIR + sICONDIRENTRY * i + 8);       // ICONDIRENTRY.dwBytesInRes
-                        int imgOffset = BitConverter.ToInt32(srcBuf, sICONDIR + sICONDIRENTRY * i + 12);    // ICONDIRENTRY.dwImageOffset
-                        writer.Write(srcBuf, imgOffset, imgSize);
+                            // Copy picture and mask data.
+                            int imgSize = BitConverter.ToInt32(srcBuf, sICONDIR + sICONDIRENTRY * i + 8);       // ICONDIRENTRY.dwBytesInRes
+                            int imgOffset = BitConverter.ToInt32(srcBuf, sICONDIR + sICONDIRENTRY * i + 12);    // ICONDIRENTRY.dwImageOffset
+                            writer.Write(srcBuf, imgOffset, imgSize);
 
-                        // Create new icon.
-                        destStream.Seek(0, SeekOrigin.Begin);
-                        splitIcons.Add(new Icon(destStream));
-                    }
+                            // Create new icon.
+                            destStream.Seek(0, SeekOrigin.Begin);
+                            splitIcons.Add(new Icon(destStream));
+                        }
                 }
             }
 
@@ -75,9 +75,13 @@ namespace Pos.Internals.Extensions
         public static byte[] ToBytes(this Image image, ImageFormat format)
         {
             if (image == null)
+            {
                 throw new ArgumentNullException("image");
+            }
             if (format == null)
+            {
                 throw new ArgumentNullException("format");
+            }
 
             using (MemoryStream stream = new MemoryStream())
             {
@@ -289,7 +293,7 @@ namespace Pos.Internals.Extensions
                 Bitmap proportionalBitmap = ScaleProportional(bitmap, width, height);
 
                 var imagePosition = new Point((int)((width - proportionalBitmap.Width) / 2m),
-                                              (int)((height - proportionalBitmap.Height) / 2m));
+                    (int)((height - proportionalBitmap.Height) / 2m));
                 g.DrawImage(proportionalBitmap, imagePosition);
             }
 
@@ -399,9 +403,13 @@ namespace Pos.Internals.Extensions
             double ratio;
 
             if (ratioWidth > ratioHeight && sourceIsLandscape == targetIsLandscape)
+            {
                 ratio = ratioWidth;
+            }
             else
+            {
                 ratio = ratioHeight;
+            }
 
             var targetWidth = (int)(image.Width * ratio);
             var targetHeight = (int)(image.Height * ratio);

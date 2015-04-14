@@ -3,7 +3,7 @@ namespace Rpc.Internals
     using System;
 
     /// <summary>Class collecting <c>String</c> tokens that are part of XML-RPC files.</summary>
-    class XmlRpcXmlTokens
+    internal class XmlRpcXmlTokens
     {
         /// <summary>C# formatting string to describe an ISO 8601 date.</summary>
         public const String ISO_DATETIME = "yyyyMMdd\\THH\\:mm\\:ss";

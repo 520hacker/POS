@@ -148,7 +148,6 @@ namespace Pos.Internals.Extensions
         public static string ToCurrencyString(this decimal value)
         {
             return value.ToString("N");
-
         }
     }
 }

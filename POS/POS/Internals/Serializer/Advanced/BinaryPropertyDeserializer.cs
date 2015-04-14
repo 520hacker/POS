@@ -1,3 +1,4 @@
+
 #region Copyright © 2010 Pawel Idzikowski [idzikowski@sharpserializer.com]
 
 //  ***********************************************************************
@@ -44,316 +45,322 @@ namespace Polenter.Serialization.Advanced
     public sealed class BinaryPropertyDeserializer : IPropertyDeserializer
     {
         private readonly IBinaryReader _reader;
-
+        
         /// <summary>
         /// Properties already processed. Used for reference resolution.
         /// </summary>
         private readonly Dictionary<int, ReferenceTargetProperty> _propertyCache =
             new Dictionary<int, ReferenceTargetProperty>();
-
+        
         ///<summary>
         ///</summary>
         ///<param name = "reader"></param>
         public BinaryPropertyDeserializer(IBinaryReader reader)
         {
-            if (reader == null) throw new ArgumentNullException("reader");
-            _reader = reader;
+            if (reader == null)
+            {
+                throw new ArgumentNullException("reader");
+            }
+            this._reader = reader;
         }
-
+        
         #region IPropertyDeserializer Members
-
+        
         /// <summary>
         ///   Open the stream to read
         /// </summary>
         /// <param name = "stream"></param>
         public void Open(Stream stream)
         {
-            _reader.Open(stream);
+            this._reader.Open(stream);
         }
-
+        
         /// <summary>
         ///   Reading the property
         /// </summary>
         /// <returns></returns>
         public Property Deserialize()
         {
-            byte elementId = _reader.ReadElementId();
-            return deserialize(elementId, null);
+            byte elementId = this._reader.ReadElementId();
+            return this.deserialize(elementId, null);
         }
-
+        
         /// <summary>
         ///   Cleans all
         /// </summary>
         public void Close()
         {
-            _reader.Close();
+            this._reader.Close();
         }
-
+        
         #endregion
-
+        
         private Property deserialize(byte elementId, Type expectedType)
         {
             // Estimate property name
-            string propertyName = _reader.ReadName();
-            return deserialize(elementId, propertyName, expectedType);
+            string propertyName = this._reader.ReadName();
+            return this.deserialize(elementId, propertyName, expectedType);
         }
-
+        
         private Property deserialize(byte elementId, string propertyName, Type expectedType)
         {
             // Estimate property type
-            Type propertyType = _reader.ReadType();
-
+            Type propertyType = this._reader.ReadType();
+            
             // id propertyType is not defined, we'll take the expectedType
             if (propertyType == null)
             {
                 propertyType = expectedType;
             }
-
+            
             int referenceId = 0;
-            if (elementId==Elements.Reference || Elements.IsElementWithId(elementId))
+            if (elementId == Elements.Reference || Elements.IsElementWithId(elementId))
             {
-                referenceId = _reader.ReadNumber();
-
-                if (elementId==Elements.Reference)
+                referenceId = this._reader.ReadNumber();
+                
+                if (elementId == Elements.Reference)
                 {
                     // This is reference
                     // Get property from the cache
-                    return createProperty(referenceId, propertyName, propertyType);                    
+                    return this.createProperty(referenceId, propertyName, propertyType);                    
                 }
             }
-
+            
             // create the property
             Property property = createProperty(elementId, propertyName, propertyType);
-            if (property == null) return null;
-
+            if (property == null)
+            {
+                return null;
+            }
+            
             // Null property?
             var nullProperty = property as NullProperty;
             if (nullProperty != null)
             {
                 return nullProperty;
             }
-
+            
             // is it simple property?
             var simpleProperty = property as SimpleProperty;
             if (simpleProperty != null)
             {
-                parseSimpleProperty(simpleProperty);
+                this.parseSimpleProperty(simpleProperty);
                 return simpleProperty;
             }
-
+            
             var referenceProperty = property as ReferenceTargetProperty;
-            if (referenceProperty!=null)
+            if (referenceProperty != null)
             {
-                if (referenceId>0)
+                if (referenceId > 0)
                 {
                     // object is used multiple times
                     referenceProperty.Reference = new ReferenceInfo();
                     referenceProperty.Reference.Id = referenceId;
                     referenceProperty.Reference.IsProcessed = true;
-                    _propertyCache.Add(referenceId, referenceProperty);
+                    this._propertyCache.Add(referenceId, referenceProperty);
                 }
             }
-
+            
             var multiDimensionalArrayProperty = property as MultiDimensionalArrayProperty;
             if (multiDimensionalArrayProperty != null)
             {
-                parseMultiDimensionalArrayProperty(multiDimensionalArrayProperty);
+                this.parseMultiDimensionalArrayProperty(multiDimensionalArrayProperty);
                 return multiDimensionalArrayProperty;
             }
-
+            
             var singleDimensionalArrayProperty = property as SingleDimensionalArrayProperty;
             if (singleDimensionalArrayProperty != null)
             {
-                parseSingleDimensionalArrayProperty(singleDimensionalArrayProperty);
+                this.parseSingleDimensionalArrayProperty(singleDimensionalArrayProperty);
                 return singleDimensionalArrayProperty;
             }
-
+            
             var dictionaryProperty = property as DictionaryProperty;
             if (dictionaryProperty != null)
             {
-                parseDictionaryProperty(dictionaryProperty);
+                this.parseDictionaryProperty(dictionaryProperty);
                 return dictionaryProperty;
             }
-
+            
             var collectionProperty = property as CollectionProperty;
             if (collectionProperty != null)
             {
-                parseCollectionProperty(collectionProperty);
+                this.parseCollectionProperty(collectionProperty);
                 return collectionProperty;
             }
-
+            
             var complexProperty = property as ComplexProperty;
             if (complexProperty != null)
             {
-                parseComplexProperty(complexProperty);
+                this.parseComplexProperty(complexProperty);
                 return complexProperty;
             }
-
+            
             return property;
         }
-
+        
         private void parseComplexProperty(ComplexProperty property)
         {
             // There are properties
-            readProperties(property.Properties, property.Type);
+            this.readProperties(property.Properties, property.Type);
         }
-
+        
         private void readProperties(PropertyCollection properties, Type ownerType)
         {
-            int count = _reader.ReadNumber();
+            int count = this._reader.ReadNumber();
             for (int i = 0; i < count; i++)
             {
-                byte elementId = _reader.ReadElementId();
-
-                string propertyName = _reader.ReadName();
-
+                byte elementId = this._reader.ReadElementId();
+                
+                string propertyName = this._reader.ReadName();
+                
                 // estimating the propertyInfo
                 PropertyInfo subPropertyInfo = ownerType.GetProperty(propertyName);
                 var propertyType = subPropertyInfo != null ? subPropertyInfo.PropertyType : null;
-                Property subProperty = deserialize(elementId, propertyName, propertyType);
+                Property subProperty = this.deserialize(elementId, propertyName, propertyType);
                 properties.Add(subProperty);
             }
         }
-
+        
         private void parseCollectionProperty(CollectionProperty property)
         {
             // Element type
-            property.ElementType = _reader.ReadType();
-
+            property.ElementType = this._reader.ReadType();
+            
             // Properties
-            readProperties(property.Properties, property.Type);
-
+            this.readProperties(property.Properties, property.Type);
+            
             // Items
-            readItems(property.Items, property.ElementType);
+            this.readItems(property.Items, property.ElementType);
         }
-
+        
         private void parseDictionaryProperty(DictionaryProperty property)
         {
             // expected key type
-            property.KeyType = _reader.ReadType();
-
+            property.KeyType = this._reader.ReadType();
+            
             // expected value type
-            property.ValueType = _reader.ReadType();
-
+            property.ValueType = this._reader.ReadType();
+            
             // Properties
-            readProperties(property.Properties, property.Type);
-
+            this.readProperties(property.Properties, property.Type);
+            
             // Items
-            readDictionaryItems(property.Items, property.KeyType, property.ValueType);
+            this.readDictionaryItems(property.Items, property.KeyType, property.ValueType);
         }
-
+        
         private void readDictionaryItems(IList<KeyValueItem> items, Type expectedKeyType, Type expectedValueType)
         {
             // count
-            int count = _reader.ReadNumber();
-
+            int count = this._reader.ReadNumber();
+            
             // items
             for (int i = 0; i < count; i++)
             {
-                readDictionaryItem(items, expectedKeyType, expectedValueType);
+                this.readDictionaryItem(items, expectedKeyType, expectedValueType);
             }
         }
-
+        
         private void readDictionaryItem(IList<KeyValueItem> items, Type expectedKeyType, Type expectedValueType)
         {
             // key
-            byte elementId = _reader.ReadElementId();
-            Property keyProperty = deserialize(elementId, expectedKeyType);
-
+            byte elementId = this._reader.ReadElementId();
+            Property keyProperty = this.deserialize(elementId, expectedKeyType);
+            
             // value
-            elementId = _reader.ReadElementId();
-            Property valueProperty = deserialize(elementId, expectedValueType);
-
+            elementId = this._reader.ReadElementId();
+            Property valueProperty = this.deserialize(elementId, expectedValueType);
+            
             // add the item
             var item = new KeyValueItem(keyProperty, valueProperty);
             items.Add(item);
         }
-
+        
         private void parseSingleDimensionalArrayProperty(SingleDimensionalArrayProperty property)
         {
             // Element type
-            property.ElementType = _reader.ReadType();
-
+            property.ElementType = this._reader.ReadType();
+            
             // Lowerbound
-            property.LowerBound = _reader.ReadNumber();
-
-            readItems(property.Items, property.ElementType);
+            property.LowerBound = this._reader.ReadNumber();
+            
+            this.readItems(property.Items, property.ElementType);
         }
-
+        
         private void readItems(ICollection<Property> items, Type expectedElementType)
         {
-            int count = _reader.ReadNumber();
+            int count = this._reader.ReadNumber();
             for (int i = 0; i < count; i++)
             {
-                byte elementId = _reader.ReadElementId();
-                Property subProperty = deserialize(elementId, expectedElementType);
+                byte elementId = this._reader.ReadElementId();
+                Property subProperty = this.deserialize(elementId, expectedElementType);
                 items.Add(subProperty);
             }
         }
-
+        
         private void parseMultiDimensionalArrayProperty(MultiDimensionalArrayProperty property)
         {
             // Element Type
-            property.ElementType = _reader.ReadType();
-
+            property.ElementType = this._reader.ReadType();
+            
             // Dimension Infos
-            readDimensionInfos(property.DimensionInfos);
-
+            this.readDimensionInfos(property.DimensionInfos);
+            
             // Items
-            readMultiDimensionalArrayItems(property.Items, property.ElementType);
+            this.readMultiDimensionalArrayItems(property.Items, property.ElementType);
         }
-
+        
         private void readMultiDimensionalArrayItems(IList<MultiDimensionalArrayItem> items, Type expectedElementType)
         {
             // count
-            int count = _reader.ReadNumber();
-
+            int count = this._reader.ReadNumber();
+            
             // items
             for (int i = 0; i < count; i++)
             {
-                readMultiDimensionalArrayItem(items, expectedElementType);
+                this.readMultiDimensionalArrayItem(items, expectedElementType);
             }
         }
-
+        
         private void readMultiDimensionalArrayItem(IList<MultiDimensionalArrayItem> items, Type expectedElementType)
         {
             // Coordinates
-            int[] indexes = _reader.ReadNumbers();
-
+            int[] indexes = this._reader.ReadNumbers();
+            
             // item itself
-            byte elementId = _reader.ReadElementId();
-            Property value = deserialize(elementId, expectedElementType);
+            byte elementId = this._reader.ReadElementId();
+            Property value = this.deserialize(elementId, expectedElementType);
             var item = new MultiDimensionalArrayItem(indexes, value);
             items.Add(item);
         }
-
+        
         private void readDimensionInfos(IList<DimensionInfo> dimensionInfos)
         {
             // count
-            int count = _reader.ReadNumber();
-
+            int count = this._reader.ReadNumber();
+            
             // Dimensions
             for (int i = 0; i < count; i++)
             {
-                readDimensionInfo(dimensionInfos);
+                this.readDimensionInfo(dimensionInfos);
             }
         }
-
+        
         private void readDimensionInfo(IList<DimensionInfo> dimensionInfos)
         {
             var info = new DimensionInfo();
-            info.Length = _reader.ReadNumber();
-            info.LowerBound = _reader.ReadNumber();
-
+            info.Length = this._reader.ReadNumber();
+            info.LowerBound = this._reader.ReadNumber();
+            
             dimensionInfos.Add(info);
         }
-
+        
         private void parseSimpleProperty(SimpleProperty property)
         {
             // There is value
-            property.Value = _reader.ReadValue(property.Type);
+            property.Value = this._reader.ReadValue(property.Type);
         }
-
+        
         private static Property createProperty(byte elementId, string propertyName, Type propertyType)
         {
             switch (elementId)
@@ -381,10 +388,10 @@ namespace Polenter.Serialization.Advanced
                     return null;
             }
         }
-
+        
         private Property createProperty(int referenceId, string propertyName, Type propertyType)
         {
-            var cachedProperty = _propertyCache[referenceId];
+            var cachedProperty = this._propertyCache[referenceId];
             var property = (ReferenceTargetProperty)Property.CreateInstance(cachedProperty.Art, propertyName, propertyType);
             cachedProperty.Reference.Count++;
             property.MakeFlatCopyFrom(cachedProperty);

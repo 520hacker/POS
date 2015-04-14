@@ -21,12 +21,12 @@ namespace Pos.Internals.Extensions
         public static T AutoInitialize<T>(this T source, object data)
         {
             const BindingFlags flags =
-                BindingFlags.Instance |
-                BindingFlags.Public |
-                BindingFlags.GetProperty |
-                BindingFlags.SetProperty;
+                                      BindingFlags.Instance |
+                                      BindingFlags.Public |
+                                      BindingFlags.GetProperty |
+                                      BindingFlags.SetProperty;
 
-            return source.AutoInitialize(data, flags); ;
+            return source.AutoInitialize(data, flags); 
         }
 
         /// <summary>
@@ -42,9 +42,15 @@ namespace Pos.Internals.Extensions
         public static T AutoInitialize<T>(this T source, object data, BindingFlags flags)
         {
             // Check if data is not null
-            if (data == null) return source;
+            if (data == null)
+            {
+                return source;
+            }
             // Check that data is the same type as source
-            if (data.GetType() != source.GetType()) return source;
+            if (data.GetType() != source.GetType())
+            {
+                return source;
+            }
 
             // Get all the public - instace properties that contains both getter and setter.
             PropertyInfo[] properties = source.GetType().GetProperties(flags);
@@ -106,9 +112,9 @@ namespace Pos.Internals.Extensions
         public static void AutoInitialize<T>(this T source, DataRow data)
         {
             const BindingFlags flags =
-                BindingFlags.Instance |
-                BindingFlags.Public |
-                BindingFlags.SetProperty;
+                                      BindingFlags.Instance |
+                                      BindingFlags.Public |
+                                      BindingFlags.SetProperty;
             source.AutoInitialize(data, flags);
         }
 
@@ -124,7 +130,10 @@ namespace Pos.Internals.Extensions
         /// </remarks>
         public static void AutoInitialize<T>(this T source, DataRow row, BindingFlags flags)
         {
-            if (row == null) return;
+            if (row == null)
+            {
+                return;
+            }
 
             // Get all the public - instace properties that contains a setter.
             PropertyInfo[] properties = source.GetType().GetProperties(flags);
@@ -148,7 +157,10 @@ namespace Pos.Internals.Extensions
                             // Convert the row value to the property type.
                             object data = converter.ConvertFrom(rowValue);
                             // If the converted type matches the property type, then set the data to the source.
-                            if (data.GetType() == propertyType) property.SetValue(source, data, null);
+                            if (data.GetType() == propertyType)
+                            {
+                                property.SetValue(source, data, null);
+                            }
                         }
                     }
                 }
@@ -181,9 +193,9 @@ namespace Pos.Internals.Extensions
         public static void AutoInitialize<T>(this T source, DataRow data, params Expression<Func<T, object>>[] columns)
         {
             const BindingFlags flags =
-                BindingFlags.Instance |
-                BindingFlags.Public |
-                BindingFlags.SetProperty;
+                                      BindingFlags.Instance |
+                                      BindingFlags.Public |
+                                      BindingFlags.SetProperty;
             source.AutoInitialize(data, flags, columns);
         }
 
@@ -198,10 +210,12 @@ namespace Pos.Internals.Extensions
         /// <remarks>
         /// Contributed by Tri Tran, http://about.me/triqtran
         /// </remarks>
-        public static void AutoInitialize<T>
-            (this T source, DataRow row, BindingFlags flags, params Expression<Func<T, object>>[] columns)
+        public static void AutoInitialize<T>(this T source, DataRow row, BindingFlags flags, params Expression<Func<T, object>>[] columns)
         {
-            if (row == null || columns == null) return;
+            if (row == null || columns == null)
+            {
+                return;
+            }
             // Get all the public - instace properties that contains a setter.
             Type sourceType = source.GetType();
 
@@ -230,7 +244,10 @@ namespace Pos.Internals.Extensions
                             // Convert the row value to the property type.
                             object data = converter.ConvertFrom(rowValue);
                             // If the converted type matches the property type, then set the data to the source.
-                            if (data.GetType() == propertyType) property.SetValue(source, data, null);
+                            if (data.GetType() == propertyType)
+                            {
+                                property.SetValue(source, data, null);
+                            }
                         }
                     }
                 }

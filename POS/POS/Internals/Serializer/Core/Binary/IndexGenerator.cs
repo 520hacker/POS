@@ -1,3 +1,4 @@
+
 #region Copyright © 2010 Pawel Idzikowski [idzikowski@sharpserializer.com]
 
 //  ***********************************************************************
@@ -38,13 +39,15 @@ namespace Polenter.Serialization.Core.Binary
     internal sealed class IndexGenerator<T>
     {
         private readonly List<T> _items = new List<T>();
-
-
+        
         public IList<T> Items
         {
-            get { return _items; }
+            get
+            {
+                return this._items;
+            }
         }
-
+        
         /// <summary>
         ///   if the item exist, it gives its index back, otherweise the item is added and its new index is given back
         /// </summary>
@@ -52,14 +55,17 @@ namespace Polenter.Serialization.Core.Binary
         /// <returns></returns>
         public int GetIndexOfItem(T item)
         {
-            int index = _items.IndexOf(item);
-
+            int index = this._items.IndexOf(item);
+            
             // item was found
-            if (index > -1) return index;
-
+            if (index > -1)
+            {
+                return index;
+            }
+            
             // item was not found
-            _items.Add(item);
-            return _items.Count - 1;
+            this._items.Add(item);
+            return this._items.Count - 1;
         }
     }
 }

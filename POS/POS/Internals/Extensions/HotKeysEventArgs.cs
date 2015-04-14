@@ -1,21 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
-using Pos.Internals.Extensions;
 
 namespace Pos.Internals.Extensions
 {
-    /// <summary>
-    /// HotKeyModifiers énumération
-    /// </summary>
-    [Flags]
-    public enum HotKeyModifiers : int
-    {
-        Alt = 0x1,
-        Control = 0x2,
-        Shift = 0x4,
-        Windows = 0x8
-    }
-
     public class HotKeysEventArgs : EventArgs
     {
         /// <summary>
@@ -23,7 +10,8 @@ namespace Pos.Internals.Extensions
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="modifiers">The modifiers.</param>
-        public HotKeysEventArgs(Keys key, HotKeyModifiers modifiers) {
+        public HotKeysEventArgs(Keys key, HotKeyModifiers modifiers)
+        {
             this.Key = key;
             this.Modifiers = modifiers;
         }

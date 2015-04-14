@@ -15,16 +15,16 @@ namespace Polenter.Serialization.Advanced
         /// <returns>null if the key was not found</returns>
         public IList<PropertyInfo> TryGetPropertyInfos(Type type)
         {
-            if (!_cache.ContainsKey(type))
+            if (!this._cache.ContainsKey(type))
             {
                 return null;
             }
-            return _cache[type];
+            return this._cache[type];
         }
 
         public void Add(Type key, IList<PropertyInfo> value)
         {
-            _cache.Add(key, value);
+            this._cache.Add(key, value);
         }
     }
 }

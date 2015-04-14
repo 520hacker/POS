@@ -1,3 +1,4 @@
+
 #region License
 
 // Copyright (c) 2007 James Newton-King
@@ -33,6 +34,7 @@ using System.Xml;
 using System.Xml.Linq;
 using Lib.JSON.Converters;
 using Lib.JSON.Utilities;
+
 #if !NET20 && (!SILVERLIGHT || WINDOWS_PHONE)
 
 #endif
@@ -48,39 +50,39 @@ namespace Lib.JSON
         /// Represents JavaScript's boolean value true as a string. This field is read-only.
         /// </summary>
         public static readonly string True = "true";
-
+        
         /// <summary>
         /// Represents JavaScript's boolean value false as a string. This field is read-only.
         /// </summary>
         public static readonly string False = "false";
-
+        
         /// <summary>
         /// Represents JavaScript's null as a string. This field is read-only.
         /// </summary>
         public static readonly string Null = "null";
-
+        
         /// <summary>
         /// Represents JavaScript's undefined as a string. This field is read-only.
         /// </summary>
         public static readonly string Undefined = "undefined";
-
+        
         /// <summary>
         /// Represents JavaScript's positive infinity as a string. This field is read-only.
         /// </summary>
         public static readonly string PositiveInfinity = "Infinity";
-
+        
         /// <summary>
         /// Represents JavaScript's negative infinity as a string. This field is read-only.
         /// </summary>
         public static readonly string NegativeInfinity = "-Infinity";
-
+        
         /// <summary>
         /// Represents JavaScript's NaN as a string. This field is read-only.
         /// </summary>
         public static readonly string NaN = "NaN";
-
+        
         internal static readonly long InitialJavaScriptDateTicks = 621355968000000000;
-
+        
         /// <summary>
         /// Converts the <see cref="DateTime"/> to its JSON string representation.
         /// </summary>
@@ -94,8 +96,8 @@ namespace Lib.JSON
                 return writer.ToString();
             }
         }
-
-#if !PocketPC && !NET20
+        
+        #if !PocketPC && !NET20
         /// <summary>
         /// Converts the <see cref="DateTimeOffset"/> to its JSON string representation.
         /// </summary>
@@ -109,96 +111,109 @@ namespace Lib.JSON
                 return writer.ToString();
             }
         }
-#endif
-
+        
+        #endif
+        
         internal static void WriteDateTimeString(TextWriter writer, DateTime value)
         {
             WriteDateTimeString(writer, value, value.GetUtcOffset(), value.Kind);
         }
-
+        
         internal static void WriteDateTimeString(TextWriter writer, DateTime value, TimeSpan offset, DateTimeKind kind)
         {
             long javaScriptTicks = ConvertDateTimeToJavaScriptTicks(value, offset);
-
+            
             writer.Write(@"""\/Date(");
             writer.Write(javaScriptTicks);
-
+            
             switch (kind)
             {
                 case DateTimeKind.Local:
                 case DateTimeKind.Unspecified:
                     writer.Write((offset.Ticks >= 0L) ? "+" : "-");
-
+                    
                     int absHours = Math.Abs(offset.Hours);
                     if (absHours < 10)
+                    {
                         writer.Write(0);
+                    }
                     writer.Write(absHours);
                     int absMinutes = Math.Abs(offset.Minutes);
                     if (absMinutes < 10)
+                    {
                         writer.Write(0);
+                    }
                     writer.Write(absMinutes);
                     break;
             }
-
+            
             writer.Write(@")\/""");
         }
-
+        
         private static long ToUniversalTicks(DateTime dateTime)
         {
             if (dateTime.Kind == DateTimeKind.Utc)
+            {
                 return dateTime.Ticks;
-
+            }
+            
             return ToUniversalTicks(dateTime, dateTime.GetUtcOffset());
         }
-
+        
         private static long ToUniversalTicks(DateTime dateTime, TimeSpan offset)
         {
             if (dateTime.Kind == DateTimeKind.Utc)
+            {
                 return dateTime.Ticks;
-
+            }
+            
             long ticks = dateTime.Ticks - offset.Ticks;
             if (ticks > 3155378975999999999L)
+            {
                 return 3155378975999999999L;
-
+            }
+            
             if (ticks < 0L)
+            {
                 return 0L;
-
+            }
+            
             return ticks;
         }
-
+        
         internal static long ConvertDateTimeToJavaScriptTicks(DateTime dateTime, TimeSpan offset)
         {
             long universialTicks = ToUniversalTicks(dateTime, offset);
-
+            
             return UniversialTicksToJavaScriptTicks(universialTicks);
         }
-
+        
         internal static long ConvertDateTimeToJavaScriptTicks(DateTime dateTime)
         {
             return ConvertDateTimeToJavaScriptTicks(dateTime, true);
         }
-
+        
         internal static long ConvertDateTimeToJavaScriptTicks(DateTime dateTime, bool convertToUtc)
         {
             long ticks = (convertToUtc) ? ToUniversalTicks(dateTime) : dateTime.Ticks;
-
+            
             return UniversialTicksToJavaScriptTicks(ticks);
         }
-
+        
         private static long UniversialTicksToJavaScriptTicks(long universialTicks)
         {
-            long javaScriptTicks = (universialTicks - InitialJavaScriptDateTicks)/10000;
-
+            long javaScriptTicks = (universialTicks - InitialJavaScriptDateTicks) / 10000;
+            
             return javaScriptTicks;
         }
-
+        
         internal static DateTime ConvertJavaScriptTicksToDateTime(long javaScriptTicks)
         {
-            var dateTime = new DateTime((javaScriptTicks*10000) + InitialJavaScriptDateTicks, DateTimeKind.Utc);
-
+            var dateTime = new DateTime((javaScriptTicks * 10000) + InitialJavaScriptDateTicks, DateTimeKind.Utc);
+            
             return dateTime;
         }
-
+        
         /// <summary>
         /// Converts the <see cref="Boolean"/> to its JSON string representation.
         /// </summary>
@@ -208,7 +223,7 @@ namespace Lib.JSON
         {
             return (value) ? True : False;
         }
-
+        
         /// <summary>
         /// Converts the <see cref="Char"/> to its JSON string representation.
         /// </summary>
@@ -218,7 +233,7 @@ namespace Lib.JSON
         {
             return ToString(char.ToString(value));
         }
-
+        
         /// <summary>
         /// Converts the <see cref="Enum"/> to its JSON string representation.
         /// </summary>
@@ -228,7 +243,7 @@ namespace Lib.JSON
         {
             return value.ToString("D");
         }
-
+        
         /// <summary>
         /// Converts the <see cref="Int32"/> to its JSON string representation.
         /// </summary>
@@ -238,7 +253,7 @@ namespace Lib.JSON
         {
             return value.ToString(null, CultureInfo.InvariantCulture);
         }
-
+        
         /// <summary>
         /// Converts the <see cref="Int16"/> to its JSON string representation.
         /// </summary>
@@ -248,7 +263,7 @@ namespace Lib.JSON
         {
             return value.ToString(null, CultureInfo.InvariantCulture);
         }
-
+        
         /// <summary>
         /// Converts the <see cref="UInt16"/> to its JSON string representation.
         /// </summary>
@@ -258,7 +273,7 @@ namespace Lib.JSON
         {
             return value.ToString(null, CultureInfo.InvariantCulture);
         }
-
+        
         /// <summary>
         /// Converts the <see cref="UInt32"/> to its JSON string representation.
         /// </summary>
@@ -268,7 +283,7 @@ namespace Lib.JSON
         {
             return value.ToString(null, CultureInfo.InvariantCulture);
         }
-
+        
         /// <summary>
         /// Converts the <see cref="Int64"/>  to its JSON string representation.
         /// </summary>
@@ -278,7 +293,7 @@ namespace Lib.JSON
         {
             return value.ToString(null, CultureInfo.InvariantCulture);
         }
-
+        
         /// <summary>
         /// Converts the <see cref="UInt64"/> to its JSON string representation.
         /// </summary>
@@ -288,7 +303,7 @@ namespace Lib.JSON
         {
             return value.ToString(null, CultureInfo.InvariantCulture);
         }
-
+        
         /// <summary>
         /// Converts the <see cref="Single"/> to its JSON string representation.
         /// </summary>
@@ -298,7 +313,7 @@ namespace Lib.JSON
         {
             return EnsureDecimalPlace(value, value.ToString("R", CultureInfo.InvariantCulture));
         }
-
+        
         /// <summary>
         /// Converts the <see cref="Double"/> to its JSON string representation.
         /// </summary>
@@ -308,24 +323,28 @@ namespace Lib.JSON
         {
             return EnsureDecimalPlace(value, value.ToString("R", CultureInfo.InvariantCulture));
         }
-
+        
         private static string EnsureDecimalPlace(double value, string text)
         {
             if (double.IsNaN(value) || double.IsInfinity(value) || text.IndexOf('.') != -1 || text.IndexOf('E') != -1 ||
                 text.IndexOf('e') != -1)
+            {
                 return text;
-
-            return text + ".0";
+            }
+            
+            return string.Format("{0}.0", text);
         }
-
+        
         private static string EnsureDecimalPlace(string text)
         {
             if (text.IndexOf('.') != -1)
+            {
                 return text;
-
-            return text + ".0";
+            }
+            
+            return string.Format("{0}.0", text);
         }
-
+        
         /// <summary>
         /// Converts the <see cref="Byte"/> to its JSON string representation.
         /// </summary>
@@ -335,7 +354,7 @@ namespace Lib.JSON
         {
             return value.ToString(null, CultureInfo.InvariantCulture);
         }
-
+        
         /// <summary>
         /// Converts the <see cref="SByte"/> to its JSON string representation.
         /// </summary>
@@ -345,7 +364,7 @@ namespace Lib.JSON
         {
             return value.ToString(null, CultureInfo.InvariantCulture);
         }
-
+        
         /// <summary>
         /// Converts the <see cref="Decimal"/> to its JSON string representation.
         /// </summary>
@@ -355,7 +374,7 @@ namespace Lib.JSON
         {
             return EnsureDecimalPlace(value.ToString(null, CultureInfo.InvariantCulture));
         }
-
+        
         /// <summary>
         /// Converts the <see cref="Guid"/> to its JSON string representation.
         /// </summary>
@@ -363,9 +382,9 @@ namespace Lib.JSON
         /// <returns>A JSON string representation of the <see cref="Guid"/>.</returns>
         public static string ToString(Guid value)
         {
-            return '"' + value.ToString("D", CultureInfo.InvariantCulture) + '"';
+            return string.Format("{0}{1}{2}", '"', value.ToString("D", CultureInfo.InvariantCulture), '"');
         }
-
+        
         /// <summary>
         /// Converts the <see cref="TimeSpan"/> to its JSON string representation.
         /// </summary>
@@ -373,9 +392,9 @@ namespace Lib.JSON
         /// <returns>A JSON string representation of the <see cref="TimeSpan"/>.</returns>
         public static string ToString(TimeSpan value)
         {
-            return '"' + value.ToString() + '"';
+            return string.Format("{0}{1}{2}", '"', value.ToString(), '"');
         }
-
+        
         /// <summary>
         /// Converts the <see cref="Uri"/> to its JSON string representation.
         /// </summary>
@@ -384,11 +403,13 @@ namespace Lib.JSON
         public static string ToString(Uri value)
         {
             if (value == null)
+            {
                 return Null;
-
+            }
+            
             return ToString(value.ToString());
         }
-
+        
         /// <summary>
         /// Converts the <see cref="String"/> to its JSON string representation.
         /// </summary>
@@ -398,7 +419,7 @@ namespace Lib.JSON
         {
             return ToString(value, '"');
         }
-
+        
         /// <summary>
         /// Converts the <see cref="String"/> to its JSON string representation.
         /// </summary>
@@ -409,7 +430,7 @@ namespace Lib.JSON
         {
             return JavaScriptUtils.ToEscapedJavaScriptString(value, delimter, true);
         }
-
+        
         /// <summary>
         /// Converts the <see cref="Object"/> to its JSON string representation.
         /// </summary>
@@ -418,10 +439,12 @@ namespace Lib.JSON
         public static string ToString(object value)
         {
             if (value == null)
+            {
                 return Null;
-
+            }
+            
             var convertible = value as IConvertible;
-
+            
             if (convertible != null)
             {
                 switch (convertible.GetTypeCode())
@@ -460,30 +483,29 @@ namespace Lib.JSON
                         return Null;
                 }
             }
-#if !PocketPC && !NET20
+            #if !PocketPC && !NET20
             else if (value is DateTimeOffset)
             {
-                return ToString((DateTimeOffset) value);
+                return ToString((DateTimeOffset)value);
             }
-#endif
+            #endif
             else if (value is Guid)
             {
-                return ToString((Guid) value);
+                return ToString((Guid)value);
             }
             else if (value is Uri)
             {
-                return ToString((Uri) value);
+                return ToString((Uri)value);
             }
             else if (value is TimeSpan)
             {
-                return ToString((TimeSpan) value);
+                return ToString((TimeSpan)value);
             }
-
+            
             throw new ArgumentException(
-                "Unsupported type: {0}. Use the JsonSerializer class to get the object's JSON representation.".
-                    FormatWith(CultureInfo.InvariantCulture, value.GetType()));
+                "Unsupported type: {0}. Use the JsonSerializer class to get the object's JSON representation.".FormatWith(CultureInfo.InvariantCulture, value.GetType()));
         }
-
+        
         private static bool IsJsonPrimitiveTypeCode(TypeCode typeCode)
         {
             switch (typeCode)
@@ -509,28 +531,40 @@ namespace Lib.JSON
                     return false;
             }
         }
-
+        
         internal static bool IsJsonPrimitiveType(Type type)
         {
             if (ReflectionUtils.IsNullableType(type))
+            {
                 type = Nullable.GetUnderlyingType(type);
-
-#if !PocketPC && !NET20
+            }
+            
+            #if !PocketPC && !NET20
             if (type == typeof (DateTimeOffset))
+            {
                 return true;
-#endif
+            }
+            #endif
             if (type == typeof (byte[]))
+            {
                 return true;
+            }
             if (type == typeof (Uri))
+            {
                 return true;
+            }
             if (type == typeof (TimeSpan))
+            {
                 return true;
+            }
             if (type == typeof (Guid))
+            {
                 return true;
-
+            }
+            
             return IsJsonPrimitiveTypeCode(Type.GetTypeCode(type));
         }
-
+        
         /// <summary>
         /// Serializes the specified object to a JSON string.
         /// </summary>
@@ -538,9 +572,9 @@ namespace Lib.JSON
         /// <returns>A JSON string representation of the object.</returns>
         public static string SerializeObject(object value)
         {
-            return SerializeObject(value, Formatting.None, (JsonSerializerSettings) null);
+            return SerializeObject(value, Formatting.None, (JsonSerializerSettings)null);
         }
-
+        
         /// <summary>
         /// Serializes the specified object to a JSON string.
         /// </summary>
@@ -551,9 +585,9 @@ namespace Lib.JSON
         /// </returns>
         public static string SerializeObject(object value, Formatting formatting)
         {
-            return SerializeObject(value, formatting, (JsonSerializerSettings) null);
+            return SerializeObject(value, formatting, (JsonSerializerSettings)null);
         }
-
+        
         /// <summary>
         /// Serializes the specified object to a JSON string using a collection of <see cref="JsonConverter"/>.
         /// </summary>
@@ -564,7 +598,7 @@ namespace Lib.JSON
         {
             return SerializeObject(value, Formatting.None, converters);
         }
-
+        
         /// <summary>
         /// Serializes the specified object to a JSON string using a collection of <see cref="JsonConverter"/>.
         /// </summary>
@@ -575,12 +609,12 @@ namespace Lib.JSON
         public static string SerializeObject(object value, Formatting formatting, params JsonConverter[] converters)
         {
             JsonSerializerSettings settings = (converters != null && converters.Length > 0)
-                                                  ? new JsonSerializerSettings {Converters = converters}
-                                                  : null;
-
+                                              ? new JsonSerializerSettings { Converters = converters }
+                                              : null;
+            
             return SerializeObject(value, formatting, settings);
         }
-
+        
         /// <summary>
         /// Serializes the specified object to a JSON string using a collection of <see cref="JsonConverter"/>.
         /// </summary>
@@ -594,19 +628,19 @@ namespace Lib.JSON
         public static string SerializeObject(object value, Formatting formatting, JsonSerializerSettings settings)
         {
             JsonSerializer jsonSerializer = JsonSerializer.Create(settings);
-
+            
             var sb = new StringBuilder(256);
             var sw = new StringWriter(sb, CultureInfo.InvariantCulture);
             using (var jsonWriter = new JsonTextWriter(sw))
             {
                 jsonWriter.Formatting = formatting;
-
+                
                 jsonSerializer.Serialize(jsonWriter, value);
             }
-
+            
             return sw.ToString();
         }
-
+        
         /// <summary>
         /// Deserializes the JSON to a .NET object.
         /// </summary>
@@ -614,9 +648,9 @@ namespace Lib.JSON
         /// <returns>The deserialized object from the Json string.</returns>
         public static object DeserializeObject(string value)
         {
-            return DeserializeObject(value, null, (JsonSerializerSettings) null);
+            return DeserializeObject(value, null, (JsonSerializerSettings)null);
         }
-
+        
         /// <summary>
         /// Deserializes the JSON to a .NET object.
         /// </summary>
@@ -630,7 +664,7 @@ namespace Lib.JSON
         {
             return DeserializeObject(value, null, settings);
         }
-
+        
         /// <summary>
         /// Deserializes the JSON to the specified .NET type.
         /// </summary>
@@ -639,9 +673,9 @@ namespace Lib.JSON
         /// <returns>The deserialized object from the Json string.</returns>
         public static object DeserializeObject(string value, Type type)
         {
-            return DeserializeObject(value, type, (JsonSerializerSettings) null);
+            return DeserializeObject(value, type, (JsonSerializerSettings)null);
         }
-
+        
         /// <summary>
         /// Deserializes the JSON to the specified .NET type.
         /// </summary>
@@ -650,9 +684,9 @@ namespace Lib.JSON
         /// <returns>The deserialized object from the Json string.</returns>
         public static T DeserializeObject<T>(string value)
         {
-            return DeserializeObject<T>(value, (JsonSerializerSettings) null);
+            return DeserializeObject<T>(value, (JsonSerializerSettings)null);
         }
-
+        
         /// <summary>
         /// Deserializes the JSON to the given anonymous type.
         /// </summary>
@@ -668,7 +702,7 @@ namespace Lib.JSON
         {
             return DeserializeObject<T>(value);
         }
-
+        
         /// <summary>
         /// Deserializes the JSON to the specified .NET type.
         /// </summary>
@@ -678,9 +712,9 @@ namespace Lib.JSON
         /// <returns>The deserialized object from the JSON string.</returns>
         public static T DeserializeObject<T>(string value, params JsonConverter[] converters)
         {
-            return (T) DeserializeObject(value, typeof (T), converters);
+            return (T)DeserializeObject(value, typeof (T), converters);
         }
-
+        
         /// <summary>
         /// Deserializes the JSON to the specified .NET type.
         /// </summary>
@@ -693,9 +727,9 @@ namespace Lib.JSON
         /// <returns>The deserialized object from the JSON string.</returns>
         public static T DeserializeObject<T>(string value, JsonSerializerSettings settings)
         {
-            return (T) DeserializeObject(value, typeof (T), settings);
+            return (T)DeserializeObject(value, typeof (T), settings);
         }
-
+        
         /// <summary>
         /// Deserializes the JSON to the specified .NET type.
         /// </summary>
@@ -706,12 +740,12 @@ namespace Lib.JSON
         public static object DeserializeObject(string value, Type type, params JsonConverter[] converters)
         {
             JsonSerializerSettings settings = (converters != null && converters.Length > 0)
-                                                  ? new JsonSerializerSettings {Converters = converters}
-                                                  : null;
-
+                                              ? new JsonSerializerSettings { Converters = converters }
+                                              : null;
+            
             return DeserializeObject(value, type, settings);
         }
-
+        
         /// <summary>
         /// Deserializes the JSON to the specified .NET type.
         /// </summary>
@@ -726,21 +760,23 @@ namespace Lib.JSON
         {
             var sr = new StringReader(value);
             JsonSerializer jsonSerializer = JsonSerializer.Create(settings);
-
+            
             object deserializedValue;
-
+            
             using (JsonReader jsonReader = new JsonTextReader(sr))
             {
                 deserializedValue = jsonSerializer.Deserialize(jsonReader, type);
-
+                
                 if (jsonReader.Read() && jsonReader.TokenType != JsonToken.Comment)
+                {
                     throw new JsonSerializationException(
                         "Additional text found in JSON string after finishing deserializing object.");
+                }
             }
-
+            
             return deserializedValue;
         }
-
+        
         /// <summary>
         /// Populates the object with values from the JSON string.
         /// </summary>
@@ -750,8 +786,7 @@ namespace Lib.JSON
         {
             PopulateObject(value, target, null);
         }
-
-
+        
         /// <summary>
         /// Populates the object with values from the JSON string.
         /// </summary>
@@ -765,18 +800,20 @@ namespace Lib.JSON
         {
             var sr = new StringReader(value);
             JsonSerializer jsonSerializer = JsonSerializer.Create(settings);
-
+            
             using (JsonReader jsonReader = new JsonTextReader(sr))
             {
                 jsonSerializer.Populate(jsonReader, target);
-
+                
                 if (jsonReader.Read() && jsonReader.TokenType != JsonToken.Comment)
+                {
                     throw new JsonSerializationException(
                         "Additional text found in JSON string after finishing deserializing object.");
+                }
             }
         }
-
-#if !SILVERLIGHT
+        
+        #if !SILVERLIGHT
         /// <summary>
         /// Serializes the XML node to a JSON string.
         /// </summary>
@@ -786,7 +823,7 @@ namespace Lib.JSON
         {
             return SerializeXmlNode(node, Formatting.None);
         }
-
+        
         /// <summary>
         /// Serializes the XML node to a JSON string.
         /// </summary>
@@ -796,10 +833,10 @@ namespace Lib.JSON
         public static string SerializeXmlNode(XmlNode node, Formatting formatting)
         {
             var converter = new XmlNodeConverter();
-
+            
             return SerializeObject(node, formatting, converter);
         }
-
+        
         /// <summary>
         /// Serializes the XML node to a JSON string.
         /// </summary>
@@ -809,11 +846,11 @@ namespace Lib.JSON
         /// <returns>A JSON string of the XmlNode.</returns>
         public static string SerializeXmlNode(XmlNode node, Formatting formatting, bool omitRootObject)
         {
-            var converter = new XmlNodeConverter {OmitRootObject = omitRootObject};
-
+            var converter = new XmlNodeConverter { OmitRootObject = omitRootObject };
+            
             return SerializeObject(node, formatting, converter);
         }
-
+        
         /// <summary>
         /// Deserializes the XmlNode from a JSON string.
         /// </summary>
@@ -823,7 +860,7 @@ namespace Lib.JSON
         {
             return DeserializeXmlNode(value, null);
         }
-
+        
         /// <summary>
         /// Deserializes the XmlNode from a JSON string nested in a root elment.
         /// </summary>
@@ -834,7 +871,7 @@ namespace Lib.JSON
         {
             return DeserializeXmlNode(value, deserializeRootElementName, false);
         }
-
+        
         /// <summary>
         /// Deserializes the XmlNode from a JSON string nested in a root elment.
         /// </summary>
@@ -846,17 +883,18 @@ namespace Lib.JSON
         /// </param>
         /// <returns>The deserialized XmlNode</returns>
         public static XmlDocument DeserializeXmlNode(string value, string deserializeRootElementName,
-                                                     bool writeArrayAttribute)
+            bool writeArrayAttribute)
         {
             var converter = new XmlNodeConverter();
             converter.DeserializeRootElementName = deserializeRootElementName;
             converter.WriteArrayAttribute = writeArrayAttribute;
-
-            return (XmlDocument) DeserializeObject(value, typeof (XmlDocument), converter);
+            
+            return (XmlDocument)DeserializeObject(value, typeof (XmlDocument), converter);
         }
-#endif
-
-#if !NET20 && (!SILVERLIGHT || WINDOWS_PHONE)
+        
+        #endif
+        
+        #if !NET20 && (!SILVERLIGHT || WINDOWS_PHONE)
         /// <summary>
         /// Serializes the <see cref="XNode"/> to a JSON string.
         /// </summary>
@@ -866,7 +904,7 @@ namespace Lib.JSON
         {
             return SerializeXNode(node, Formatting.None);
         }
-
+        
         /// <summary>
         /// Serializes the <see cref="XNode"/> to a JSON string.
         /// </summary>
@@ -877,7 +915,7 @@ namespace Lib.JSON
         {
             return SerializeXNode(node, formatting, false);
         }
-
+        
         /// <summary>
         /// Serializes the <see cref="XNode"/> to a JSON string.
         /// </summary>
@@ -887,11 +925,11 @@ namespace Lib.JSON
         /// <returns>A JSON string of the XNode.</returns>
         public static string SerializeXNode(XObject node, Formatting formatting, bool omitRootObject)
         {
-            var converter = new XmlNodeConverter {OmitRootObject = omitRootObject};
-
+            var converter = new XmlNodeConverter { OmitRootObject = omitRootObject };
+            
             return SerializeObject(node, formatting, converter);
         }
-
+        
         /// <summary>
         /// Deserializes the <see cref="XNode"/> from a JSON string.
         /// </summary>
@@ -901,7 +939,7 @@ namespace Lib.JSON
         {
             return DeserializeXNode(value, null);
         }
-
+        
         /// <summary>
         /// Deserializes the <see cref="XNode"/> from a JSON string nested in a root elment.
         /// </summary>
@@ -912,7 +950,7 @@ namespace Lib.JSON
         {
             return DeserializeXNode(value, deserializeRootElementName, false);
         }
-
+        
         /// <summary>
         /// Deserializes the <see cref="XNode"/> from a JSON string nested in a root elment.
         /// </summary>
@@ -924,14 +962,14 @@ namespace Lib.JSON
         /// </param>
         /// <returns>The deserialized XNode</returns>
         public static XDocument DeserializeXNode(string value, string deserializeRootElementName,
-                                                 bool writeArrayAttribute)
+            bool writeArrayAttribute)
         {
             var converter = new XmlNodeConverter();
             converter.DeserializeRootElementName = deserializeRootElementName;
             converter.WriteArrayAttribute = writeArrayAttribute;
-
-            return (XDocument) DeserializeObject(value, typeof (XDocument), converter);
+            
+            return (XDocument)DeserializeObject(value, typeof (XDocument), converter);
         }
-#endif
+        #endif
     }
 }

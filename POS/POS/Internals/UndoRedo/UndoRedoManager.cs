@@ -15,17 +15,17 @@ namespace POS.Internals.UndoRedo
         private static Command currentCommand;
         private static int maxHistorySize;
 
-        internal static Command CurrentCommand
-        {
-            get { return currentCommand; }
-        }
+        public static event EventHandler<CommandDoneEventArgs> CommandDone;
 
         /// <summary>
         /// Returns true if history has command that can be undone
         /// </summary>
         public static bool CanUndo
         {
-            get { return currentPosition >= 0; }
+            get
+            {
+                return currentPosition >= 0;
+            }
         }
 
         /// <summary>
@@ -33,12 +33,18 @@ namespace POS.Internals.UndoRedo
         /// </summary>
         public static bool CanRedo
         {
-            get { return currentPosition < history.Count - 1; }
+            get
+            {
+                return currentPosition < history.Count - 1;
+            }
         }
 
         public static bool IsCommandStarted
         {
-            get { return currentCommand != null; }
+            get
+            {
+                return currentCommand != null;
+            }
         }
 
         /// <summary>Gets an enumeration of commands captions that can be undone.</summary>
@@ -48,7 +54,9 @@ namespace POS.Internals.UndoRedo
             get
             {
                 for (int i = currentPosition; i >= 0; i--)
+                {
                     yield return history[i].Caption;
+                }
             }
         }
 
@@ -59,7 +67,9 @@ namespace POS.Internals.UndoRedo
             get
             {
                 for (int i = currentPosition + 1; i < history.Count; i++)
+                {
                     yield return history[i].Caption;
+                }
             }
         }
 
@@ -69,15 +79,30 @@ namespace POS.Internals.UndoRedo
         /// </summary>
         public static int MaxHistorySize
         {
-            get { return maxHistorySize; }
+            get
+            {
+                return maxHistorySize;
+            }
             set
             {
                 if (IsCommandStarted)
+                {
                     throw new InvalidOperationException("Max size may not be set while command is run.");
+                }
                 if (value < 0)
+                {
                     throw new ArgumentOutOfRangeException("Value may not be less than 0");
+                }
                 maxHistorySize = value;
                 TruncateHistory();
+            }
+        }
+
+        internal static Command CurrentCommand
+        {
+            get
+            {
+                return currentCommand;
             }
         }
 
@@ -134,7 +159,9 @@ namespace POS.Internals.UndoRedo
         {
             AssertCommand();
             foreach (IUndoRedoMember member in currentCommand.Keys)
+            {
                 member.OnCommit(currentCommand[member]);
+            }
 
             // add command to history (all redo records will be removed)
             int count = history.Count - currentPosition - 1;
@@ -155,7 +182,9 @@ namespace POS.Internals.UndoRedo
         {
             AssertCommand();
             foreach (IUndoRedoMember member in currentCommand.Keys)
+            {
                 member.OnUndo(currentCommand[member]);
+            }
             currentCommand = null;
         }
 
@@ -174,51 +203,40 @@ namespace POS.Internals.UndoRedo
         internal static void AssertNoCommand()
         {
             if (currentCommand != null)
+            {
                 throw new InvalidOperationException(
                     "Previous command is not completed. Use UndoRedoManager.Commit() to complete current command.");
+            }
         }
 
         /// <summary>Checks that command had been started</summary>
         internal static void AssertCommand()
         {
             if (currentCommand == null)
+            {
                 throw new InvalidOperationException("Command is not started. Use method UndoRedoManager.Start().");
+            }
         }
-
-        public static event EventHandler<CommandDoneEventArgs> CommandDone;
 
         private static void OnCommandDone(CommandDoneType type)
         {
             if (CommandDone != null)
+            {
                 CommandDone(null, new CommandDoneEventArgs(type));
+            }
         }
 
         private static void TruncateHistory()
         {
             if (maxHistorySize > 0)
+            {
                 if (history.Count > maxHistorySize)
                 {
                     int count = history.Count - maxHistorySize;
                     history.RemoveRange(0, count);
                     currentPosition -= count;
                 }
-        }
-    }
-
-    public enum CommandDoneType
-    {
-        Commit,
-        Undo,
-        Redo
-    }
-
-    public class CommandDoneEventArgs : EventArgs
-    {
-        public readonly CommandDoneType CommandDoneType;
-
-        public CommandDoneEventArgs(CommandDoneType type)
-        {
-            CommandDoneType = type;
+            }
         }
     }
 }

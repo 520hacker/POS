@@ -18,9 +18,13 @@ namespace Pos.Internals.Extensions
         public static void SetVisible(this TabPage tabPage, bool visible)
         {
             if (visible)
+            {
                 tabPage.ShowTabPage();
+            }
             else
+            {
                 tabPage.HideTabPage();
+            }
         }
 
         /// <summary>
@@ -42,7 +46,9 @@ namespace Pos.Internals.Extensions
         public static void ShowTabPage(this TabPage tabPage)
         {
             if (!_hiddenPages.ContainsKey(tabPage))
+            {
                 return;
+            }
 
             var opt = _hiddenPages[tabPage];
             var tabControl = (TabControl)opt[0];

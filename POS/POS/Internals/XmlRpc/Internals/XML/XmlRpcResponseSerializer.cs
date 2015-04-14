@@ -2,13 +2,12 @@ namespace Rpc.Internals
 {
     using System;
     using System.Xml;
-    using Rpc.Internals;
 
     /// <summary>Class responsible for serializing an XML-RPC response.</summary>
     /// <remarks>This class handles the response envelope, depending on XmlRpcSerializer
     /// to serialize the payload.</remarks>
     /// <seealso cref="XmlRpcSerializer"/>
-    class XmlRpcResponseSerializer : XmlRpcSerializer
+    internal class XmlRpcResponseSerializer : XmlRpcSerializer
     {
         static private XmlRpcResponseSerializer _singleton;
 
@@ -18,7 +17,9 @@ namespace Rpc.Internals
             get
             {
                 if (_singleton == null)
+                {
                     _singleton = new XmlRpcResponseSerializer();
+                }
 
                 return _singleton;
             }
@@ -36,7 +37,9 @@ namespace Rpc.Internals
             output.WriteStartElement(METHOD_RESPONSE);
 
             if (response.IsFault)
+            {
                 output.WriteStartElement(FAULT);
+            }
             else
             {
                 output.WriteStartElement(PARAMS);
@@ -45,13 +48,15 @@ namespace Rpc.Internals
 
             output.WriteStartElement(VALUE);
 
-            SerializeObject(output, response.Value);
+            this.SerializeObject(output, response.Value);
 
             output.WriteEndElement();
 
             output.WriteEndElement();
             if (!response.IsFault)
+            {
                 output.WriteEndElement();
+            }
             output.WriteEndElement();
         }
     }

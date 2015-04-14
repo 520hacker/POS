@@ -1,4 +1,6 @@
+
 #region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,45 +23,42 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 #if !(NET35 || NET20 || WINDOWS_PHONE)
+
 using System;
-using System.Collections.Generic;
-using System.Reflection;
-using Lib.JSON.Utilities;
-using System.Collections;
 
 namespace Lib.JSON.Serialization
 {
-  /// <summary>
-  /// Contract details for a <see cref="Type"/> used by the <see cref="JsonSerializer"/>.
-  /// </summary>
-  public class JsonDynamicContract : JsonContract
-  {
     /// <summary>
-    /// Gets the object's properties.
+    /// Contract details for a <see cref="Type"/> used by the <see cref="JsonSerializer"/>.
     /// </summary>
-    /// <value>The object's properties.</value>
-    public JsonPropertyCollection Properties { get; private set; }
-
-    /// <summary>
-    /// Gets or sets the property name resolver.
-    /// </summary>
-    /// <value>The property name resolver.</value>
-    public Func<string, string> PropertyNameResolver { get; set; }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="JsonDynamicContract"/> class.
-    /// </summary>
-    /// <param name="underlyingType">The underlying type for the contract.</param>
-    public JsonDynamicContract(Type underlyingType)
-      : base(underlyingType)
+    public class JsonDynamicContract : JsonContract
     {
-      ContractType = JsonContractType.Dynamic;
-
-      Properties = new JsonPropertyCollection(UnderlyingType);
+        /// <summary>
+        /// Gets the object's properties.
+        /// </summary>
+        /// <value>The object's properties.</value>
+        public JsonPropertyCollection Properties { get; private set; }
+        
+        /// <summary>
+        /// Gets or sets the property name resolver.
+        /// </summary>
+        /// <value>The property name resolver.</value>
+        public Func<string, string> PropertyNameResolver { get; set; }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JsonDynamicContract"/> class.
+        /// </summary>
+        /// <param name="underlyingType">The underlying type for the contract.</param>
+        public JsonDynamicContract(Type underlyingType) : base(underlyingType)
+        {
+            this.ContractType = JsonContractType.Dynamic;
+            
+            this.Properties = new JsonPropertyCollection(this.UnderlyingType);
+        }
     }
-  }
 }
 #endif

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
-using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization.Json;
 using System.Text;
@@ -120,9 +119,9 @@ namespace Pos.Internals.Extensions
             // Copy the properties
             foreach (PropertyInfo property in type.GetProperties())
             {
-                if (property.CanWrite
-                    && property.CanRead
-                    && !ignoreList.Contains(property.Name))
+                if (property.CanWrite &&
+                    property.CanRead &&
+                    !ignoreList.Contains(property.Name))
                 {
                     object val = property.GetValue(source, null);
                     property.SetValue(target, val, null);
@@ -277,8 +276,8 @@ namespace Pos.Internals.Extensions
 
             foreach (PropertyInfo property in type.GetProperties())
             {
-                if (property.CanWrite
-                    && property.CanRead)
+                if (property.CanWrite &&
+                    property.CanRead)
                 {
                     object val = property.GetValue(source, null);
                     sb.Append(property.Name);

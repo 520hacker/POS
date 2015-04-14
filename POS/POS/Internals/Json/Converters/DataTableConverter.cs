@@ -1,4 +1,6 @@
-﻿#region License
+﻿
+#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,136 +23,140 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 #if !SILVERLIGHT
+
 using System;
 using System.Data;
 using Lib.JSON.Serialization;
 
 namespace Lib.JSON.Converters
 {
-  /// <summary>
-  /// Converts a <see cref="DataTable"/> to and from JSON.
-  /// </summary>
-  public class DataTableConverter : JsonConverter
-  {
     /// <summary>
-    /// Writes the JSON representation of the object.
+    /// Converts a <see cref="DataTable"/> to and from JSON.
     /// </summary>
-    /// <param name="writer">The <see cref="JsonWriter"/> to write to.</param>
-    /// <param name="value">The value.</param>
-    /// <param name="serializer">The calling serializer.</param>
-    public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+    public class DataTableConverter : JsonConverter
     {
-      DataTable table = (DataTable)value;
-      DefaultContractResolver resolver = serializer.ContractResolver as DefaultContractResolver;
-
-      writer.WriteStartArray();
-
-      foreach (DataRow row in table.Rows)
-      {
-        writer.WriteStartObject();
-        foreach (DataColumn column in row.Table.Columns)
+        /// <summary>
+        /// Writes the JSON representation of the object.
+        /// </summary>
+        /// <param name="writer">The <see cref="JsonWriter"/> to write to.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="serializer">The calling serializer.</param>
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-          if (serializer.NullValueHandling == NullValueHandling.Ignore && (row[column] == null || row[column] == DBNull.Value))
-            continue;
+            DataTable table = (DataTable)value;
+            DefaultContractResolver resolver = serializer.ContractResolver as DefaultContractResolver;
+            
+            writer.WriteStartArray();
+            
+            foreach (DataRow row in table.Rows)
+            {
+                writer.WriteStartObject();
+                foreach (DataColumn column in row.Table.Columns)
+                {
+                    if (serializer.NullValueHandling == NullValueHandling.Ignore && (row[column] == null || row[column] == DBNull.Value))
+                    {
+                        continue;
+                    }
+                    
+                    writer.WritePropertyName((resolver != null) ? resolver.ResolvePropertyName(column.ColumnName) : column.ColumnName);
+                    serializer.Serialize(writer, row[column]);
+                }
+                writer.WriteEndObject();
+            }
 
-          writer.WritePropertyName((resolver != null) ? resolver.ResolvePropertyName(column.ColumnName) : column.ColumnName);
-          serializer.Serialize(writer, row[column]);
+            writer.WriteEndArray();
         }
-        writer.WriteEndObject();
-      }
-
-      writer.WriteEndArray();
-    }
-
-    /// <summary>
-    /// Reads the JSON representation of the object.
-    /// </summary>
-    /// <param name="reader">The <see cref="JsonReader"/> to read from.</param>
-    /// <param name="objectType">Type of the object.</param>
-    /// <param name="existingValue">The existing value of object being read.</param>
-    /// <param name="serializer">The calling serializer.</param>
-    /// <returns>The object value.</returns>
-    public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-    {
-      DataTable dt;
-
-      if (reader.TokenType == JsonToken.PropertyName)
-      {
-        dt = new DataTable((string)reader.Value);
-        reader.Read();
-      }
-      else
-      {
-        dt = new DataTable();
-      }
-
-      reader.Read();
-
-      while (reader.TokenType == JsonToken.StartObject)
-      {
-        DataRow dr = dt.NewRow();
-        reader.Read();
-
-        while (reader.TokenType == JsonToken.PropertyName)
+        
+        /// <summary>
+        /// Reads the JSON representation of the object.
+        /// </summary>
+        /// <param name="reader">The <see cref="JsonReader"/> to read from.</param>
+        /// <param name="objectType">Type of the object.</param>
+        /// <param name="existingValue">The existing value of object being read.</param>
+        /// <param name="serializer">The calling serializer.</param>
+        /// <returns>The object value.</returns>
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-          string columnName = (string)reader.Value;
+            DataTable dt;
+            
+            if (reader.TokenType == JsonToken.PropertyName)
+            {
+                dt = new DataTable((string)reader.Value);
+                reader.Read();
+            }
+            else
+            {
+                dt = new DataTable();
+            }
+            
+            reader.Read();
+            
+            while (reader.TokenType == JsonToken.StartObject)
+            {
+                DataRow dr = dt.NewRow();
+                reader.Read();
+                
+                while (reader.TokenType == JsonToken.PropertyName)
+                {
+                    string columnName = (string)reader.Value;
+                    
+                    reader.Read();
+                    
+                    if (!dt.Columns.Contains(columnName))
+                    {
+                        Type columnType = GetColumnDataType(reader.TokenType);
+                        dt.Columns.Add(new DataColumn(columnName, columnType));
+                    }
+                    
+                    dr[columnName] = reader.Value ?? DBNull.Value;
+                    reader.Read();
+                }
 
-          reader.Read();
+                dr.EndEdit();
+                dt.Rows.Add(dr);
 
-          if (!dt.Columns.Contains(columnName))
-          {
-            Type columnType = GetColumnDataType(reader.TokenType);
-            dt.Columns.Add(new DataColumn(columnName, columnType));
-          }
+                reader.Read();
+            }
 
-          dr[columnName] = reader.Value ?? DBNull.Value;
-          reader.Read();
+            return dt;
         }
-
-        dr.EndEdit();
-        dt.Rows.Add(dr);
-
-        reader.Read();
-      }
-
-      return dt;
+        
+        private static Type GetColumnDataType(JsonToken tokenType)
+        {
+            switch (tokenType)
+            {
+                case JsonToken.Integer:
+                    return typeof (long);
+                case JsonToken.Float:
+                    return typeof (double);
+                case JsonToken.String:
+                case JsonToken.Null:
+                case JsonToken.Undefined:
+                    return typeof (string);
+                case JsonToken.Boolean:
+                    return typeof (bool);
+                case JsonToken.Date:
+                    return typeof (DateTime);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+        
+        /// <summary>
+        /// Determines whether this instance can convert the specified value type.
+        /// </summary>
+        /// <param name="valueType">Type of the value.</param>
+        /// <returns>
+        /// 	<c>true</c> if this instance can convert the specified value type; otherwise, <c>false</c>.
+        /// </returns>
+        public override bool CanConvert(Type valueType)
+        {
+            return (valueType == typeof(DataTable));
+        }
     }
-
-    private static Type GetColumnDataType(JsonToken tokenType)
-    {
-      switch (tokenType)
-      {
-        case JsonToken.Integer:
-          return typeof (long);
-        case JsonToken.Float:
-          return typeof (double);
-        case JsonToken.String:
-        case JsonToken.Null:
-        case JsonToken.Undefined:
-          return typeof (string);
-        case JsonToken.Boolean:
-          return typeof (bool);
-        case JsonToken.Date:
-          return typeof (DateTime);
-        default:
-          throw new ArgumentOutOfRangeException();
-      }
-    }
-
-    /// <summary>
-    /// Determines whether this instance can convert the specified value type.
-    /// </summary>
-    /// <param name="valueType">Type of the value.</param>
-    /// <returns>
-    /// 	<c>true</c> if this instance can convert the specified value type; otherwise, <c>false</c>.
-    /// </returns>
-    public override bool CanConvert(Type valueType)
-    {
-      return (valueType == typeof(DataTable));
-    }
-  }
 }
 #endif

@@ -12,14 +12,14 @@ namespace Info.Blockchain.API.BlockExplorer
     {
         public Address(JObject a)
         {
-            Hash160 = (string)a["hash160"];
-            AddressStr = (string)a["address"];
-            TotalReceived = (long)a["total_received"];
-            TotalSent = (long)a["total_sent"];
-            FinalBalance = (long)a["final_balance"];
+            this.Hash160 = (string)a["hash160"];
+            this.AddressStr = (string)a["address"];
+            this.TotalReceived = (long)a["total_received"];
+            this.TotalSent = (long)a["total_sent"];
+            this.FinalBalance = (long)a["final_balance"];
 
             var txs = a["txs"].Select(x => new Transaction((JObject)x, -1, false)).ToList();
-            Transactions = new ReadOnlyCollection<Transaction>(txs);
+            this.Transactions = new ReadOnlyCollection<Transaction>(txs);
         }
 
         /// <summary>

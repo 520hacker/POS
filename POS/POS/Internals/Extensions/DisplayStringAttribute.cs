@@ -44,20 +44,12 @@ namespace Pos.Internals.Extensions
         /// </summary>
         public static readonly DisplayStringAttribute Default = new DisplayStringAttribute();
 
-        private readonly string _displayString;
-        /// <summary>
-        /// The value of this attribute
-        /// </summary>
-        public string DisplayString
-        {
-            get { return _displayString; }
-        }
-
         /// <summary>
         /// Initializes a new instance of the class <c>DisplayStringAttribute</c> with default value (empty string)
         /// </summary>
-        public DisplayStringAttribute()
-            :this(string.Empty) { }
+        public DisplayStringAttribute() : this(string.Empty)
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the class <c>DisplayStringAttribute</c> with specified value
@@ -65,26 +57,33 @@ namespace Pos.Internals.Extensions
         /// <param name="displayString">The value of this attribute</param>
         public DisplayStringAttribute(string displayString)
         {
-            _displayString = displayString;
+            this.DisplayString = displayString;
         }
+
+        /// <summary>
+        /// The value of this attribute
+        /// </summary>
+        public string DisplayString { get; private set; }
 
         public override bool Equals(object obj)
         {
             var dsaObj = obj as DisplayStringAttribute;
             if (dsaObj == null)
+            {
                 return false;
+            }
 
-            return _displayString.Equals(dsaObj._displayString);
+            return this.DisplayString.Equals(dsaObj.DisplayString);
         }
 
         public override int GetHashCode()
         {
-            return _displayString.GetHashCode();
+            return this.DisplayString.GetHashCode();
         }
 
         public override bool IsDefaultAttribute()
         {
-            return Equals(Default);
+            return this.Equals(Default);
         }
     }
 }

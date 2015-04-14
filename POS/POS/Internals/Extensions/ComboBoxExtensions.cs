@@ -33,7 +33,7 @@ namespace Pos.Internals.Extensions
         /// </remarks>
         public static void MeasureDropDownWidth(this ComboBox comboBox, int rightSpaceWidth = 15, int minDropDownWidth = -1)
         {
-            if(comboBox.Items.Count == 0)
+            if (comboBox.Items.Count == 0)
             {
                 comboBox.DropDownWidth = Math.Max(comboBox.Width, minDropDownWidth);
                 return;

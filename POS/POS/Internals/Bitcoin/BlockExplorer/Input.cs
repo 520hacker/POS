@@ -14,10 +14,12 @@ namespace Info.Blockchain.API.BlockExplorer
         {
             JObject prevOut = i["prev_out"] as JObject;
             if (prevOut != null)
-                PreviousOutput = new Output(prevOut, true);
+            {
+                this.PreviousOutput = new Output(prevOut, true);
+            }
 
-            Sequence = (long)i["sequence"];
-            ScriptSignature = (string)i["script"];
+            this.Sequence = (long)i["sequence"];
+            this.ScriptSignature = (string)i["script"];
         }
 
         /// <summary>

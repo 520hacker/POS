@@ -19,11 +19,11 @@ namespace Pos.Internals.Extensions
 
         public static string ClassPropertiesToString(object obj)
         {
-            var retVal = obj.GetType() + "\n";
+            var retVal = string.Format("{0}\n", obj.GetType());
             const BindingFlags Flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.FlattenHierarchy;
             var sourceProperties = obj.GetType().GetProperties(Flags);
 
-            return sourceProperties.Where(pi => pi.PropertyType.Namespace == "System").Aggregate(retVal, (current, pi) => current + string.Format("{0}:{1}\n", pi.Name, pi.GetValue(obj, null)));
+            return sourceProperties.Where(pi => pi.PropertyType.Namespace == "System").Aggregate(retVal, (current, pi) => string.Format("{0}{1}", current, string.Format("{0}:{1}\n", pi.Name, pi.GetValue(obj, null))));
         }
 
         public static string ReplaceMany(this string s, params string[] kv)

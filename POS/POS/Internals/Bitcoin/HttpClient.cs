@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
@@ -11,10 +10,21 @@ namespace Info.Blockchain.API
 {
     public class HttpClient
     {
-        private static string BASE_URI = "https://blockchain.info/";
+        private static readonly string BASE_URI = "https://blockchain.info/";
 
         private static volatile int timeoutMs = 10000;
-        public static int TimeoutMs { get { return timeoutMs; } set { timeoutMs = value; } }
+
+        public static int TimeoutMs
+        {
+            get
+            {
+                return timeoutMs;
+            }
+            set
+            {
+                timeoutMs = value;
+            }
+        }
 
         /// <summary>
         /// Performs a GET request on a Blockchain.info API resource. 
@@ -46,11 +56,11 @@ namespace Info.Blockchain.API
 
             if (parameters != null && parameters.Count > 0)
             {
-                query = string.Join("&", parameters.AllKeys.Select(key => string.Format("{0}={1}", 
+                query = string.Join("&", parameters.AllKeys.Select(key => string.Format("{0}={1}",
                     HttpUtility.UrlEncode(key), HttpUtility.UrlEncode(parameters[key]))));
             }
 
-            var request = WebRequest.Create(BASE_URI + resource + (method == "GET" && query != null ? '?' + query : null));
+            var request = WebRequest.Create(string.Format("{0}{1}{2}", BASE_URI, resource, method == "GET" && query != null ? string.Format("{0}{1}", '?', query) : null));
             request.Timeout = timeoutMs;
 
             if (method == "POST")
@@ -75,12 +85,18 @@ namespace Info.Blockchain.API
                 {
                     var httpResponse = e.Response as HttpWebResponse;
                     if (httpResponse != null && httpResponse.StatusCode != HttpStatusCode.OK)
+                    {
                         throw new APIException(ReadStream(httpResponse.GetResponseStream()));
+                    }
                     else
+                    {
                         throw e;
+                    }
                 }
                 else
+                {
                     throw e;
+                }
             }
 
             return responseStr;

@@ -1,3 +1,4 @@
+
 #region Copyright © 2010 Pawel Idzikowski [idzikowski@sharpserializer.com]
 
 //  ***********************************************************************
@@ -42,26 +43,26 @@ namespace Polenter.Serialization.Serializing
     {
         private readonly object[] _emptyObjectArray = new object[0];
         private readonly PropertyProvider _propertyProvider;
-
+        
         /// <summary>
         /// Contains reference targets.
         /// </summary>
         private readonly Dictionary<object, ReferenceTargetProperty> _propertyCache =
             new Dictionary<object, ReferenceTargetProperty>();
-
+        
         /// <summary>
         /// It will be incremented as neccessary
         /// </summary>
         private int _currentReferenceId = 1;
-
+        
         /// <summary>
         /// </summary>
         /// <param name = "propertyProvider">provides all important properties of the decomposed object</param>
         public PropertyFactory(PropertyProvider propertyProvider)
         {
-            _propertyProvider = propertyProvider;
+            this._propertyProvider = propertyProvider;
         }
-
+        
         /// <summary>
         /// </summary>
         /// <param name = "name"></param>
@@ -69,11 +70,14 @@ namespace Polenter.Serialization.Serializing
         /// <returns>NullProperty if the value is null</returns>
         public Property CreateProperty(string name, object value)
         {
-            if (value == null) return new NullProperty(name);
-
+            if (value == null)
+            {
+                return new NullProperty(name);
+            }
+            
             // If value type is recognized, it will be taken from typeinfo cache
             TypeInfo typeInfo = TypeInfo.GetTypeInfo(value);
-
+            
             // Is it simple type
             Property property = createSimpleProperty(name, typeInfo, value);
             if (property != null)
@@ -81,13 +85,13 @@ namespace Polenter.Serialization.Serializing
                 // It is simple type
                 return property;
             }
-
+            
             // From now it can only be an instance of ReferenceTargetProperty
             ReferenceTargetProperty referenceTarget = createReferenceTargetInstance(name, typeInfo);
-
+            
             // Search in Cache
             ReferenceTargetProperty cachedTarget;
-            if (_propertyCache.TryGetValue(value, out cachedTarget))
+            if (this._propertyCache.TryGetValue(value, out cachedTarget))
             {
                 // Value was already referenced
                 // Its reference will be used
@@ -95,29 +99,31 @@ namespace Polenter.Serialization.Serializing
                 referenceTarget.MakeFlatCopyFrom(cachedTarget);
                 return referenceTarget;
             }
-
+            
             // Target was not found in cache
             // it must be created
-
+            
             // Adding property to cache
             referenceTarget.Reference = new ReferenceInfo();
-            referenceTarget.Reference.Id = _currentReferenceId++;
-            _propertyCache.Add(value, referenceTarget);
-
+            referenceTarget.Reference.Id = this._currentReferenceId++;
+            this._propertyCache.Add(value, referenceTarget);
+            
             // Parsing the property
-            var handled = fillSingleDimensionalArrayProperty(referenceTarget as SingleDimensionalArrayProperty, typeInfo, value);
-            handled = handled || fillMultiDimensionalArrayProperty(referenceTarget as MultiDimensionalArrayProperty, typeInfo, value);
-            handled = handled || fillDictionaryProperty(referenceTarget as DictionaryProperty, typeInfo, value);
-            handled = handled || fillCollectionProperty(referenceTarget as CollectionProperty, typeInfo, value);
-            handled = handled || fillComplexProperty(referenceTarget as ComplexProperty, typeInfo, value);
-
+            var handled = this.fillSingleDimensionalArrayProperty(referenceTarget as SingleDimensionalArrayProperty, typeInfo, value);
+            handled = handled || this.fillMultiDimensionalArrayProperty(referenceTarget as MultiDimensionalArrayProperty, typeInfo, value);
+            handled = handled || this.fillDictionaryProperty(referenceTarget as DictionaryProperty, typeInfo, value);
+            handled = handled || this.fillCollectionProperty(referenceTarget as CollectionProperty, typeInfo, value);
+            handled = handled || this.fillComplexProperty(referenceTarget as ComplexProperty, typeInfo, value);
+            
             if (!handled)
+            {
                 throw new InvalidOperationException(string.Format("Property cannot be filled. Property: {0}",
-                                                                  referenceTarget));
-           
+                    referenceTarget));
+            }
+            
             return referenceTarget;
         }
-
+        
         private static ReferenceTargetProperty createReferenceTargetInstance(string name, TypeInfo typeInfo)
         {
             // Is it array?
@@ -131,7 +137,7 @@ namespace Polenter.Serialization.Serializing
                 // MultiD-Array
                 return new MultiDimensionalArrayProperty(name, typeInfo.Type);
             }
-
+            
             if (typeInfo.IsDictionary)
             {
                 return new DictionaryProperty(name, typeInfo.Type);
@@ -145,142 +151,154 @@ namespace Polenter.Serialization.Serializing
                 // Actually it would be enough to check if the typeinfo.IsEnumerable is true...
                 return new CollectionProperty(name, typeInfo.Type);
             }
-
+            
             // If nothing was recognized, a complex type will be created
             return new ComplexProperty(name, typeInfo.Type);
         }
-
+        
         private bool fillComplexProperty(ComplexProperty property, TypeInfo typeInfo, object value)
         {
             if (property == null)
+            {
                 return false;
-
+            }
+            
             // Parsing properties
-            parseProperties(property, typeInfo, value);
-
+            this.parseProperties(property, typeInfo, value);
+            
             return true;
         }
-
+        
         private void parseProperties(ComplexProperty property, TypeInfo typeInfo, object value)
         {
-            IList<PropertyInfo> propertyInfos = _propertyProvider.GetProperties(typeInfo);
+            IList<PropertyInfo> propertyInfos = this._propertyProvider.GetProperties(typeInfo);
             foreach (PropertyInfo propertyInfo in propertyInfos)
             {
-                object subValue = propertyInfo.GetValue(value, _emptyObjectArray);
-
-                Property subProperty = CreateProperty(propertyInfo.Name, subValue);
-
+                object subValue = propertyInfo.GetValue(value, this._emptyObjectArray);
+                
+                Property subProperty = this.CreateProperty(propertyInfo.Name, subValue);
+                
                 property.Properties.Add(subProperty);
             }
         }
-
-
+        
         private bool fillCollectionProperty(CollectionProperty property, TypeInfo info, object value)
         {
             if (property == null)
+            {
                 return false;
-
+            }
+            
             // Parsing properties
-            parseProperties(property, info, value);
-
+            this.parseProperties(property, info, value);
+            
             // Parse Items
-            parseCollectionItems(property, info, value);
-
+            this.parseCollectionItems(property, info, value);
+            
             return true;
         }
-
+        
         private void parseCollectionItems(CollectionProperty property, TypeInfo info, object value)
         {
             property.ElementType = info.ElementType;
-
-            var collection = (IEnumerable) value;
+            
+            var collection = (IEnumerable)value;
             foreach (object item in collection)
             {
-                Property itemProperty = CreateProperty(null, item);
-
+                Property itemProperty = this.CreateProperty(null, item);
+                
                 property.Items.Add(itemProperty);
             }
         }
-
+        
         private bool fillDictionaryProperty(DictionaryProperty property, TypeInfo info, object value)
         {
             if (property == null)
+            {
                 return false;
-
+            }
+            
             // Properties
-            parseProperties(property, info, value);
-
+            this.parseProperties(property, info, value);
+            
             // Items
-            parseDictionaryItems(property, info, value);
-
+            this.parseDictionaryItems(property, info, value);
+            
             return true;
         }
-
+        
         private void parseDictionaryItems(DictionaryProperty property, TypeInfo info, object value)
         {
             property.KeyType = info.KeyType;
             property.ValueType = info.ElementType;
-
-            var dictionary = (IDictionary) value;
+            
+            var dictionary = (IDictionary)value;
             foreach (DictionaryEntry entry in dictionary)
             {
-                Property keyProperty = CreateProperty(null, entry.Key);
-
-                Property valueProperty = CreateProperty(null, entry.Value);
-
+                Property keyProperty = this.CreateProperty(null, entry.Key);
+                
+                Property valueProperty = this.CreateProperty(null, entry.Value);
+                
                 property.Items.Add(new KeyValueItem(keyProperty, valueProperty));
             }
         }
-
+        
         private bool fillMultiDimensionalArrayProperty(MultiDimensionalArrayProperty property, TypeInfo info, object value)
         {
             if (property == null)
+            {
                 return false;
+            }
             property.ElementType = info.ElementType;
-
+            
             var analyzer = new ArrayAnalyzer(value);
-
+            
             // DimensionInfos
             property.DimensionInfos = analyzer.ArrayInfo.DimensionInfos;
-
+            
             // Items
             foreach (var indexSet in analyzer.GetIndexes())
             {
-                object subValue = ((Array) value).GetValue(indexSet);
-                Property itemProperty = CreateProperty(null, subValue);
-
+                object subValue = ((Array)value).GetValue(indexSet);
+                Property itemProperty = this.CreateProperty(null, subValue);
+                
                 property.Items.Add(new MultiDimensionalArrayItem(indexSet, itemProperty));
             }
             return true;
         }
-
+        
         private bool fillSingleDimensionalArrayProperty(SingleDimensionalArrayProperty property, TypeInfo info, object value)
         {
             if (property == null)
+            {
                 return false;
-
+            }
+            
             property.ElementType = info.ElementType;
-
+            
             var analyzer = new ArrayAnalyzer(value);
-
+            
             // Dimensionen
             DimensionInfo dimensionInfo = analyzer.ArrayInfo.DimensionInfos[0];
             property.LowerBound = dimensionInfo.LowerBound;
-
+            
             // Items
             foreach (object item in analyzer.GetValues())
             {
-                Property itemProperty = CreateProperty(null, item);
-
+                Property itemProperty = this.CreateProperty(null, item);
+                
                 property.Items.Add(itemProperty);
             }
-
+            
             return true;
         }
-
+        
         private static Property createSimpleProperty(string name, TypeInfo typeInfo, object value)
         {
-            if (!typeInfo.IsSimple) return null;
+            if (!typeInfo.IsSimple)
+            {
+                return null;
+            }
             var result = new SimpleProperty(name, typeInfo.Type);
             result.Value = value;
             return result;

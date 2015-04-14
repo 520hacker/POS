@@ -28,11 +28,6 @@ namespace Pos.Internals.Extensions
         private Size desiredSize = new Size(100, 100);
 
         /// <summary>
-        /// Thumbnail image.
-        /// </summary>
-        private Bitmap thumbNail;
-
-        /// <summary>
         /// Finalizes an instance of the ShellThumbnail class.
         /// </summary>
         ~ShellThumbnail()
@@ -48,9 +43,6 @@ namespace Pos.Internals.Extensions
         [Flags]
         private enum ESTRRET
         {
-            STRRET_WSTR = 0,
-            STRRET_OFFSET = 1,
-            STRRET_CSTR = 2
         }
 
         /// <summary>
@@ -61,7 +53,6 @@ namespace Pos.Internals.Extensions
         {
             SHCONTF_FOLDERS = 32,
             SHCONTF_NONFOLDERS = 64,
-            SHCONTF_INCLUDEHIDDEN = 128,
         }
 
         /// <summary>
@@ -70,10 +61,6 @@ namespace Pos.Internals.Extensions
         [Flags]
         private enum ESHGDN
         {
-            SHGDN_NORMAL = 0,
-            SHGDN_INFOLDER = 1,
-            SHGDN_FORADDRESSBAR = 16384,
-            SHGDN_FORPARSING = 32768
         }
 
         /// <summary>
@@ -82,27 +69,6 @@ namespace Pos.Internals.Extensions
         [Flags]
         private enum ESFGAO
         {
-            SFGAO_CANCOPY = 1,
-            SFGAO_CANMOVE = 2,
-            SFGAO_CANLINK = 4,
-            SFGAO_CANRENAME = 16,
-            SFGAO_CANDELETE = 32,
-            SFGAO_HASPROPSHEET = 64,
-            SFGAO_DROPTARGET = 256,
-            SFGAO_CAPABILITYMASK = 375,
-            SFGAO_LINK = 65536,
-            SFGAO_SHARE = 131072,
-            SFGAO_READONLY = 262144,
-            SFGAO_GHOSTED = 524288,
-            SFGAO_DISPLAYATTRMASK = 983040,
-            SFGAO_FILESYSANCESTOR = 268435456,
-            SFGAO_FOLDER = 536870912,
-            SFGAO_FILESYSTEM = 1073741824,
-            SFGAO_HASSUBFOLDER = -2147483648,
-            SFGAO_CONTENTSMASK = -2147483648,
-            SFGAO_VALIDATE = 16777216,
-            SFGAO_REMOVABLE = 33554432,
-            SFGAO_COMPRESSED = 67108864,
         }
 
         /// <summary>
@@ -110,16 +76,8 @@ namespace Pos.Internals.Extensions
         /// </summary>
         private enum EIEIFLAG
         {
-            IEIFLAG_ASYNC = 1,
-            IEIFLAG_CACHE = 2,
             IEIFLAG_ASPECT = 4,
-            IEIFLAG_OFFLINE = 8,
-            IEIFLAG_GLEAM = 16,
             IEIFLAG_SCREEN = 32,
-            IEIFLAG_ORIGSIZE = 64,
-            IEIFLAG_NOSTAMP = 128,
-            IEIFLAG_NOBORDER = 256,
-            IEIFLAG_QUALITY = 512
         }
 
         #endregion
@@ -198,23 +156,6 @@ namespace Pos.Internals.Extensions
             /// <returns>Resulting integer.</returns>
             [PreserveSig()]
             int Next(int celt, ref IntPtr rgelt, ref int pceltFetched);
-
-            /// <summary>
-            /// Skips an ID.
-            /// </summary>
-            /// <param name="celt">ID to skip.</param>
-            void Skip(int celt);
-
-            /// <summary>
-            /// Resets the list.
-            /// </summary>
-            void Reset();
-
-            /// <summary>
-            /// Clones the list.
-            /// </summary>
-            /// <param name="ppenum">List to clone.</param>
-            void Clone(ref IEnumIDList ppenum);
         }
 
         /// <summary>
@@ -234,7 +175,8 @@ namespace Pos.Internals.Extensions
             /// <param name="pchEaten">Integer parameter.</param>
             /// <param name="ppidl">Pointer parameter.</param>
             /// <param name="pdwAttributes">Integer parameter.</param>
-            void ParseDisplayName(IntPtr hwndOwner, IntPtr pbcReserved, [MarshalAs(UnmanagedType.LPWStr)]string lpszDisplayName, ref int pchEaten, ref IntPtr ppidl, ref int pdwAttributes);
+            void ParseDisplayName(IntPtr hwndOwner, IntPtr pbcReserved, [MarshalAs(UnmanagedType.LPWStr)]
+                                  string lpszDisplayName, ref int pchEaten, ref IntPtr ppidl, ref int pdwAttributes);
 
             /// <summary>
             /// Enumerates objects.
@@ -242,7 +184,8 @@ namespace Pos.Internals.Extensions
             /// <param name="hwndOwner">Handle owner.</param>
             /// <param name="grfFlags">Flags parameter.</param>
             /// <param name="ppenumIDList">ID list parameter.</param>
-            void EnumObjects(IntPtr hwndOwner, [MarshalAs(UnmanagedType.U4)]ESHCONTF grfFlags, ref IEnumIDList ppenumIDList);
+            void EnumObjects(IntPtr hwndOwner, [MarshalAs(UnmanagedType.U4)]
+                             ESHCONTF grfFlags, ref IEnumIDList ppenumIDList);
 
             /// <summary>
             /// Binds to an object.
@@ -253,20 +196,10 @@ namespace Pos.Internals.Extensions
             /// <param name="ppvOut">Shell folder.</param>
             void BindToObject(IntPtr pidl, IntPtr pbcReserved, ref Guid riid, ref IShellFolder ppvOut);
 
-            void BindToStorage(IntPtr pidl, IntPtr pbcReserved, ref Guid riid, IntPtr ppvObj);
-
             [PreserveSig()]
             int CompareIDs(IntPtr compareParam, IntPtr pidl1, IntPtr pidl2);
 
-            void CreateViewObject(IntPtr hwndOwner, ref Guid riid, IntPtr ppvOut);
-
-            void GetAttributesOf(int cidl, IntPtr apidl, [MarshalAs(UnmanagedType.U4)]ref ESFGAO rgfInOut);
-
             void GetUIObjectOf(IntPtr hwndOwner, int cidl, ref IntPtr apidl, ref Guid riid, ref int prgfInOut, ref IUnknown ppvOut);
-
-            void GetDisplayNameOf(IntPtr pidl, [MarshalAs(UnmanagedType.U4)]ESHGDN nameFlags, ref STRRET_CSTR name);
-
-            void SetNameOf(IntPtr hwndOwner, IntPtr pidl, [MarshalAs(UnmanagedType.LPWStr)]string lpszName, [MarshalAs(UnmanagedType.U4)] ESHCONTF nameFlags, ref IntPtr ppidlOut);
         }
 
         /// <summary>
@@ -275,7 +208,8 @@ namespace Pos.Internals.Extensions
         [ComImport(), Guid("BB2E617C-0920-11d1-9A0B-00C04FC2D6C1"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         private interface IExtractImage
         {
-            void GetLocation([Out(), MarshalAs(UnmanagedType.LPWStr)]StringBuilder pathBuffer, int cch, ref int extractPriority, ref SIZE extractSize, int colorDepth, ref int extractFlags);
+            void GetLocation([Out(), MarshalAs(UnmanagedType.LPWStr)]
+                             StringBuilder pathBuffer, int cch, ref int extractPriority, ref SIZE extractSize, int colorDepth, ref int extractFlags);
 
             void Extract(ref IntPtr bitmapThumbnail);
         }
@@ -305,17 +239,17 @@ namespace Pos.Internals.Extensions
 
         public Size DesiredSize
         {
-            get { return this.desiredSize; }
-            set { this.desiredSize = value; }
-        }
-
-        public Bitmap ThumbNail
-        {
             get
             {
-                return this.thumbNail;
+                return this.desiredSize;
+            }
+            set
+            {
+                this.desiredSize = value;
             }
         }
+
+        public Bitmap ThumbNail { get; private set; }
 
         #endregion
 
@@ -370,9 +304,9 @@ namespace Pos.Internals.Extensions
 
                 this.alloc = null;
 
-                if (this.thumbNail != null)
+                if (this.ThumbNail != null)
                 {
-                    this.thumbNail.Dispose();
+                    this.ThumbNail.Dispose();
                 }
 
                 this.disposed = true;
@@ -386,10 +320,10 @@ namespace Pos.Internals.Extensions
                 throw new FileNotFoundException(string.Format("The file '{0}' does not exist", fileName), fileName);
             }
 
-            if (this.thumbNail != null)
+            if (this.ThumbNail != null)
             {
-                this.thumbNail.Dispose();
-                this.thumbNail = null;
+                this.ThumbNail.Dispose();
+                this.ThumbNail = null;
             }
 
             IShellFolder folder = null;
@@ -526,7 +460,7 @@ namespace Pos.Internals.Extensions
                     extractImage = (IExtractImage)iunk;
                     if (extractImage != null)
                     {
-                        Console.WriteLine("Got an IExtractImage object - " + file);
+                        Console.WriteLine(string.Format("Got an IExtractImage object - {0}", file));
                         SIZE sz = new SIZE();
                         sz.HorizontalSize = this.DesiredSize.Width;
                         sz.VerticalSize = this.DesiredSize.Height;
@@ -540,7 +474,7 @@ namespace Pos.Internals.Extensions
 
                         if (bitmapPointer != IntPtr.Zero)
                         {
-                            this.thumbNail = Bitmap.FromHbitmap(bitmapPointer);
+                            this.ThumbNail = Bitmap.FromHbitmap(bitmapPointer);
                         }
 
                         Marshal.ReleaseComObject(extractImage);
@@ -597,11 +531,6 @@ namespace Pos.Internals.Extensions
         [StructLayout(LayoutKind.Sequential, Pack = 4, Size = 0, CharSet = CharSet.Auto)]
         private struct STRRET_CSTR
         {
-            /// <summary>
-            /// ESTRRET type.
-            /// </summary>
-            public ESTRRET Type;
-
             /// <summary>
             /// ESTRRET string.
             /// </summary>

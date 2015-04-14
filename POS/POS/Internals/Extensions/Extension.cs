@@ -7,6 +7,25 @@ namespace Pos.Internals.Extensions
 {
     public static class Extension
     {
+        public enum RangeTypes
+        {
+            /// <summary>
+            /// Die Untergrenze wird ein- und die Obergrenze ausgeschlossen.
+            /// </summary>
+            InclExcl,
+            /// <summary>
+            /// Die Untergrenze wird aus- und die Obergrenze eingeschlossen.
+            /// </summary>
+            ExclIncl,
+            /// <summary>
+            /// Beide Grenzen werden eingeschlossen.
+            /// </summary>
+            Incl,
+            /// <summary>
+            /// Beide Grenzen werden ausgeschlossen.
+            /// </summary>
+            Excl,
+        }
 
         /// <summary>
         /// Wählt einen zusammenhängenden Bereich einer Sequenz aus, der zwischen 2 Elementen liegt, die durch je eine Bedingung ermittelt wurden.<para/>
@@ -28,11 +47,17 @@ namespace Pos.Internals.Extensions
         public static IEnumerable<T> Range<T>(this IEnumerable<T> source, Func<T, bool> startCondition, Func<T, bool> endCondition, bool includeStart, bool includeEnd, bool multipleRanges)
         {
             if (source == null)
+            {
                 throw new ArgumentNullException("source");
+            }
             if (startCondition == null)
+            {
                 throw new ArgumentNullException("startCondition");
+            }
             if (endCondition == null)
+            {
                 throw new ArgumentNullException("endCondition");
+            }
 
             using (var enumerator = source.GetEnumerator())
             {
@@ -44,14 +69,22 @@ namespace Pos.Internals.Extensions
                         if (endCondition(enumerator.Current))
                         {
                             if (includeEnd)
+                            {
                                 yield return enumerator.Current;
+                            }
                             if (multipleRanges)
+                            {
                                 ret = false;
+                            }
                             else
+                            {
                                 break;
+                            }
                         }
                         else
+                        {
                             yield return enumerator.Current;
+                        }
                     }
                     else
                     {
@@ -59,7 +92,9 @@ namespace Pos.Internals.Extensions
                         {
                             ret = true;
                             if (includeStart)
+                            {
                                 yield return enumerator.Current;
+                            }
                         }
                     }
                 }
@@ -76,16 +111,21 @@ namespace Pos.Internals.Extensions
         /// <returns><c>True</c>, wenn <paramref name="value"/> in den angegebenen Grenzen liegt. Andernfalls <c>False</c>.</returns>
         public static bool IsInRange(this double val, double min, double max, RangeTypes rangeType)
         {
-            return ((rangeType == RangeTypes.Excl || rangeType == RangeTypes.ExclIncl) ? val > min : val >= min)
-                && ((rangeType == RangeTypes.Excl || rangeType == RangeTypes.InclExcl) ? val < max : val <= max);
+            return ((rangeType == RangeTypes.Excl || rangeType == RangeTypes.ExclIncl) ? val > min : val >= min) &&
+                   ((rangeType == RangeTypes.Excl || rangeType == RangeTypes.InclExcl) ? val < max : val <= max);
         }
 
         public static Color FromHex(this Color c, string hex)
         {
             if (hex.StartsWith("#"))
+            {
                 hex = hex.Substring(1);
+            }
 
-            if (hex.Length != 6) throw new Exception("Color not valid");
+            if (hex.Length != 6)
+            {
+                throw new Exception("Color not valid");
+            }
 
             return Color.FromArgb(
                 int.Parse(hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber),
@@ -96,26 +136,6 @@ namespace Pos.Internals.Extensions
         public static void AddEventListener(this object e, string name, Delegate action)
         {
             e.GetType().GetEvent(name).AddEventHandler(e, action);
-        }
-
-        public enum RangeTypes
-        {
-            /// <summary>
-            /// Die Untergrenze wird ein- und die Obergrenze ausgeschlossen.
-            /// </summary>
-            InclExcl,
-            /// <summary>
-            /// Die Untergrenze wird aus- und die Obergrenze eingeschlossen.
-            /// </summary>
-            ExclIncl,
-            /// <summary>
-            /// Beide Grenzen werden eingeschlossen.
-            /// </summary>
-            Incl,
-            /// <summary>
-            /// Beide Grenzen werden ausgeschlossen.
-            /// </summary>
-            Excl,
         }
 
         public static T As<T>(this string input)

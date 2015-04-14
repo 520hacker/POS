@@ -35,4 +35,3 @@ namespace Pos.Internals.Extensions
         public static CultureInfo DefaultCulture { get; set; }
     }
 }
-

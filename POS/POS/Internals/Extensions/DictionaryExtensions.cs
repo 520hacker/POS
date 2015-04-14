@@ -20,7 +20,9 @@ namespace Pos.Internals.Extensions
         public static IDictionary<TKey, TValue> Sort<TKey, TValue>(this IDictionary<TKey, TValue> dictionary)
         {
             if (dictionary == null)
+            {
                 throw new ArgumentNullException("dictionary");
+            }
 
             return new SortedDictionary<TKey, TValue>(dictionary);
         }
@@ -36,9 +38,13 @@ namespace Pos.Internals.Extensions
         public static IDictionary<TKey, TValue> Sort<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, IComparer<TKey> comparer)
         {
             if (dictionary == null)
+            {
                 throw new ArgumentNullException("dictionary");
+            }
             if (comparer == null)
+            {
                 throw new ArgumentNullException("comparer");
+            }
 
             return new SortedDictionary<TKey, TValue>(dictionary, comparer);
         }
@@ -65,7 +71,9 @@ namespace Pos.Internals.Extensions
         public static IDictionary<TValue, TKey> Invert<TKey, TValue>(this IDictionary<TKey, TValue> dictionary)
         {
             if (dictionary == null)
+            {
                 throw new ArgumentNullException("dictionary");
+            }
             return dictionary.ToDictionary(pair => pair.Value, pair => pair.Key);
         }
 
@@ -81,7 +89,9 @@ namespace Pos.Internals.Extensions
             var table = new Hashtable();
 
             foreach (var item in dictionary)
+            {
                 table.Add(item.Key, item.Value);
+            }
 
             return table;
         }
@@ -97,7 +107,9 @@ namespace Pos.Internals.Extensions
             foreach (var key in keys)
             {
                 if (dictionary.ContainsKey(key))
+                {
                     return dictionary[key];
+                }
             }
             return defaultValue;
         }

@@ -4,7 +4,6 @@ namespace Pos.Internals.Extensions
 {
     public static class MathExtensions
     {
-
         public static int Fibonacci(this int n)
         {
             int a = 0;
@@ -23,13 +22,12 @@ namespace Pos.Internals.Extensions
         {
             var r = new List<int>();
 
-            for (int i = 1; i < n+1; i++)
+            for (int i = 1; i < n + 1; i++)
             {
                 r.Add(Fibonacci(i));
             }
 
             return r.ToArray();
         }
-
     }
 }

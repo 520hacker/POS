@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Info.Blockchain.API
 {
@@ -12,8 +10,7 @@ namespace Info.Blockchain.API
     /// </summary>
     public class APIException : Exception
     {
-        public APIException(String message)
-            : base(message)
+        public APIException(String message) : base(message)
         {
         }
     }

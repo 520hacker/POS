@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.ComponentModel;
+using System.Linq;
 
 namespace Pos.Internals.Extensions
 {
@@ -16,7 +16,9 @@ namespace Pos.Internals.Extensions
         public static void Apply<T>(this IEnumerable<T> enumerable, Action<T> action)
         {
             foreach (var item in enumerable)
+            {
                 action(item);
+            }
         }
 
         /// <summary>
@@ -34,6 +36,5 @@ namespace Pos.Internals.Extensions
             }
             return bl;
         }
-
     }
 }

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Info.Blockchain.API.Receive
 {
@@ -13,10 +11,10 @@ namespace Info.Blockchain.API.Receive
         public ReceiveResponse(int feePercent, string destinationAddress,
             string inputAddress, string callbackUrl)
         {
-            FeePercent = feePercent;
-            DestinationAddress = destinationAddress;
-            InputAddress = inputAddress;
-            CallbackUrl = callbackUrl;
+            this.FeePercent = feePercent;
+            this.DestinationAddress = destinationAddress;
+            this.InputAddress = inputAddress;
+            this.CallbackUrl = callbackUrl;
         }
 
         /// <summary>

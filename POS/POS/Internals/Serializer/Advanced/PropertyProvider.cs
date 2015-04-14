@@ -1,3 +1,4 @@
+
 #region Copyright © 2010 Pawel Idzikowski [idzikowski@sharpserializer.com]
 
 //  ***********************************************************************
@@ -30,7 +31,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reflection;
-using Polenter.Serialization.Serializing;
 
 namespace Polenter.Serialization.Advanced
 {
@@ -48,11 +48,11 @@ namespace Polenter.Serialization.Advanced
     {
         private PropertiesToIgnore _propertiesToIgnore;
         private IList<Type> _attributesToIgnore;
-#if !PORTABLE
+        #if !PORTABLE
         [ThreadStatic]
-#endif
+        #endif
         private static PropertyCache _cache;
-
+        
         /// <summary>
         ///   Which properties should be ignored
         /// </summary>
@@ -69,12 +69,18 @@ namespace Polenter.Serialization.Advanced
         {
             get
             {
-                if (_propertiesToIgnore == null) _propertiesToIgnore = new PropertiesToIgnore();
-                return _propertiesToIgnore;
+                if (this._propertiesToIgnore == null)
+                {
+                    this._propertiesToIgnore = new PropertiesToIgnore();
+                }
+                return this._propertiesToIgnore;
             }
-            set { _propertiesToIgnore = value; }
+            set
+            {
+                this._propertiesToIgnore = value;
+            }
         }
-
+        
         /// <summary>
         /// All Properties markt with one of the contained attribute-types will be ignored on save.
         /// </summary>
@@ -82,12 +88,18 @@ namespace Polenter.Serialization.Advanced
         {
             get
             {
-                if (_attributesToIgnore==null)_attributesToIgnore=new List<Type>();
-                return _attributesToIgnore;
+                if (this._attributesToIgnore == null)
+                {
+                    this._attributesToIgnore = new List<Type>();
+                }
+                return this._attributesToIgnore;
             }
-            set { _attributesToIgnore = value; }
+            set
+            {
+                this._attributesToIgnore = value;
+            }
         }
-
+        
         /// <summary>
         ///   Gives all properties back which:
         ///   - are public
@@ -106,25 +118,25 @@ namespace Polenter.Serialization.Advanced
             {
                 return propertyInfos;
             }
-
+            
             // Creating infos
-            PropertyInfo[] properties = GetAllProperties(typeInfo.Type);
+            PropertyInfo[] properties = this.GetAllProperties(typeInfo.Type);
             var result = new List<PropertyInfo>();
-
+            
             foreach (PropertyInfo property in properties)
             {
-                if (!IgnoreProperty(typeInfo, property))
+                if (!this.IgnoreProperty(typeInfo, property))
                 {
                     result.Add(property);
                 }
             }
-
+            
             // adding result to Cache
             Cache.Add(typeInfo.Type, result);
-
+            
             return result;
         }
-
+        
         /// <summary>
         ///   Should the property be removed from serialization?
         /// </summary>
@@ -140,31 +152,31 @@ namespace Polenter.Serialization.Advanced
         protected virtual bool IgnoreProperty(Polenter.Serialization.Serializing.TypeInfo info, PropertyInfo property)
         {
             // Soll die Eigenschaft ignoriert werden
-            if (PropertiesToIgnore.Contains(info.Type, property.Name))
+            if (this.PropertiesToIgnore.Contains(info.Type, property.Name))
             {
                 return true;
             }
-
-            if (ContainsExcludeFromSerializationAttribute(property))
+            
+            if (this.ContainsExcludeFromSerializationAttribute(property))
             {
                 return true;
             }
-
+            
             if (!property.CanRead || !property.CanWrite)
             {
                 return true;
             }
-
+            
             ParameterInfo[] indexParameters = property.GetIndexParameters();
             if (indexParameters.Length > 0)
             {
                 // Indexer
                 return true;
             }
-
+            
             return false;
         }
-
+        
         /// <summary>
         /// Determines whether <paramref name="property"/> is excluded from serialization or not.
         /// </summary>
@@ -174,15 +186,17 @@ namespace Polenter.Serialization.Advanced
         /// </returns>
         protected bool ContainsExcludeFromSerializationAttribute(PropertyInfo property)
         {
-            foreach (Type attrType in AttributesToIgnore)
+            foreach (Type attrType in this.AttributesToIgnore)
             {
                 object[] attributes = property.GetCustomAttributes(attrType, false);
                 if (attributes.Length > 0) 
+                {
                     return true;
+                }
             }
             return false;
         }
-
+        
         /// <summary>
         ///   Gives all properties back which:
         ///   - are public
@@ -194,126 +208,17 @@ namespace Polenter.Serialization.Advanced
         {
             return type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
         }
-
+        
         private static PropertyCache Cache
         {
             get
             {
-                if (_cache==null)
+                if (_cache == null)
                 {
-                    _cache=new PropertyCache();
+                    _cache = new PropertyCache();
                 }
                 return _cache;
             }
         }
-    }
-
-    /// <summary>
-    ///   Cache which contains type as a key, and all associated property names
-    /// </summary>
-    public sealed class PropertiesToIgnore
-    {
-        private readonly TypePropertiesToIgnoreCollection _propertiesToIgnore = new TypePropertiesToIgnoreCollection();
-
-        ///<summary>
-        ///</summary>
-        ///<param name = "type"></param>
-        ///<param name = "propertyName"></param>
-        public void Add(Type type, string propertyName)
-        {
-            TypePropertiesToIgnore item = getPropertiesToIgnore(type);
-            if (!item.PropertyNames.Contains(propertyName))
-            {
-                item.PropertyNames.Add(propertyName);
-            }
-        }
-
-        private TypePropertiesToIgnore getPropertiesToIgnore(Type type)
-        {
-            TypePropertiesToIgnore item = _propertiesToIgnore.TryFind(type);
-            if (item == null)
-            {
-                item = new TypePropertiesToIgnore(type);
-                _propertiesToIgnore.Add(item);
-            }
-            return item;
-        }
-
-        ///<summary>
-        ///</summary>
-        ///<param name = "type"></param>
-        ///<param name = "propertyName"></param>
-        ///<returns></returns>
-        public bool Contains(Type type, string propertyName)
-        {
-            return _propertiesToIgnore.ContainsProperty(type, propertyName);
-        }
-
-        #region Nested type: TypePropertiesToIgnore
-
-        private sealed class TypePropertiesToIgnore
-        {
-            private IList<string> _propertyNames;
-
-            public TypePropertiesToIgnore(Type type)
-            {
-                Type = type;
-            }
-
-            public Type Type { get; set; }
-
-            public IList<string> PropertyNames
-            {
-                get
-                {
-                    if (_propertyNames == null) _propertyNames = new List<string>();
-                    return _propertyNames;
-                }
-                set { _propertyNames = value; }
-            }
-        }
-
-        #endregion
-
-        #region Nested type: TypePropertiesToIgnoreCollection
-
-        private sealed class TypePropertiesToIgnoreCollection : KeyedCollection<Type, TypePropertiesToIgnore>
-        {
-            protected override Type GetKeyForItem(TypePropertiesToIgnore item)
-            {
-                return item.Type;
-            }
-
-            public int IndexOf(Type type)
-            {
-                for (int i = 0; i < Count; i++)
-                {
-                    TypePropertiesToIgnore item = this[i];
-                    if (item.Type == type)
-                    {
-                        return i;
-                    }
-                }
-                return -1;
-            }
-
-            public TypePropertiesToIgnore TryFind(Type type)
-            {
-                foreach (TypePropertiesToIgnore item in Items)
-                {
-                    if (item.Type == type) return item;
-                }
-                return null;
-            }
-
-            public bool ContainsProperty(Type type, string propertyName)
-            {
-                TypePropertiesToIgnore propertiesToIgnore = TryFind(type);
-                if (propertiesToIgnore == null) return false;
-                return propertiesToIgnore.PropertyNames.Contains(propertyName);
-            }
-        }
-
-        #endregion
     }
 }

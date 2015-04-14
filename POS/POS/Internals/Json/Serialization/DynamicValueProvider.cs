@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,91 +22,97 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 #if !PocketPC && !SILVERLIGHT
+
 using System;
-using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Reflection;
 using Lib.JSON.Utilities;
-using System.Globalization;
 
 namespace Lib.JSON.Serialization
 {
-  /// <summary>
-  /// Get and set values for a <see cref="MemberInfo"/> using dynamic methods.
-  /// </summary>
-  public class DynamicValueProvider : IValueProvider
-  {
-    private readonly MemberInfo _memberInfo;
-    private Func<object, object> _getter;
-    private Action<object, object> _setter;
-
     /// <summary>
-    /// Initializes a new instance of the <see cref="DynamicValueProvider"/> class.
+    /// Get and set values for a <see cref="MemberInfo"/> using dynamic methods.
     /// </summary>
-    /// <param name="memberInfo">The member info.</param>
-    public DynamicValueProvider(MemberInfo memberInfo)
+    public class DynamicValueProvider : IValueProvider
     {
-      ValidationUtils.ArgumentNotNull(memberInfo, "memberInfo");
-      _memberInfo = memberInfo;
-    }
-
-    /// <summary>
-    /// Sets the value.
-    /// </summary>
-    /// <param name="target">The target to set the value on.</param>
-    /// <param name="value">The value to set on the target.</param>
-    public void SetValue(object target, object value)
-    {
-      try
-      {
-        if (_setter == null)
-          _setter = DynamicReflectionDelegateFactory.Instance.CreateSet<object>(_memberInfo);
-
-#if DEBUG
-        // dynamic method doesn't check whether the type is 'legal' to set
-        // add this check for unit tests
-        if (value == null)
+        private readonly MemberInfo _memberInfo;
+        private Func<object, object> _getter;
+        private Action<object, object> _setter;
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DynamicValueProvider"/> class.
+        /// </summary>
+        /// <param name="memberInfo">The member info.</param>
+        public DynamicValueProvider(MemberInfo memberInfo)
         {
-          if (!ReflectionUtils.IsNullable(ReflectionUtils.GetMemberUnderlyingType(_memberInfo)))
-            throw new Exception("Incompatible value. Cannot set {0} to null.".FormatWith(CultureInfo.InvariantCulture, _memberInfo));
+            ValidationUtils.ArgumentNotNull(memberInfo, "memberInfo");
+            this._memberInfo = memberInfo;
         }
-        else if (!ReflectionUtils.GetMemberUnderlyingType(_memberInfo).IsAssignableFrom(value.GetType()))
+        
+        /// <summary>
+        /// Sets the value.
+        /// </summary>
+        /// <param name="target">The target to set the value on.</param>
+        /// <param name="value">The value to set on the target.</param>
+        public void SetValue(object target, object value)
         {
-            throw new Exception("Incompatible value. Cannot set {0} to type {1}.".FormatWith(CultureInfo.InvariantCulture, _memberInfo, value.GetType()));
+            try
+            {
+                if (this._setter == null)
+                {
+                    this._setter = DynamicReflectionDelegateFactory.Instance.CreateSet<object>(this._memberInfo);
+                }
+                
+                #if DEBUG
+                // dynamic method doesn't check whether the type is 'legal' to set
+                // add this check for unit tests
+                if (value == null)
+                {
+                    if (!ReflectionUtils.IsNullable(ReflectionUtils.GetMemberUnderlyingType(this._memberInfo)))
+                    {
+                        throw new Exception("Incompatible value. Cannot set {0} to null.".FormatWith(CultureInfo.InvariantCulture, this._memberInfo));
+                    }
+                }
+                else if (!ReflectionUtils.GetMemberUnderlyingType(this._memberInfo).IsAssignableFrom(value.GetType()))
+                {
+                    throw new Exception("Incompatible value. Cannot set {0} to type {1}.".FormatWith(CultureInfo.InvariantCulture, this._memberInfo, value.GetType()));
+                }
+                #endif
+                
+                this._setter(target, value);
+            }
+            catch (Exception ex)
+            {
+                throw new JsonSerializationException("Error setting value to '{0}' on '{1}'.".FormatWith(CultureInfo.InvariantCulture, this._memberInfo.Name, target.GetType()), ex);
+            }
         }
-#endif
-
-        _setter(target, value);
-      }
-      catch (Exception ex)
-      {
-        throw new JsonSerializationException("Error setting value to '{0}' on '{1}'.".FormatWith(CultureInfo.InvariantCulture, _memberInfo.Name, target.GetType()), ex);
-      }
+        
+        /// <summary>
+        /// Gets the value.
+        /// </summary>
+        /// <param name="target">The target to get the value from.</param>
+        /// <returns>The value.</returns>
+        public object GetValue(object target)
+        {
+            try
+            {
+                if (this._getter == null)
+                {
+                    this._getter = DynamicReflectionDelegateFactory.Instance.CreateGet<object>(this._memberInfo);
+                }
+                
+                return this._getter(target);
+            }
+            catch (Exception ex)
+            {
+                throw new JsonSerializationException("Error getting value from '{0}' on '{1}'.".FormatWith(CultureInfo.InvariantCulture, this._memberInfo.Name, target.GetType()), ex);
+            }
+        }
     }
-
-    /// <summary>
-    /// Gets the value.
-    /// </summary>
-    /// <param name="target">The target to get the value from.</param>
-    /// <returns>The value.</returns>
-    public object GetValue(object target)
-    {
-      try
-      {
-        if (_getter == null)
-          _getter = DynamicReflectionDelegateFactory.Instance.CreateGet<object>(_memberInfo);
-
-        return _getter(target);
-      }
-      catch (Exception ex)
-      {
-        throw new JsonSerializationException("Error getting value from '{0}' on '{1}'.".FormatWith(CultureInfo.InvariantCulture, _memberInfo.Name, target.GetType()), ex);
-      }
-    }
-  }
 }
 #endif

@@ -22,6 +22,6 @@ namespace POS
             frm.BackgroundImage = qrCode.GetGraphic(20);
 
             frm.Show(owner);
-        } 
+        }
     }
 }

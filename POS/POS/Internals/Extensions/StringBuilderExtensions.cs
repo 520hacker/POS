@@ -25,7 +25,10 @@ namespace Pos.Internals.Extensions
         /// <param name="value"></param>
         public static StringBuilder AppendLineIf(this StringBuilder sb, bool condition, object value)
         {
-            if (condition) sb.AppendLine(value.ToString());
+            if (condition)
+            {
+                sb.AppendLine(value.ToString());
+            }
             return sb;
         }
 
@@ -39,7 +42,10 @@ namespace Pos.Internals.Extensions
         /// <param name="args"></param>
         public static StringBuilder AppendLineIf(this StringBuilder sb, bool condition, string format, params object[] args)
         {
-            if (condition) sb.AppendFormat(format, args).AppendLine();
+            if (condition)
+            {
+                sb.AppendFormat(format, args).AppendLine();
+            }
             return sb;
         }
 
@@ -52,7 +58,10 @@ namespace Pos.Internals.Extensions
         /// <param name="value"></param>
         public static StringBuilder AppendIf(this StringBuilder sb, bool condition, object value)
         {
-            if (condition) sb.Append(value.ToString());
+            if (condition)
+            {
+                sb.Append(value.ToString());
+            }
             return sb;
         }
 
@@ -66,7 +75,10 @@ namespace Pos.Internals.Extensions
         /// <param name="args"></param>
         public static StringBuilder AppendFormatIf(this StringBuilder sb, bool condition, string format, params object[] args)
         {
-            if (condition) sb.AppendFormat(format, args);
+            if (condition)
+            {
+                sb.AppendFormat(format, args);
+            }
             return sb;
         }
     }

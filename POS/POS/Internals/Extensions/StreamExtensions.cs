@@ -29,7 +29,9 @@ namespace Pos.Internals.Extensions
         public static StreamReader GetReader(this Stream stream, Encoding encoding)
         {
             if (stream.CanRead == false)
+            {
                 throw new InvalidOperationException("Stream does not support reading.");
+            }
 
             encoding = (encoding ?? Encoding.Default);
             return new StreamReader(stream, encoding);
@@ -54,7 +56,9 @@ namespace Pos.Internals.Extensions
         public static StreamWriter GetWriter(this Stream stream, Encoding encoding)
         {
             if (stream.CanWrite == false)
+            {
                 throw new InvalidOperationException("Stream does not support writing.");
+            }
 
             encoding = (encoding ?? Encoding.Default);
             return new StreamWriter(stream, encoding);
@@ -79,7 +83,9 @@ namespace Pos.Internals.Extensions
         public static string ReadToEnd(this Stream stream, Encoding encoding)
         {
             using (var reader = stream.GetReader(encoding))
+            {
                 return reader.ReadToEnd();
+            }
         }
 
         /// <summary>
@@ -90,7 +96,9 @@ namespace Pos.Internals.Extensions
         public static Stream SeekToBegin(this Stream stream)
         {
             if (stream.CanSeek == false)
+            {
                 throw new InvalidOperationException("Stream does not support seeking.");
+            }
 
             stream.Seek(0, SeekOrigin.Begin);
             return stream;
@@ -104,7 +112,9 @@ namespace Pos.Internals.Extensions
         public static Stream SeekToEnd(this Stream stream)
         {
             if (stream.CanSeek == false)
+            {
                 throw new InvalidOperationException("Stream does not support seeking.");
+            }
 
             stream.Seek(0, SeekOrigin.End);
             return stream;
@@ -131,15 +141,21 @@ namespace Pos.Internals.Extensions
         public static Stream CopyTo(this Stream stream, Stream targetStream, int bufferSize)
         {
             if (stream.CanRead == false)
+            {
                 throw new InvalidOperationException("Source stream does not support reading.");
+            }
             if (targetStream.CanWrite == false)
+            {
                 throw new InvalidOperationException("Target stream does not support writing.");
+            }
 
             var buffer = new byte[bufferSize];
             int bytesRead;
 
             while ((bytesRead = stream.Read(buffer, 0, bufferSize)) > 0)
+            {
                 targetStream.Write(buffer, 0, bytesRead);
+            }
             return stream;
         }
 
@@ -167,13 +183,6 @@ namespace Pos.Internals.Extensions
             }
         }
 
-        public struct Chunk
-        {
-            public int Length { get; set; }
-            public byte[] Raw { get; set; }
-            public int Id { get; set; }
-        }
-
         /// <summary>
         /// 	Copies any stream into a local MemoryStream
         /// </summary>
@@ -197,7 +206,9 @@ namespace Pos.Internals.Extensions
         public static byte[] ReadAllBytes(this Stream stream)
         {
             using (var memoryStream = stream.CopyToMemory())
+            {
                 return memoryStream.ToArray();
+            }
         }
 
         /// <summary>
@@ -214,7 +225,9 @@ namespace Pos.Internals.Extensions
             {
                 cnt = stream.Read(buf, offset, bufsize - offset);
                 if (cnt == 0)
+                {
                     return null;
+                }
                 offset += cnt;
             }
             while (offset < bufsize);
@@ -230,6 +243,15 @@ namespace Pos.Internals.Extensions
         public static void Write(this Stream stream, byte[] bytes)
         {
             stream.Write(bytes, 0, bytes.Length);
+        }
+
+        public struct Chunk
+        {
+            public int Length { get; set; }
+
+            public byte[] Raw { get; set; }
+
+            public int Id { get; set; }
         }
     }
 }

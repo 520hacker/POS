@@ -1,4 +1,6 @@
+
 #region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,19 +23,18 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Collections.ObjectModel;
 
 namespace Lib.JSON
 {
-  /// <summary>
-  /// Represents a collection of <see cref="JsonConverter"/>.
-  /// </summary>
-  public class JsonConverterCollection : Collection<JsonConverter>
-  {
-  }
+    /// <summary>
+    /// Represents a collection of <see cref="JsonConverter"/>.
+    /// </summary>
+    public class JsonConverterCollection : Collection<JsonConverter>
+    {
+    }
 }

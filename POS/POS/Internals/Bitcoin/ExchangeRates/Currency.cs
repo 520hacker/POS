@@ -1,22 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Info.Blockchain.API.ExchangeRates
 {
     /// <summary>
     /// This class is used in the response of the `GetTicker` method in the `ExchangeRates` class.
     /// </summary>
-    public  class Currency
+    public class Currency
     {
         public Currency(double buy, double sell, double last, double price15m, string symbol)
         {
-            Buy = buy;
-            Sell = sell;
-            Last = last;
-            Price15m = price15m;
-            Symbol = symbol;
+            this.Buy = buy;
+            this.Sell = sell;
+            this.Last = last;
+            this.Price15m = price15m;
+            this.Symbol = symbol;
         }
 
         /// <summary>

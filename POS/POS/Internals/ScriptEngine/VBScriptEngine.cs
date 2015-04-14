@@ -11,7 +11,7 @@ namespace POS.Internals.ScriptEngine
     public class VBScriptEngine : WindowsScriptEngine
     {
         #region data
-
+        
         private static readonly Dictionary<int, string> runtimeErrorMap = new Dictionary<int, string>
         {
             // http://msdn.microsoft.com/en-us/library/xe43cc8d(VS.84).aspx
@@ -59,62 +59,64 @@ namespace POS.Internals.ScriptEngine
             { 458, "Variable uses an Automation type not supported in VBScript" },
             { 450, "Wrong number of arguments or invalid property assignment" }
         };
-
+        
         #endregion
-
+        
         public void AddHostFunction(string name, Delegate d)
         {
-            AddHostObject(name, d);
+            this.AddHostObject(name, d);
         }
-
+        
         public void Add<T>(string name, T obj)
         {
             if (typeof(T) == typeof(Type))
-                AddHostType(name, obj as Type);
+            {
+                this.AddHostType(name, obj as Type);
+            }
             else if (typeof(T) == typeof(Delegate))
-                AddHostFunction(name, obj as Delegate);
+            {
+                this.AddHostFunction(name, obj as Delegate);
+            }
             else
-                AddHostObject(name, obj);
+            {
+                this.AddHostObject(name, obj);
+            }
         }
-
+        
         #region constructors
-
+        
         /// <summary>
         /// Initializes a new VBScript engine instance.
         /// </summary>
-        public VBScriptEngine()
-            : this(null)
+        public VBScriptEngine() : this(null)
         {
         }
-
+        
         /// <summary>
         /// Initializes a new VBScript engine instance with the specified name.
         /// </summary>
         /// <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
-        public VBScriptEngine(string name)
-            : this(name, WindowsScriptEngineFlags.None)
+        public VBScriptEngine(string name) : this(name, WindowsScriptEngineFlags.None)
         {
         }
-
+        
         /// <summary>
         /// Initializes a new VBScript engine instance with the specified options.
         /// </summary>
         /// <param name="flags">A value that selects options for the operation.</param>
-        public VBScriptEngine(WindowsScriptEngineFlags flags)
-            : this(null, flags)
+        public VBScriptEngine(WindowsScriptEngineFlags flags) : this(null, flags)
         {
         }
-
+        
         /// <summary>
         /// Initializes a new VBScript engine instance with the specified name and options.
         /// </summary>
         /// <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
         /// <param name="flags">A value that selects options for the operation.</param>
-        public VBScriptEngine(string name, WindowsScriptEngineFlags flags)
-            : this("VBScript", name, flags)
+        public VBScriptEngine(string name, WindowsScriptEngineFlags flags) : this("VBScript", name, flags)
         {
         }
-
+        
         /// <summary>
         /// Initializes a new VBScript engine instance with the specified programmatic
         /// identifier, name, and options.
@@ -126,52 +128,50 @@ namespace POS.Internals.ScriptEngine
         /// The <paramref name="progID"/> argument can be a class identifier (CLSID) in standard
         /// GUID format with braces (e.g., "{F414C260-6AC0-11CF-B6D1-00AA00BBBB58}").
         /// </remarks>
-        protected VBScriptEngine(string progID, string name, WindowsScriptEngineFlags flags)
-            : base(progID, name, flags)
+        protected VBScriptEngine(string progID, string name, WindowsScriptEngineFlags flags) : base(progID, name, flags)
         {
-            Execute(
-                MiscHelpers.FormatInvariant("{0} [internal]", GetType().Name),
+            this.Execute(
+MiscHelpers.FormatInvariant("{0} [internal]", this.GetType().Name),
                 @"
-                    class EngineInternalImpl
-                        public function getCommandResult(value)
-                            if IsObject(value) then
-                                if value is nothing then
-                                    getCommandResult = ""[nothing]""
-                                else
-                                    dim ValueTypeName
-                                    ValueTypeName = TypeName(value)
-                                    if (ValueTypeName = ""Object"" or ValueTypeName = ""Unknown"") then
-                                        set getCommandResult = value
-                                    else
-                                        getCommandResult = ""[ScriptObject:"" + ValueTypeName + ""]""
-                                    end if
-                                end if
-                            elseif IsArray(value) then
-                                getCommandResult = ""[array]""
-                            elseif IsNull(value) then
-                                getCommandResult = ""[null]""
-                            elseif IsEmpty(value) then
-                                getCommandResult = ""[empty]""
-                            else
-                                getCommandResult = CStr(value)
-                            end if
-                        end function
-                        public function invokeConstructor(constructor, args)
-                            Err.Raise 445
-                        end function
-                        public function invokeMethod(target, method, args)
-                            Err.Raise 445
-                        end function
-                    end class
-                    set EngineInternal = new EngineInternalImpl
-                "
-            );
+                     class EngineInternalImpl
+                         public function getCommandResult(value)
+                             if IsObject(value) then
+                                 if value is nothing then
+                                     getCommandResult = ""[nothing]""
+                                 else
+                                     dim ValueTypeName
+                                     ValueTypeName = TypeName(value)
+                                     if (ValueTypeName = ""Object"" or ValueTypeName = ""Unknown"") then
+                                         set getCommandResult = value
+                                     else
+                                         getCommandResult = ""[ScriptObject:"" + ValueTypeName + ""]""
+                                     end if
+                                 end if
+                             elseif IsArray(value) then
+                                 getCommandResult = ""[array]""
+                             elseif IsNull(value) then
+                                 getCommandResult = ""[null]""
+                             elseif IsEmpty(value) then
+                                 getCommandResult = ""[empty]""
+                             else
+                                 getCommandResult = CStr(value)
+                             end if
+                         end function
+                         public function invokeConstructor(constructor, args)
+                             Err.Raise 445
+                         end function
+                         public function invokeMethod(target, method, args)
+                             Err.Raise 445
+                         end function
+                     end class
+                     set EngineInternal = new EngineInternalImpl
+                 ");
         }
-
+        
         #endregion
-
+        
         #region ScriptEngine overrides
-
+        
         /// <summary>
         /// Gets the script engine's recommended file name extension for script files.
         /// </summary>
@@ -180,9 +180,12 @@ namespace POS.Internals.ScriptEngine
         /// </remarks>
         public override string FileNameExtension
         {
-            get { return "vbs"; }
+            get
+            {
+                return "vbs";
+            }
         }
-
+        
         /// <summary>
         /// Executes script code as a command.
         /// </summary>
@@ -208,18 +211,21 @@ namespace POS.Internals.ScriptEngine
             if (trimmedCommand.StartsWith("eval ", StringComparison.OrdinalIgnoreCase))
             {
                 var expression = MiscHelpers.FormatInvariant("EngineInternal.getCommandResult({0})", trimmedCommand.Substring(5));
-                return GetCommandResultString(Evaluate("Expression", true, expression, false));
+                return this.GetCommandResultString(this.Evaluate("Expression", true, expression, false));
             }
-
-            Execute("Command", true, trimmedCommand);
+            
+            this.Execute("Command", true, trimmedCommand);
             return null;
         }
-
+        
         internal override IDictionary<int, string> RuntimeErrorMap
         {
-            get { return runtimeErrorMap; }
+            get
+            {
+                return runtimeErrorMap;
+            }
         }
-
+        
         #endregion
     }
 }

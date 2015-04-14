@@ -3,26 +3,26 @@ namespace Rpc.Internals
     using System;
     using System.Collections;
     using System.IO;
-    using System.Xml;
     using System.Net;
     using System.Text;
-    using Rpc.Internals;
+    using System.Xml;
 
     /// <summary>Class supporting the request side of an XML-RPC transaction.</summary>
-    class XmlRpcRequest
+    internal class XmlRpcRequest
     {
-        private String _methodName = null;
-        private Encoding _encoding = new ASCIIEncoding();
-        private XmlRpcRequestSerializer _serializer = new XmlRpcRequestSerializer();
-        private XmlRpcResponseDeserializer _deserializer = new XmlRpcResponseDeserializer();
-
         /// <summary><c>ArrayList</c> containing the parameters.</summary>
         protected IList _params = null;
+
+        private readonly Encoding _encoding = new ASCIIEncoding();
+        private readonly XmlRpcRequestSerializer _serializer = new XmlRpcRequestSerializer();
+        private readonly XmlRpcResponseDeserializer _deserializer = new XmlRpcResponseDeserializer();
+
+        private String _methodName = null;
 
         /// <summary>Instantiate an <c>XmlRpcRequest</c></summary>
         public XmlRpcRequest()
         {
-            _params = new ArrayList();
+            this._params = new ArrayList();
         }
 
         /// <summary>Instantiate an <c>XmlRpcRequest</c> for a specified method and parameters.</summary>
@@ -31,8 +31,8 @@ namespace Rpc.Internals
         /// <param name="parameters"><c>ArrayList</c> of XML-RPC type parameters to invoke the request with.</param>
         public XmlRpcRequest(String methodName, IList parameters)
         {
-            MethodName = methodName;
-            _params = parameters;
+            this.MethodName = methodName;
+            this._params = parameters;
         }
 
         /// <summary><c>ArrayList</c> conntaining the parameters for the request.</summary>
@@ -40,7 +40,7 @@ namespace Rpc.Internals
         {
             get
             {
-                return _params;
+                return this._params;
             }
         }
 
@@ -49,11 +49,11 @@ namespace Rpc.Internals
         {
             get
             {
-                return _methodName;
+                return this._methodName;
             }
             set
             {
-                _methodName = value;
+                this._methodName = value;
             }
         }
 
@@ -62,12 +62,14 @@ namespace Rpc.Internals
         {
             get
             {
-                int index = MethodName.IndexOf(".");
+                int index = this.MethodName.IndexOf(".");
 
                 if (index == -1)
-                    return MethodName;
+                {
+                    return this.MethodName;
+                }
 
-                return MethodName.Substring(0, index);
+                return this.MethodName.Substring(0, index);
             }
         }
 
@@ -76,12 +78,14 @@ namespace Rpc.Internals
         {
             get
             {
-                int index = MethodName.IndexOf(".");
+                int index = this.MethodName.IndexOf(".");
 
                 if (index == -1)
-                    return MethodName;
+                {
+                    return this.MethodName;
+                }
 
-                return MethodName.Substring(index + 1, MethodName.Length - index - 1);
+                return this.MethodName.Substring(index + 1, this.MethodName.Length - index - 1);
             }
         }
 
@@ -91,10 +95,12 @@ namespace Rpc.Internals
         /// <exception cref="XmlRpcException">If an exception generated on the server side.</exception>
         public Object Invoke(String url)
         {
-            XmlRpcResponse res = Send(url);
+            XmlRpcResponse res = this.Send(url);
 
             if (res.IsFault)
+            {
                 throw new XmlRpcException(res.FaultCode, res.FaultString);
+            }
 	
             return res.Value;
         }
@@ -106,22 +112,24 @@ namespace Rpc.Internals
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             if (request == null)
+            {
                 throw new XmlRpcException(XmlRpcErrorCodes.TRANSPORT_ERROR,
-                    XmlRpcErrorCodes.TRANSPORT_ERROR_MSG + ": Could not create request with " + url);
+                    string.Format("{0}: Could not create request with {1}", XmlRpcErrorCodes.TRANSPORT_ERROR_MSG, url));
+            }
             request.Method = "POST";
             request.ContentType = "text/xml";
             request.AllowWriteStreamBuffering = true;
 
             Stream stream = request.GetRequestStream();
-            XmlTextWriter xml = new XmlTextWriter(stream, _encoding);
-            _serializer.Serialize(xml, this);
+            XmlTextWriter xml = new XmlTextWriter(stream, this._encoding);
+            this._serializer.Serialize(xml, this);
             xml.Flush();
             xml.Close();
 
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             StreamReader input = new StreamReader(response.GetResponseStream());
 
-            XmlRpcResponse resp = (XmlRpcResponse)_deserializer.Deserialize(input);
+            XmlRpcResponse resp = (XmlRpcResponse)this._deserializer.Deserialize(input);
             input.Close();
             response.Close();
             return resp;
@@ -131,7 +139,7 @@ namespace Rpc.Internals
         /// <returns><c>String</c> representation of the object.</returns>
         override public String ToString()
         {
-            return _serializer.Serialize(this);
+            return this._serializer.Serialize(this);
         }
     }
 }

@@ -4,17 +4,18 @@ namespace Rpc.Internals
     using System.Collections;
 
     /// <summary>Class designed to represent an XML-RPC response.</summary>
-    class XmlRpcResponse
+    internal class XmlRpcResponse
     {
-        private Object _value;
         /// <summary><c>bool</c> indicating if this response represents a fault.</summary>
         public bool IsFault;
+
+        private Object _value;
 
         /// <summary>Basic constructor</summary>
         public XmlRpcResponse()
         {
-            Value = null;
-            IsFault = false;
+            this.Value = null;
+            this.IsFault = false;
         }
 
         /// <summary>Constructor for a fault.</summary>
@@ -22,7 +23,7 @@ namespace Rpc.Internals
         /// <param name="message"><c>String</c> the faultString value.</param>
         public XmlRpcResponse(int code, String message) : this()
         {
-            SetFault(code, message);
+            this.SetFault(code, message);
         }
 
         /// <summary>The data value of the response, may be fault data.</summary>
@@ -30,12 +31,12 @@ namespace Rpc.Internals
         {
             get
             {
-                return _value;
+                return this._value;
             }
             set
             {
-                IsFault = false;
-                _value = value;
+                this.IsFault = false;
+                this._value = value;
             }
         }
 
@@ -44,10 +45,14 @@ namespace Rpc.Internals
         {
             get
             {
-                if (!IsFault)
+                if (!this.IsFault)
+                {
                     return 0;
+                }
                 else
-                    return (int)((Hashtable)_value)[XmlRpcXmlTokens.FAULT_CODE];
+                {
+                    return (int)((Hashtable)this._value)[XmlRpcXmlTokens.FAULT_CODE];
+                }
             }
         }
 
@@ -56,10 +61,14 @@ namespace Rpc.Internals
         {
             get
             {
-                if (!IsFault)
+                if (!this.IsFault)
+                {
                     return "";
+                }
                 else
-                    return (String)((Hashtable)_value)[XmlRpcXmlTokens.FAULT_STRING];
+                {
+                    return (String)((Hashtable)this._value)[XmlRpcXmlTokens.FAULT_STRING];
+                }
             }
         }
 
@@ -71,8 +80,8 @@ namespace Rpc.Internals
             Hashtable fault = new Hashtable();
             fault.Add("faultCode", code);
             fault.Add("faultString", message);
-            Value = fault;
-            IsFault = true;
+            this.Value = fault;
+            this.IsFault = true;
         }
 
         /// <summary>Form a useful string representation of the object, in this case the XML response.</summary>

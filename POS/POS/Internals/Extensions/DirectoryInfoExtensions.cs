@@ -28,7 +28,9 @@ namespace Pos.Internals.Extensions
         {
             var files = new List<FileInfo>();
             foreach (var pattern in patterns)
+            {
                 files.AddRange(directory.GetFiles(pattern));
+            }
             return files.ToArray();
         }
 
@@ -48,13 +50,17 @@ namespace Pos.Internals.Extensions
         {
             var files = directory.GetFiles(pattern);
             if (files.Length > 0)
+            {
                 return files[0];
+            }
 
             foreach (var subDirectory in directory.GetDirectories()) 
             {
                 var foundFile = subDirectory.FindFileRecursive(pattern);
                 if (foundFile != null)
+                {
                     return foundFile;
+                }
             }
             return null;
         }
@@ -76,14 +82,18 @@ namespace Pos.Internals.Extensions
             foreach (var file in directory.GetFiles()) 
             {
                 if (predicate(file))
+                {
                     return file;
+                }
             }
 
             foreach (var subDirectory in directory.GetDirectories())
             {
                 var foundFile = subDirectory.FindFileRecursive(predicate);
                 if (foundFile != null)
+                {
                     return foundFile;
+                }
             }
             return null;
         }
@@ -108,14 +118,17 @@ namespace Pos.Internals.Extensions
         /// <param name="targetDirectory">The target directory.</param>
         public static void CopyTo(this DirectoryInfo sourceDirectory, DirectoryInfo targetDirectory) 
         {
-            if(targetDirectory.Exists == false) targetDirectory.Create();
+            if (targetDirectory.Exists == false)
+            {
+                targetDirectory.Create();
+            }
 
-            foreach(var childDirectory in sourceDirectory.GetDirectories()) 
+            foreach (var childDirectory in sourceDirectory.GetDirectories()) 
             {
                 CopyTo(childDirectory, Path.Combine(targetDirectory.FullName, childDirectory.Name));
             }
 
-            foreach(var file in sourceDirectory.GetFiles())
+            foreach (var file in sourceDirectory.GetFiles())
             {
                 file.CopyTo(Path.Combine(targetDirectory.FullName, file.Name));
             }

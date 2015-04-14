@@ -11,7 +11,7 @@ namespace POS.Internals.ScriptEngine
     public class JScriptEngine : WindowsScriptEngine
     {
         #region data
-
+        
         private static readonly Dictionary<int, string> runtimeErrorMap = new Dictionary<int, string>
         {
             // http://msdn.microsoft.com/en-us/library/1dk3k160(VS.84).aspx
@@ -47,47 +47,43 @@ namespace POS.Internals.ScriptEngine
             { 5018, "Unexpected quantifier" },
             { 5013, "VBArray expected" }
         };
-
+        
         #endregion
-
+        
         #region constructors
-
+        
         /// <summary>
         /// Initializes a new JScript engine instance.
         /// </summary>
-        public JScriptEngine()
-            : this(null)
+        public JScriptEngine() : this(null)
         {
         }
-
+        
         /// <summary>
         /// Initializes a new JScript engine instance with the specified name.
         /// </summary>
         /// <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
-        public JScriptEngine(string name)
-            : this(name, WindowsScriptEngineFlags.None)
+        public JScriptEngine(string name) : this(name, WindowsScriptEngineFlags.None)
         {
         }
-
+        
         /// <summary>
         /// Initializes a new JScript engine instance with the specified options.
         /// </summary>
         /// <param name="flags">A value that selects options for the operation.</param>
-        public JScriptEngine(WindowsScriptEngineFlags flags)
-            : this(null, flags)
+        public JScriptEngine(WindowsScriptEngineFlags flags) : this(null, flags)
         {
         }
-
+        
         /// <summary>
         /// Initializes a new JScript engine instance with the specified name and options.
         /// </summary>
         /// <param name="name">A name to associate with the instance. Currently this name is used only as a label in presentation contexts such as debugger user interfaces.</param>
         /// <param name="flags">A value that selects options for the operation.</param>
-        public JScriptEngine(string name, WindowsScriptEngineFlags flags)
-            : this("JScript", name, flags)
+        public JScriptEngine(string name, WindowsScriptEngineFlags flags) : this("JScript", name, flags)
         {
         }
-
+        
         /// <summary>
         /// Initializes a new JScript engine instance with the specified programmatic
         /// identifier, name, and options.
@@ -99,78 +95,82 @@ namespace POS.Internals.ScriptEngine
         /// The <paramref name="progID"/> argument can be a class identifier (CLSID) in standard
         /// GUID format with braces (e.g., "{F414C260-6AC0-11CF-B6D1-00AA00BBBB58}").
         /// </remarks>
-        protected JScriptEngine(string progID, string name, WindowsScriptEngineFlags flags)
-            : base(progID, name, flags)
+        protected JScriptEngine(string progID, string name, WindowsScriptEngineFlags flags) : base(progID, name, flags)
         {
-            Execute(
-                MiscHelpers.FormatInvariant("{0} [internal]", GetType().Name),
+            this.Execute(
+MiscHelpers.FormatInvariant("{0} [internal]", this.GetType().Name),
                 @"
-                    EngineInternal = (function () {
+                     EngineInternal = (function () {
 
-                        function convertArgs(args) {
-                            var result = [];
-                            var count = args.Length;
-                            for (var i = 0; i < count; i++) {
-                                result.push(args[i]);
-                            }
-                            return result;
-                        }
+                         function convertArgs(args) {
+                             var result = [];
+                             var count = args.Length;
+                             for (var i = 0; i < count; i++) {
+                                 result.push(args[i]);
+                             }
+                             return result;
+                         }
 
-                        function construct(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15) {
-                            return new this(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15);
-                        }
+                         function construct(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15) {
+                             return new this(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15);
+                         }
 
-                        return {
+                         return {
 
-                            getCommandResult: function (value) {
-                                if (value != null) {
-                                    if ((typeof(value) == 'object') || (typeof(value) == 'function')) {
-                                        if (typeof(value.toString) == 'function') {
-                                            return value.toString();
-                                        }
-                                    }
-                                }
-                                return value;
-                            },
+                             getCommandResult: function (value) {
+                                 if (value != null) {
+                                     if ((typeof(value) == 'object') || (typeof(value) == 'function')) {
+                                         if (typeof(value.toString) == 'function') {
+                                             return value.toString();
+                                         }
+                                     }
+                                 }
+                                 return value;
+                             },
 
-                            invokeConstructor: function (constructor, args) {
-                                if (typeof(constructor) != 'function') {
-                                    throw new Error('Function expected');
-                                }
-                                return construct.apply(constructor, convertArgs(args));
-                            },
+                             invokeConstructor: function (constructor, args) {
+                                 if (typeof(constructor) != 'function') {
+                                     throw new Error('Function expected');
+                                 }
+                                 return construct.apply(constructor, convertArgs(args));
+                             },
 
-                            invokeMethod: function (target, method, args) {
-                                if (typeof(method) != 'function') {
-                                    throw new Error('Function expected');
-                                }
-                                return method.apply(target, convertArgs(args));
-                            }
-                        };
-                    })();
-                "
-            );
+                             invokeMethod: function (target, method, args) {
+                                 if (typeof(method) != 'function') {
+                                     throw new Error('Function expected');
+                                 }
+                                 return method.apply(target, convertArgs(args));
+                             }
+                         };
+                     })();
+                 ");
         }
-
+        
         #endregion
-
+        
         public void AddHostFunction(string name, Delegate d)
         {
-            AddHostObject(name, d);
+            this.AddHostObject(name, d);
         }
-
+        
         public void Add<T>(string name, T obj)
         {
             if (typeof(T) == typeof(Type))
-                AddHostType(name, obj as Type);
+            {
+                this.AddHostType(name, obj as Type);
+            }
             else if (typeof(T) == typeof(Delegate))
-                AddHostFunction(name, obj as Delegate);
+            {
+                this.AddHostFunction(name, obj as Delegate);
+            }
             else
-                AddHostObject(name, obj);
+            {
+                this.AddHostObject(name, obj);
+            }
         }
-
+        
         #region ScriptEngine overrides
-
+        
         /// <summary>
         /// Gets the script engine's recommended file name extension for script files.
         /// </summary>
@@ -179,9 +179,12 @@ namespace POS.Internals.ScriptEngine
         /// </remarks>
         public override string FileNameExtension
         {
-            get { return "js"; }
+            get
+            {
+                return "js";
+            }
         }
-
+        
         /// <summary>
         /// Executes script code as a command.
         /// </summary>
@@ -200,15 +203,18 @@ namespace POS.Internals.ScriptEngine
         /// </remarks>
         public override string ExecuteCommand(string command)
         {
-            Script.EngineInternal.command = command;
+            this.Script.EngineInternal.command = command;
             return base.ExecuteCommand("EngineInternal.getCommandResult(eval(EngineInternal.command))");
         }
-
+        
         internal override IDictionary<int, string> RuntimeErrorMap
         {
-            get { return runtimeErrorMap; }
+            get
+            {
+                return runtimeErrorMap;
+            }
         }
-
+        
         #endregion
     }
 }

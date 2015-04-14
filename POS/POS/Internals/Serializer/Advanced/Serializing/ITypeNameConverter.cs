@@ -1,3 +1,4 @@
+
 #region Copyright © 2010 Pawel Idzikowski [idzikowski@sharpserializer.com]
 
 //  ***********************************************************************
@@ -41,7 +42,7 @@ namespace Polenter.Serialization.Advanced.Serializing
         /// <param name = "type"></param>
         /// <returns>string.Empty if the type is null</returns>
         string ConvertToTypeName(Type type);
-
+        
         /// <summary>
         ///   Gives back Type from the text.
         /// </summary>

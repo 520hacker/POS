@@ -12,7 +12,7 @@ namespace Polenter.Serialization.Serializing
         /// <returns>null if the key was not found</returns>
         public TypeInfo TryGetTypeInfo(Type type)
         {
-            if (!Contains(type))
+            if (!this.Contains(type))
             {
                 return null;
             }

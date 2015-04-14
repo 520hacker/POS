@@ -15,7 +15,7 @@ namespace POS.Internals.Extensions
         /// <returns>The multiplication of the <paramref name="source"/> by <paramref name="factor"/></returns>
         public static TimeSpan MultiplyBy(this TimeSpan source, int factor)
         {
-            TimeSpan result = TimeSpan.FromTicks(source.Ticks*factor);
+            TimeSpan result = TimeSpan.FromTicks(source.Ticks * factor);
             return result;
         }
         
@@ -27,7 +27,7 @@ namespace POS.Internals.Extensions
         /// <returns>The multiplication of the <paramref name="source"/> by <paramref name="factor"/></returns>
         public static TimeSpan MultiplyBy(this TimeSpan source, double factor)
         {
-            TimeSpan result = TimeSpan.FromTicks((long)(source.Ticks*factor));
+            TimeSpan result = TimeSpan.FromTicks((long)(source.Ticks * factor));
             return result;
         }
     }

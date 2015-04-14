@@ -1,4 +1,5 @@
 ﻿// <copyright file="XmlExtensions.cs" company="Edge Extensions Project">
+
 using System.Linq;
 using System.Xml;
 using Pos.Internals.Extensions;

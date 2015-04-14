@@ -1,5 +1,4 @@
 #region Copyright © 2010 Pawel Idzikowski [idzikowski@sharpserializer.com]
-
 //  ***********************************************************************
 //  Project: sharpSerializer
 //  Web: http://www.sharpserializer.com
@@ -23,9 +22,7 @@
 //      3. This notice may not be removed or altered from any source distribution.
 //  
 //  ***********************************************************************
-
 #endregion
-
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -38,27 +35,23 @@ namespace Polenter.Serialization.Core
     public class ArrayAnalyzer
     {
         private readonly object _array;
-        private readonly ArrayInfo _arrayInfo;
         private IList<int[]> _indexes;
-
+        
         ///<summary>
         ///</summary>
         ///<param name = "array"></param>
         public ArrayAnalyzer(object array)
         {
-            _array = array;
+            this._array = array;
             var type = array.GetType();
-            _arrayInfo = getArrayInfo(type);
+            this.ArrayInfo = this.getArrayInfo(type);
         }
-
+        
         /// <summary>
         ///   Contains extended information about the current array
         /// </summary>
-        public ArrayInfo ArrayInfo
-        {
-            get { return _arrayInfo; }
-        }
-
+        public ArrayInfo ArrayInfo { get; private set; }
+        
         /// <summary>
         ///   How many dimensions. There can be at least 1
         /// </summary>
@@ -67,7 +60,7 @@ namespace Polenter.Serialization.Core
         {
             return arrayType.GetArrayRank();
         }
-
+        
         /// <summary>
         ///   How many items in one dimension
         /// </summary>
@@ -77,10 +70,10 @@ namespace Polenter.Serialization.Core
         private int getLength(int dimension, Type arrayType)
         {
             MethodInfo methodInfo = arrayType.GetMethod("GetLength");
-            var length = (int) methodInfo.Invoke(_array, new object[] {dimension});
+            var length = (int)methodInfo.Invoke(this._array, new object[] { dimension });
             return length;
         }
-
+        
         /// <summary>
         ///   Lower index of an array. Default is 0.
         /// </summary>
@@ -89,103 +82,98 @@ namespace Polenter.Serialization.Core
         /// <param name="arrayType"></param>
         private int getLowerBound(int dimension, Type arrayType)
         {
-            return getBound("GetLowerBound", dimension, arrayType);
+            return this.getBound("GetLowerBound", dimension, arrayType);
         }
-
-
-//        private int getUpperBound(int dimension)
-//        {
+        
+        //        private int getUpperBound(int dimension)
+        //        {
         // Not used, as UpperBound is equal LowerBound+Length
-//            return getBound("GetUpperBound", dimension);
-//        }
-
+        //            return getBound("GetUpperBound", dimension);
+        //        }
+        
         private int getBound(string methodName, int dimension, Type arrayType)
         {
             MethodInfo methodInfo = arrayType.GetMethod(methodName);
-            var bound = (int) methodInfo.Invoke(_array, new object[] {dimension});
+            var bound = (int)methodInfo.Invoke(this._array, new object[] { dimension });
             return bound;
         }
-
+        
         private ArrayInfo getArrayInfo(Type arrayType)
         {
             // Caching is innacceptable, as an array of type string can have different bounds
-
             var info = new ArrayInfo();
-
+            
             // Fill the dimension infos
-            for (int dimension = 0; dimension < getRank(arrayType); dimension++)
+            for (int dimension = 0; dimension < this.getRank(arrayType); dimension++)
             {
                 var dimensionInfo = new DimensionInfo();
-                dimensionInfo.Length = getLength(dimension, arrayType);
-                dimensionInfo.LowerBound = getLowerBound(dimension, arrayType);
+                dimensionInfo.Length = this.getLength(dimension, arrayType);
+                dimensionInfo.LowerBound = this.getLowerBound(dimension, arrayType);
                 info.DimensionInfos.Add(dimensionInfo);
             }
-
-
+            
             return info;
         }
-
+        
         ///<summary>
         ///</summary>
         ///<returns></returns>
         public IEnumerable<int[]> GetIndexes()
         {
-            if (_indexes == null)
+            if (this._indexes == null)
             {
-                _indexes = new List<int[]>();
-                ForEach(addIndexes);
+                this._indexes = new List<int[]>();
+                this.ForEach(addIndexes);
             }
-
-            foreach (var item in _indexes)
+            
+            foreach (var item in this._indexes)
             {
                 yield return item;
             }
         }
-
+        
         ///<summary>
         ///</summary>
         ///<returns></returns>
         public IEnumerable<object> GetValues()
         {
-            foreach (var indexSet in GetIndexes())
+            foreach (var indexSet in this.GetIndexes())
             {
-                object value = ((Array) _array).GetValue(indexSet);
+                object value = ((Array)this._array).GetValue(indexSet);
                 yield return value;
             }
         }
-
+        
         private void addIndexes(int[] obj)
         {
-            _indexes.Add(obj);
+            this._indexes.Add(obj);
         }
-
-
+        
         ///<summary>
         ///</summary>
         ///<param name = "action"></param>
         public void ForEach(Action<int[]> action)
         {
-            DimensionInfo dimensionInfo = _arrayInfo.DimensionInfos[0];
+            DimensionInfo dimensionInfo = this.ArrayInfo.DimensionInfos[0];
             for (int index = dimensionInfo.LowerBound; index < dimensionInfo.LowerBound + dimensionInfo.Length; index++)
             {
                 var result = new List<int>();
-
+                
                 // Adding the first coordinate
                 result.Add(index);
-
-                if (_arrayInfo.DimensionInfos.Count < 2)
+                
+                if (this.ArrayInfo.DimensionInfos.Count < 2)
                 {
                     // only one dimension
                     action.Invoke(result.ToArray());
                     continue;
                 }
-
+                
                 // further dimensions
-                forEach(_arrayInfo.DimensionInfos, 1, result, action);
+                this.forEach(ArrayInfo.DimensionInfos, 1, result, action);
             }
         }
-
-
+        
         /// <summary>
         ///   This functiona will be recursively used
         /// </summary>
@@ -194,46 +182,26 @@ namespace Polenter.Serialization.Core
         /// <param name = "coordinates"></param>
         /// <param name = "action"></param>
         private void forEach(IList<DimensionInfo> dimensionInfos, int dimension, IEnumerable<int> coordinates,
-                             Action<int[]> action)
+            Action<int[]> action)
         {
             DimensionInfo dimensionInfo = dimensionInfos[dimension];
             for (int index = dimensionInfo.LowerBound; index < dimensionInfo.LowerBound + dimensionInfo.Length; index++)
             {
                 var result = new List<int>(coordinates);
-
+                
                 // Adding the first coordinate
                 result.Add(index);
-
-                if (dimension == _arrayInfo.DimensionInfos.Count - 1)
+                
+                if (dimension == this.ArrayInfo.DimensionInfos.Count - 1)
                 {
                     // This is the last dimension
                     action.Invoke(result.ToArray());
                     continue;
                 }
-
+                
                 // Further dimensions
-                forEach(_arrayInfo.DimensionInfos, dimension + 1, result, action);
+                this.forEach(ArrayInfo.DimensionInfos, dimension + 1, result, action);
             }
-        }
-    }
-
-    /// <summary>
-    ///   Contain info about array (i.e. how many dimensions, lower/upper bounds)
-    /// </summary>
-    public sealed class ArrayInfo
-    {
-        private IList<DimensionInfo> _dimensionInfos;
-
-        ///<summary>
-        ///</summary>
-        public IList<DimensionInfo> DimensionInfos
-        {
-            get
-            {
-                if (_dimensionInfos == null) _dimensionInfos = new List<DimensionInfo>();
-                return _dimensionInfos;
-            }
-            set { _dimensionInfos = value; }
         }
     }
 }

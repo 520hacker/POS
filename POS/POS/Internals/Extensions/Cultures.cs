@@ -1,5 +1,4 @@
-﻿using Creek.Extensions;
-using Pos.Internals.Extensions;
+﻿using Pos.Internals.Extensions;
 
 namespace Creek.Extensions
 {
@@ -10,7 +9,7 @@ namespace Creek.Extensions
     public enum Cultures
     {
         // ReSharper disable InconsistentNaming
-#pragma warning disable 1591
+        #pragma warning disable 1591
         [DisplayString("af-ZA")]
         Afrikaans,
         [DisplayString("af-ZA")]
@@ -462,6 +461,6 @@ namespace Creek.Extensions
         [DisplayString("zu-ZA")]
         Zulu_SouthAfrica
         // ReSharper restore InconsistentNaming
-#pragma warning restore 1591
+        #pragma warning restore 1591
     }
 }

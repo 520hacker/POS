@@ -47,7 +47,9 @@ namespace Pos.Internals.Extensions
         public static IEnumerable<decimal> Abs(this IEnumerable<decimal> value)
         {
             foreach (decimal d in value)
+            {
                 yield return d.Abs();
+            }
         }
     }
 }

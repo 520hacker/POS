@@ -29,12 +29,18 @@ namespace Pos.Internals.Extensions
             for (var i = 0; i < values.Length; i++)
             {
                 if (i > 0)
+                {
                     sb.Append(separator);
+                }
                 if (quotation != null)
+                {
                     sb.Append(quotation);
+                }
                 sb.Append(values[i]);
                 if (quotation != null)
+                {
                     sb.Append(quotation);
+                }
             }
 
             sb.Append(suffix);

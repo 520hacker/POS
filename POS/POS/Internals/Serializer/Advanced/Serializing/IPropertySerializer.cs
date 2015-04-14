@@ -1,3 +1,4 @@
+
 #region Copyright © 2010 Pawel Idzikowski [idzikowski@sharpserializer.com]
 
 //  ***********************************************************************
@@ -41,13 +42,13 @@ namespace Polenter.Serialization.Advanced.Serializing
         /// </summary>
         /// <param name = "stream"></param>
         void Open(Stream stream);
-
+        
         /// <summary>
         ///   Serializes property
         /// </summary>
         /// <param name = "property"></param>
         void Serialize(Property property);
-
+        
         /// <summary>
         ///   Cleaning, but the stream can be used further
         /// </summary>

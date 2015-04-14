@@ -5,166 +5,180 @@ using Lib.JSON.Utilities;
 
 namespace Lib.JSON.Linq
 {
-  internal class JPath
-  {
-    private readonly string _expression;
-    public List<object> Parts { get; private set; }
-
-    private int _currentIndex;
-
-    public JPath(string expression)
+    internal class JPath
     {
-      ValidationUtils.ArgumentNotNull(expression, "expression");
-      _expression = expression;
-      Parts = new List<object>();
+        private readonly string _expression;
+        private int _currentIndex;
 
-      ParseMain();
-    }
-
-    private void ParseMain()
-    {
-      int currentPartStartIndex = _currentIndex;
-      bool followingIndexer = false;
-
-      while (_currentIndex < _expression.Length)
-      {
-        char currentChar = _expression[_currentIndex];
-
-        switch (currentChar)
+        public JPath(string expression)
         {
-          case '[':
-          case '(':
-            if (_currentIndex > currentPartStartIndex)
+            ValidationUtils.ArgumentNotNull(expression, "expression");
+            this._expression = expression;
+            this.Parts = new List<object>();
+
+            this.ParseMain();
+        }
+
+        public List<object> Parts { get; private set; }
+
+        internal JToken Evaluate(JToken root, bool errorWhenNoMatch)
+        {
+            JToken current = root;
+
+            foreach (object part in this.Parts)
             {
-              string member = _expression.Substring(currentPartStartIndex, _currentIndex - currentPartStartIndex);
-              Parts.Add(member);
-            }
+                string propertyName = part as string;
+                if (propertyName != null)
+                {
+                    JObject o = current as JObject;
+                    if (o != null)
+                    {
+                        current = o[propertyName];
 
-            ParseIndexer(currentChar);
-            currentPartStartIndex = _currentIndex + 1;
-            followingIndexer = true;
-            break;
-          case ']':
-          case ')':
-            throw new Exception("Unexpected character while parsing path: " + currentChar);
-          case '.':
-            if (_currentIndex > currentPartStartIndex)
-            {
-              string member = _expression.Substring(currentPartStartIndex, _currentIndex - currentPartStartIndex);
-              Parts.Add(member);
-            }
-            currentPartStartIndex = _currentIndex + 1;
-            followingIndexer = false;
-            break;
-          default:
-            if (followingIndexer)
-              throw new Exception("Unexpected character following indexer: " + currentChar);
-            break;
-        }
+                        if (current == null && errorWhenNoMatch)
+                        {
+                            throw new Exception("Property '{0}' does not exist on JObject.".FormatWith(CultureInfo.InvariantCulture, propertyName));
+                        }
+                    }
+                    else
+                    {
+                        if (errorWhenNoMatch)
+                        {
+                            throw new Exception("Property '{0}' not valid on {1}.".FormatWith(CultureInfo.InvariantCulture, propertyName, current.GetType().Name));
+                        }
 
-        _currentIndex++;
-      }
+                        return null;
+                    }
+                }
+                else
+                {
+                    int index = (int)part;
 
-      if (_currentIndex > currentPartStartIndex)
-      {
-        string member = _expression.Substring(currentPartStartIndex, _currentIndex - currentPartStartIndex);
-        Parts.Add(member);
-      }
-    }
+                    JArray a = current as JArray;
 
-    private void ParseIndexer(char indexerOpenChar)
-    {
-      _currentIndex++;
-
-      char indexerCloseChar = (indexerOpenChar == '[') ? ']' : ')';
-      int indexerStart = _currentIndex;
-      int indexerLength = 0;
-      bool indexerClosed = false;
-
-      while (_currentIndex < _expression.Length)
-      {
-        char currentCharacter = _expression[_currentIndex];
-        if (char.IsDigit(currentCharacter))
-        {
-          indexerLength++;
-        }
-        else if (currentCharacter == indexerCloseChar)
-        {
-          indexerClosed = true;
-          break;
-        }
-        else
-        {
-          throw new Exception("Unexpected character while parsing path indexer: " + currentCharacter);
-        }
-
-        _currentIndex++;
-      }
-
-      if (!indexerClosed)
-        throw new Exception("Path ended with open indexer. Expected " + indexerCloseChar);
-
-      if (indexerLength == 0)
-        throw new Exception("Empty path indexer.");
-
-      string indexer = _expression.Substring(indexerStart, indexerLength);
-      Parts.Add(Convert.ToInt32(indexer, CultureInfo.InvariantCulture));
-    }
-
-    internal JToken Evaluate(JToken root, bool errorWhenNoMatch)
-    {
-      JToken current = root;
-
-      foreach (object part in Parts)
-      {
-        string propertyName = part as string;
-        if (propertyName != null)
-        {
-          JObject o = current as JObject;
-          if (o != null)
-          {
-            current = o[propertyName];
-
-            if (current == null && errorWhenNoMatch)
-              throw new Exception("Property '{0}' does not exist on JObject.".FormatWith(CultureInfo.InvariantCulture, propertyName));
-          }
-          else
-          {
-            if (errorWhenNoMatch)
-              throw new Exception("Property '{0}' not valid on {1}.".FormatWith(CultureInfo.InvariantCulture, propertyName, current.GetType().Name));
-
-            return null;
-          }
-        }
-        else
-        {
-          int index = (int) part;
-
-          JArray a = current as JArray;
-
-          if (a != null)
-          {
-            if (a.Count <= index)
-            {
-              if (errorWhenNoMatch)
-                throw new IndexOutOfRangeException("Index {0} outside the bounds of JArray.".FormatWith(CultureInfo.InvariantCulture, index));
+                    if (a != null)
+                    {
+                        if (a.Count <= index)
+                        {
+                            if (errorWhenNoMatch)
+                            {
+                                throw new IndexOutOfRangeException("Index {0} outside the bounds of JArray.".FormatWith(CultureInfo.InvariantCulture, index));
+                            }
               
-              return null;
+                            return null;
+                        }
+
+                        current = a[index];
+                    }
+                    else
+                    {
+                        if (errorWhenNoMatch)
+                        {
+                            throw new Exception("Index {0} not valid on {1}.".FormatWith(CultureInfo.InvariantCulture, index, current.GetType().Name));
+                        }
+
+                        return null;
+                    }
+                }
             }
 
-            current = a[index];
-          }
-          else
-          {
-            if (errorWhenNoMatch)
-              throw new Exception("Index {0} not valid on {1}.".FormatWith(CultureInfo.InvariantCulture, index, current.GetType().Name));
-
-            return null;
-          }
+            return current;
         }
-      }
 
-      return current;
+        private void ParseMain()
+        {
+            int currentPartStartIndex = this._currentIndex;
+            bool followingIndexer = false;
+
+            while (this._currentIndex < this._expression.Length)
+            {
+                char currentChar = this._expression[this._currentIndex];
+
+                switch (currentChar)
+                {
+                    case '[':
+                    case '(':
+                        if (this._currentIndex > currentPartStartIndex)
+                        {
+                            string member = this._expression.Substring(currentPartStartIndex, this._currentIndex - currentPartStartIndex);
+                            this.Parts.Add(member);
+                        }
+
+                        this.ParseIndexer(currentChar);
+                        currentPartStartIndex = this._currentIndex + 1;
+                        followingIndexer = true;
+                        break;
+                    case ']':
+                    case ')':
+                        throw new Exception(string.Format("Unexpected character while parsing path: {0}", currentChar));
+                    case '.':
+                        if (this._currentIndex > currentPartStartIndex)
+                        {
+                            string member = this._expression.Substring(currentPartStartIndex, this._currentIndex - currentPartStartIndex);
+                            this.Parts.Add(member);
+                        }
+                        currentPartStartIndex = this._currentIndex + 1;
+                        followingIndexer = false;
+                        break;
+                    default:
+                        if (followingIndexer)
+                        {
+                            throw new Exception(string.Format("Unexpected character following indexer: {0}", currentChar));
+                        }
+                        break;
+                }
+
+                this._currentIndex++;
+            }
+
+            if (this._currentIndex > currentPartStartIndex)
+            {
+                string member = this._expression.Substring(currentPartStartIndex, this._currentIndex - currentPartStartIndex);
+                this.Parts.Add(member);
+            }
+        }
+
+        private void ParseIndexer(char indexerOpenChar)
+        {
+            this._currentIndex++;
+
+            char indexerCloseChar = (indexerOpenChar == '[') ? ']' : ')';
+            int indexerStart = this._currentIndex;
+            int indexerLength = 0;
+            bool indexerClosed = false;
+
+            while (this._currentIndex < this._expression.Length)
+            {
+                char currentCharacter = this._expression[this._currentIndex];
+                if (char.IsDigit(currentCharacter))
+                {
+                    indexerLength++;
+                }
+                else if (currentCharacter == indexerCloseChar)
+                {
+                    indexerClosed = true;
+                    break;
+                }
+                else
+                {
+                    throw new Exception(string.Format("Unexpected character while parsing path indexer: {0}", currentCharacter));
+                }
+
+                this._currentIndex++;
+            }
+
+            if (!indexerClosed)
+            {
+                throw new Exception(string.Format("Path ended with open indexer. Expected {0}", indexerCloseChar));
+            }
+
+            if (indexerLength == 0)
+            {
+                throw new Exception("Empty path indexer.");
+            }
+
+            string indexer = this._expression.Substring(indexerStart, indexerLength);
+            this.Parts.Add(Convert.ToInt32(indexer, CultureInfo.InvariantCulture));
+        }
     }
-  }
 }

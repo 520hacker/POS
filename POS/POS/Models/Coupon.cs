@@ -28,7 +28,7 @@ namespace POS.Models
         {
             get
             {
-                return DateTime.Today <= ExpireDate;
+                return DateTime.Today <= this.ExpireDate;
             }
         }
 

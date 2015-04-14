@@ -1,3 +1,4 @@
+
 #region Copyright © 2010 Pawel Idzikowski [idzikowski@sharpserializer.com]
 
 //  ***********************************************************************
@@ -50,8 +51,7 @@ namespace Polenter.Serialization.Advanced
         private IndexGenerator<string> _names;
         private Stream _stream;
         private IndexGenerator<Type> _types;
-
-
+        
         ///<summary>
         ///</summary>
         ///<param name = "typeNameConverter"></param>
@@ -59,104 +59,109 @@ namespace Polenter.Serialization.Advanced
         ///<exception cref = "ArgumentNullException"></exception>
         public SizeOptimizedBinaryWriter(ITypeNameConverter typeNameConverter, Encoding encoding)
         {
-            if (typeNameConverter == null) throw new ArgumentNullException("typeNameConverter");
-            if (encoding == null) throw new ArgumentNullException("encoding");
-            _encoding = encoding;
-            _typeNameConverter = typeNameConverter;
+            if (typeNameConverter == null)
+            {
+                throw new ArgumentNullException("typeNameConverter");
+            }
+            if (encoding == null)
+            {
+                throw new ArgumentNullException("encoding");
+            }
+            this._encoding = encoding;
+            this._typeNameConverter = typeNameConverter;
         }
-
+        
         #region IBinaryWriter Members
-
+        
         /// <summary>
         ///   Writes Property Id
         /// </summary>
         /// <param name = "id"></param>
         public void WriteElementId(byte id)
         {
-            _cache.Add(new ByteWriteCommand(id));
+            this._cache.Add(new ByteWriteCommand(id));
         }
-
+        
         /// <summary>
         ///   Writes type
         /// </summary>
         /// <param name = "type"></param>
         public void WriteType(Type type)
         {
-            int typeIndex = _types.GetIndexOfItem(type);
-            _cache.Add(new NumberWriteCommand(typeIndex));
+            int typeIndex = this._types.GetIndexOfItem(type);
+            this._cache.Add(new NumberWriteCommand(typeIndex));
         }
-
+        
         /// <summary>
         ///   Writes property name
         /// </summary>
         /// <param name = "name"></param>
         public void WriteName(string name)
         {
-            int nameIndex = _names.GetIndexOfItem(name);
-            _cache.Add(new NumberWriteCommand(nameIndex));
+            int nameIndex = this._names.GetIndexOfItem(name);
+            this._cache.Add(new NumberWriteCommand(nameIndex));
         }
-
+        
         /// <summary>
         ///   Writes a simple value (value of a simple property)
         /// </summary>
         /// <param name = "value"></param>
         public void WriteValue(object value)
         {
-            _cache.Add(new ValueWriteCommand(value));
+            this._cache.Add(new ValueWriteCommand(value));
         }
-
+        
         /// <summary>
         ///   Writes an integer. It saves the number with the least required bytes
         /// </summary>
         /// <param name = "number"></param>
         public void WriteNumber(int number)
         {
-            _cache.Add(new NumberWriteCommand(number));
+            this._cache.Add(new NumberWriteCommand(number));
         }
-
+        
         /// <summary>
         ///   Writes an array of numbers. It saves numbers with the least required bytes
         /// </summary>
         /// <param name = "numbers"></param>
         public void WriteNumbers(int[] numbers)
         {
-            _cache.Add(new NumbersWriteCommand(numbers));
+            this._cache.Add(new NumbersWriteCommand(numbers));
         }
-
+        
         /// <summary>
         ///   Opens the stream for writing
         /// </summary>
         /// <param name = "stream"></param>
         public void Open(Stream stream)
         {
-            _stream = stream;
-            _cache = new List<WriteCommand>();
-            _types = new IndexGenerator<Type>();
-            _names = new IndexGenerator<string>();
+            this._stream = stream;
+            this._cache = new List<WriteCommand>();
+            this._types = new IndexGenerator<Type>();
+            this._names = new IndexGenerator<string>();
         }
-
-
+        
         /// <summary>
         ///   Saves the data to the stream, the stream is not closed and can be further used
         /// </summary>
         public void Close()
         {
-            var writer = new BinaryWriter(_stream, _encoding);
-
+            var writer = new BinaryWriter(this._stream, this._encoding);
+            
             // Write Names
-            writeNamesHeader(writer);
-
+            this.writeNamesHeader(writer);
+            
             // Write Types
-            writeTypesHeader(writer);
-
+            this.writeTypesHeader(writer);
+            
             // Write Data
-            writeCache(_cache, writer);
-
+            writeCache(this._cache, writer);
+            
             writer.Flush();
         }
-
+        
         #endregion
-
+        
         private static void writeCache(List<WriteCommand> cache, BinaryWriter writer)
         {
             foreach (WriteCommand command in cache)
@@ -164,115 +169,115 @@ namespace Polenter.Serialization.Advanced
                 command.Write(writer);
             }
         }
-
+        
         private void writeNamesHeader(BinaryWriter writer)
         {
             // count
-            BinaryWriterTools.WriteNumber(_names.Items.Count, writer);
-
+            BinaryWriterTools.WriteNumber(this._names.Items.Count, writer);
+            
             // Items
-            foreach (string name in _names.Items)
+            foreach (string name in this._names.Items)
             {
                 BinaryWriterTools.WriteString(name, writer);
             }
         }
-
+        
         private void writeTypesHeader(BinaryWriter writer)
         {
             // count
-            BinaryWriterTools.WriteNumber(_types.Items.Count, writer);
-
+            BinaryWriterTools.WriteNumber(this._types.Items.Count, writer);
+            
             // Items
-            foreach (Type type in _types.Items)
+            foreach (Type type in this._types.Items)
             {
-                string typeName = _typeNameConverter.ConvertToTypeName(type);
+                string typeName = this._typeNameConverter.ConvertToTypeName(type);
                 BinaryWriterTools.WriteString(typeName, writer);
             }
         }
-
+        
         #region Nested type: ByteWriteCommand
-
+        
         private sealed class ByteWriteCommand : WriteCommand
         {
             public ByteWriteCommand(byte data)
             {
-                Data = data;
+                this.Data = data;
             }
-
+            
             public byte Data { get; set; }
-
+            
             public override void Write(BinaryWriter writer)
             {
-                writer.Write(Data);
+                writer.Write(this.Data);
             }
         }
-
+        
         #endregion
-
+        
         #region Nested type: NumberWriteCommand
-
+        
         private sealed class NumberWriteCommand : WriteCommand
         {
             public NumberWriteCommand(int data)
             {
-                Data = data;
+                this.Data = data;
             }
-
+            
             public int Data { get; set; }
-
+            
             public override void Write(BinaryWriter writer)
             {
-                BinaryWriterTools.WriteNumber(Data, writer);
+                BinaryWriterTools.WriteNumber(this.Data, writer);
             }
         }
-
+        
         #endregion
-
+        
         #region Nested type: NumbersWriteCommand
-
+        
         private sealed class NumbersWriteCommand : WriteCommand
         {
             public NumbersWriteCommand(int[] data)
             {
-                Data = data;
+                this.Data = data;
             }
-
+            
             public int[] Data { get; set; }
-
+            
             public override void Write(BinaryWriter writer)
             {
-                BinaryWriterTools.WriteNumbers(Data, writer);
+                BinaryWriterTools.WriteNumbers(this.Data, writer);
             }
         }
-
+        
         #endregion
-
+        
         #region Nested type: ValueWriteCommand
-
+        
         private sealed class ValueWriteCommand : WriteCommand
         {
             public ValueWriteCommand(object data)
             {
-                Data = data;
+                this.Data = data;
             }
-
+            
             public object Data { get; set; }
-
+            
             public override void Write(BinaryWriter writer)
             {
-                BinaryWriterTools.WriteValue(Data, writer);
+                BinaryWriterTools.WriteValue(this.Data, writer);
             }
         }
-
+        
         #endregion
-
+        
         #region Nested type: WriteCommand
-
+        
         private abstract class WriteCommand
         {
             public abstract void Write(BinaryWriter writer);
         }
-
+        
         #endregion
     }
 }

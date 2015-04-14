@@ -4,12 +4,11 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
-using POS.Internals;
 using Telerik.WinControls;
 
 namespace POS
 {
-    static class Program
+    internal static class Program
     {
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -19,7 +18,7 @@ namespace POS
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             ThemeResolutionService.ApplicationThemeName = new Telerik.WinControls.Themes.TelerikMetroTouchTheme().ThemeName;
 

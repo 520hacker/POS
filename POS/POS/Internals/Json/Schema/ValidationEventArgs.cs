@@ -1,4 +1,6 @@
+
 #region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,6 +23,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
@@ -28,35 +31,33 @@ using Lib.JSON.Utilities;
 
 namespace Lib.JSON.Schema
 {
-  /// <summary>
-  /// Returns detailed information related to the <see cref="ValidationEventHandler"/>.
-  /// </summary>
-  public class ValidationEventArgs : EventArgs
-  {
-    private readonly JsonSchemaException _ex;
-
-    internal ValidationEventArgs(JsonSchemaException ex)
-    {
-      ValidationUtils.ArgumentNotNull(ex, "ex");
-      _ex = ex;
-    }
-
     /// <summary>
-    /// Gets the <see cref="JsonSchemaException"/> associated with the validation event.
+    /// Returns detailed information related to the <see cref="ValidationEventHandler"/>.
     /// </summary>
-    /// <value>The JsonSchemaException associated with the validation event.</value>
-    public JsonSchemaException Exception
+    public class ValidationEventArgs : EventArgs
     {
-      get { return _ex; }
+        internal ValidationEventArgs(JsonSchemaException ex)
+        {
+            ValidationUtils.ArgumentNotNull(ex, "ex");
+            this.Exception = ex;
+        }
+        
+        /// <summary>
+        /// Gets the <see cref="JsonSchemaException"/> associated with the validation event.
+        /// </summary>
+        /// <value>The JsonSchemaException associated with the validation event.</value>
+        public JsonSchemaException Exception { get; private set; }
+        
+        /// <summary>
+        /// Gets the text description corresponding to the validation event.
+        /// </summary>
+        /// <value>The text description.</value>
+        public string Message
+        {
+            get
+            {
+                return this.Exception.Message;
+            }
+        }
     }
-
-    /// <summary>
-    /// Gets the text description corresponding to the validation event.
-    /// </summary>
-    /// <value>The text description.</value>
-    public string Message
-    {
-      get { return _ex.Message; }
-    }
-  }
 }

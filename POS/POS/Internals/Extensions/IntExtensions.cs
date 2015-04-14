@@ -26,7 +26,9 @@ namespace Pos.Internals.Extensions
         {
             // NOTE: Is it possible to reuse LongExtensions for this call?
             for (var i = 0; i < value; i++)
+            {
                 action(i);
+            }
         }
 
         /// <summary>

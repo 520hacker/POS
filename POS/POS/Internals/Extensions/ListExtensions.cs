@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text.RegularExpressions;
 using System.Text;
 
 namespace Pos.Internals.Extensions
@@ -63,7 +62,9 @@ namespace Pos.Internals.Extensions
             for (var i = 0; i < list.Count; i++)
             {
                 if (comparison(list[i]))
+                {
                     return i;
+                }
             }
             return -1;
         }
@@ -111,7 +112,9 @@ namespace Pos.Internals.Extensions
         public static string Join<T>(this IList<T> list, string joinString)
         {
             if (list == null || !list.Any())
+            {
                 return String.Empty;
+            }
 
             StringBuilder result = new StringBuilder();
 
@@ -128,11 +131,15 @@ namespace Pos.Internals.Extensions
                         result.Append(joinString);
                     }
                     else
+                    {
                         result.Append(list[i]);
+                    }
                 }
             }
             else
+            {
                 result.Append(list[0]);
+            }
 
             return result.ToString();
         }
@@ -163,10 +170,14 @@ namespace Pos.Internals.Extensions
         public static T GetRandomItem<T>(this IList<T> source, Random random)
         {
             if (source.Count > 0)
+            {
                 // The maxValue for the upper-bound in the Next() method is exclusive, see: http://stackoverflow.com/q/5063269/375958
                 return source[random.Next(0, source.Count)];
+            }
             else
+            {
                 throw new InvalidOperationException("Could not get item from empty list.");
+            }
         }
 
         /// <summary>
@@ -207,7 +218,10 @@ namespace Pos.Internals.Extensions
         public static List<T> Merge<T>(params List<T>[] lists)
         {
             var merged = new List<T>();
-            foreach (var list in lists) merged.Merge(list);
+            foreach (var list in lists)
+            {
+                merged.Merge(list);
+            }
             return merged;
         }
 
@@ -222,7 +236,10 @@ namespace Pos.Internals.Extensions
         public static List<T> Merge<T>(Expression<Func<T, object>> match, params List<T>[] lists)
         {
             var merged = new List<T>();
-            foreach (var list in lists) merged.Merge(list, match);
+            foreach (var list in lists)
+            {
+                merged.Merge(list, match);
+            }
             return merged;
         }
 
@@ -243,7 +260,10 @@ namespace Pos.Internals.Extensions
                 foreach (var item in list2)
                 {
                     var key = matchFunc(item);
-                    if (!list1.Exists(i => matchFunc(i).Equals(key))) list1.Add(item);
+                    if (!list1.Exists(i => matchFunc(i).Equals(key)))
+                    {
+                        list1.Add(item);
+                    }
                 }
             }
 
@@ -260,12 +280,16 @@ namespace Pos.Internals.Extensions
         /// </remarks>
         public static List<T> Merge<T>(this List<T> list1, List<T> list2)
         {
-            if (list1 != null && list2 != null) foreach (var item in list2.Where(item => !list1.Contains(item))) list1.Add(item);
+            if (list1 != null && list2 != null)
+            {
+                foreach (var item in list2.Where(item => !list1.Contains(item)))
+                {
+                    list1.Add(item);
+                }
+            }
             return list1;
         }
-
+        
         #endregion
-
-    
     }
 }

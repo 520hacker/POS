@@ -7,15 +7,17 @@ namespace POS
 {
     public class DataStorage
     {
-        public static string ProductsPath = ServiceLocator.DataPath + "\\products.bin";
-        public static string ProductCategoriesPath = ServiceLocator.DataPath + "\\productCategories.bin";
-        public static string CouponsPath = ServiceLocator.DataPath + "\\coupons.bin";
-        public static string InvoicesPath = ServiceLocator.DataPath + "\\invoices.bin";
+        public static string ProductsPath = string.Format("{0}\\products.bin", ServiceLocator.DataPath);
+        public static string ProductCategoriesPath = string.Format("{0}\\productCategories.bin", ServiceLocator.DataPath);
+        public static string CouponsPath = string.Format("{0}\\coupons.bin", ServiceLocator.DataPath);
+        public static string InvoicesPath = string.Format("{0}\\invoices.bin", ServiceLocator.DataPath);
 
         public static Product[] ReadProducts()
         {
             if (File.Exists(ProductsPath))
+            {
                 return DatabaseReader.Read<Product[]>(ProductsPath);
+            }
             return new Product[0];
         }
 
@@ -27,7 +29,9 @@ namespace POS
         public static Coupon[] ReadCoupons()
         {
             if (File.Exists(ProductsPath))
+            {
                 return DatabaseReader.Read<Coupon[]>(CouponsPath);
+            }
             return new Coupon[0];
         }
 
@@ -39,7 +43,9 @@ namespace POS
         public static ProductCategory[] ReadProductCategories()
         {
             if (File.Exists(ProductCategoriesPath))
+            {
                 return DatabaseReader.Read<ProductCategory[]>(ProductCategoriesPath);
+            }
             return new ProductCategory[0];
         }
 
@@ -51,7 +57,9 @@ namespace POS
         public static Invoice[] ReadInvoices()
         {
             if (File.Exists(InvoicesPath))
+            {
                 return DatabaseReader.Read<Invoice[]>(InvoicesPath);
+            }
             return new Invoice[0];
         }
 

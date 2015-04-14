@@ -14,7 +14,9 @@ namespace POS
             var s = new SharpSerializer();
 
             if (File.Exists("settings.dat"))
+            {
                 _data = (UndoRedoDictionary<string, object>)s.Deserialize("settings.dat");
+            }
         }
 
         public static T Get<T>(string name)

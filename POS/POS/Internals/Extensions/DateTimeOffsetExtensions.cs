@@ -7,9 +7,6 @@ namespace Pos.Internals.Extensions
     /// </summary>
     public static class DateTimeOffsetExtensions
     {
-
-
-
         /// <summary>
         /// 	Converts a DateTimeOffset into a DateTime using the local system time zone.
         /// </summary>

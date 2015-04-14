@@ -23,9 +23,9 @@ namespace POS.Internals.I18N
         /// <param name="cultureInfo">Locale of this catalog.</param>
         protected BaseCatalog(CultureInfo cultureInfo)
         {
-            CultureInfo = cultureInfo;
-            PluralForms = PluralFormProcessor.Default;
-            Translations = new Dictionary<string, string[]>();
+            this.CultureInfo = cultureInfo;
+            this.PluralForms = PluralFormProcessor.Default;
+            this.Translations = new Dictionary<string, string[]>();
         }
 
         #region ICatalog implementation
@@ -38,7 +38,7 @@ namespace POS.Internals.I18N
         /// <returns>Translated text.</returns>
         public virtual string GetString(string text)
         {
-            return GetStringDefault(text, text);
+            return this.GetStringDefault(text, text);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace POS.Internals.I18N
         /// <returns>Translated text.</returns>
         public virtual string GetString(string text, params object[] args)
         {
-            return String.Format(GetStringDefault(text, text), args);
+            return String.Format(this.GetStringDefault(text, text), args);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace POS.Internals.I18N
         /// <returns>Translated text.</returns>
         public virtual string GetPluralString(string text, string pluralText, long n)
         {
-            return GetPluralStringDefault(text, text, pluralText, n);
+            return this.GetPluralStringDefault(text, text, pluralText, n);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace POS.Internals.I18N
         /// <returns>Translated text.</returns>
         public virtual string GetPluralString(string text, string pluralText, long n, params object[] args)
         {
-            return String.Format(GetPluralStringDefault(text, text, pluralText, n), args);
+            return String.Format(this.GetPluralStringDefault(text, text, pluralText, n), args);
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace POS.Internals.I18N
         /// <returns>Translated text.</returns>
         public virtual string GetParticularString(string context, string text)
         {
-            return GetStringDefault(context + CONTEXT_GLUE + text, text);
+            return this.GetStringDefault(string.Format("{0}{1}{2}", context, CONTEXT_GLUE, text), text);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace POS.Internals.I18N
         /// <returns>Translated text.</returns>
         public virtual string GetParticularString(string context, string text, params object[] args)
         {
-            return String.Format(GetStringDefault(context + CONTEXT_GLUE + text, text), args);
+            return String.Format(this.GetStringDefault(string.Format("{0}{1}{2}", context, CONTEXT_GLUE, text), text), args);
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace POS.Internals.I18N
         /// <returns>Translated text.</returns>
         public virtual string GetParticularPluralString(string context, string text, string pluralText, long n)
         {
-            return GetPluralStringDefault(context + CONTEXT_GLUE + text, text, pluralText, n);
+            return this.GetPluralStringDefault(string.Format("{0}{1}{2}", context, CONTEXT_GLUE, text), text, pluralText, n);
         }
 
         /// <summary>
@@ -130,9 +130,9 @@ namespace POS.Internals.I18N
         /// <param name="args">Optional arguments for <see cref="System.String.Format(string, object[])"/> method.</param>
         /// <returns>Translated text.</returns>
         public virtual string GetParticularPluralString(string context, string text, string pluralText, long n,
-                                                        params object[] args)
+            params object[] args)
         {
-            return String.Format(GetPluralStringDefault(context + CONTEXT_GLUE + text, text, pluralText, n), args);
+            return String.Format(this.GetPluralStringDefault(string.Format("{0}{1}{2}", context, CONTEXT_GLUE, text), text, pluralText, n), args);
         }
 
         #endregion
@@ -161,7 +161,7 @@ namespace POS.Internals.I18N
         /// <returns>Translated string</returns>
         public virtual string GetStringDefault(string messageId, string defaultMessage)
         {
-            string[] translations = GetTranslations(messageId);
+            string[] translations = this.GetTranslations(messageId);
 
             if (translations == null || translations.Length == 0)
             {
@@ -182,15 +182,15 @@ namespace POS.Internals.I18N
         /// <param name="n">Value that determines the plural form</param>
         /// <returns>Translated string</returns>
         public virtual string GetPluralStringDefault(string messageId, string defaultMessage,
-                                                     string defaultPluralMessage, long n)
+            string defaultPluralMessage, long n)
         {
-            string[] translations = GetTranslations(messageId);
-            int pluralIndex = PluralForms.GetPluralFormIndex(CultureInfo, n);
+            string[] translations = this.GetTranslations(messageId);
+            int pluralIndex = this.PluralForms.GetPluralFormIndex(this.CultureInfo, n);
 
             if (translations == null || translations.Length <= pluralIndex)
             {
                 Trace.WriteLine(String.Format("Translation not found (plural) for message id \"{0}\".", messageId),
-                                "Lib.Gettext");
+                    "Lib.Gettext");
                 return (n == 1) ? defaultMessage : defaultPluralMessage;
             }
 
@@ -204,10 +204,16 @@ namespace POS.Internals.I18N
         /// <returns>Returns all translations for given <paramref name="messageId"/> or null if not found.</returns>
         public virtual string[] GetTranslations(string messageId)
         {
-            if (String.IsNullOrEmpty(messageId)) return null;
-            if (!Translations.ContainsKey(messageId)) return null;
+            if (String.IsNullOrEmpty(messageId))
+            {
+                return null;
+            }
+            if (!this.Translations.ContainsKey(messageId))
+            {
+                return null;
+            }
 
-            return Translations[messageId];
+            return this.Translations[messageId];
         }
     }
 }

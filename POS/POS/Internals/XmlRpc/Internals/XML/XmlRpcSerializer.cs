@@ -8,7 +8,7 @@ namespace Rpc.Internals
     /// <summary>Base class of classes serializing data to XML-RPC's XML format.</summary>
     /// <remarks>This class handles the basic type conversions like Integer to &lt;i4&gt;. </remarks>
     /// <seealso cref="XmlRpcXmlTokens"/>
-    class XmlRpcSerializer : XmlRpcXmlTokens
+    internal class XmlRpcSerializer : XmlRpcXmlTokens
     {
         /// <summary>Serialize the <c>XmlRpcRequest</c> to the output stream.</summary>
         /// <param name="output">An <c>XmlTextWriter</c> stream to write data to.</param>
@@ -29,7 +29,7 @@ namespace Rpc.Internals
             XmlTextWriter xml = new XmlTextWriter(strBuf);
             xml.Formatting = Formatting.Indented;
             xml.Indentation = 4;
-            Serialize(xml, obj);
+            this.Serialize(xml, obj);
             xml.Flush();
             String returns = strBuf.ToString();
             xml.Close();
@@ -42,7 +42,9 @@ namespace Rpc.Internals
         public void SerializeObject(XmlTextWriter output, Object obj)
         {
             if (obj == null)
+            {
                 return;
+            }
 
             if (obj is byte[])
             {
@@ -80,7 +82,7 @@ namespace Rpc.Internals
                     foreach (Object member in ((IList)obj))
                     {
                         output.WriteStartElement(VALUE);
-                        SerializeObject(output, member);
+                        this.SerializeObject(output, member);
                         output.WriteEndElement();
                     }
                 }
@@ -96,7 +98,7 @@ namespace Rpc.Internals
                     output.WriteStartElement(MEMBER);
                     output.WriteElementString(NAME, key);
                     output.WriteStartElement(VALUE);
-                    SerializeObject(output, h[key]);
+                    this.SerializeObject(output, h[key]);
                     output.WriteEndElement();
                     output.WriteEndElement();
                 }

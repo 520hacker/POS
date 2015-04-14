@@ -1,3 +1,4 @@
+
 #region Copyright © 2010 Pawel Idzikowski [idzikowski@sharpserializer.com]
 
 //  ***********************************************************************
@@ -39,64 +40,63 @@ namespace Polenter.Serialization.Serializing
         /// <summary>
         ///   Cache stores type info and spares time be recall the info every time it is needed
         /// </summary>
-#if !PORTABLE
+        #if !PORTABLE
         [ThreadStatic]
-#endif
+        #endif
         private static TypeInfoCollection _cache;
-
+        
         ///<summary>
         ///</summary>
         public bool IsSimple { get; set; }
-
+        
         ///<summary>
         ///</summary>
         public bool IsArray { get; set; }
-
+        
         ///<summary>
         ///</summary>
         public bool IsEnumerable { get; set; }
-
+        
         ///<summary>
         ///</summary>
         public bool IsCollection { get; set; }
-
+        
         ///<summary>
         ///</summary>
         public bool IsDictionary { get; set; }
-
+        
         /// <summary>
         ///   Of what type are elements of Array, Collection or values in a Dictionary
         /// </summary>
         public Type ElementType { get; set; }
-
+        
         /// <summary>
         ///   Of what type are dictionary keys
         /// </summary>
         public Type KeyType { get; set; }
-
+        
         /// <summary>
         ///   Valid dimensions start with 1
         /// </summary>
         public int ArrayDimensionCount { get; set; }
-
+        
         ///<summary>
         ///  Property type
         ///</summary>
         public Type Type { get; set; }
-
+        
         private static TypeInfoCollection Cache
         {
             get
             {
-                if (_cache==null)
+                if (_cache == null)
                 {
-                    _cache=new TypeInfoCollection();
+                    _cache = new TypeInfoCollection();
                 }
                 return _cache;
             }
         }
-
-
+        
         ///<summary>
         ///</summary>
         ///<param name = "obj"></param>
@@ -104,13 +104,15 @@ namespace Polenter.Serialization.Serializing
         ///<exception cref = "ArgumentNullException"></exception>
         public static TypeInfo GetTypeInfo(object obj)
         {
-            if (obj == null) throw new ArgumentNullException("obj");
-
+            if (obj == null)
+            {
+                throw new ArgumentNullException("obj");
+            }
+            
             Type type = obj.GetType();
             return GetTypeInfo(type);
         }
-
-
+        
         ///<summary>
         ///</summary>
         ///<param name = "type"></param>
@@ -124,22 +126,22 @@ namespace Polenter.Serialization.Serializing
                 // no info in cache yet
                 typeInfo = new TypeInfo();
                 typeInfo.Type = type;
-
+                
                 typeInfo.IsSimple = Tools.IsSimple(type);   
-
+                
                 // new since v.2.16
                 // check if array of byte
-                if (type==typeof(byte[]))
+                if (type == typeof(byte[]))
                 {
                     typeInfo.ElementType = typeof (byte);
                 }
-
+                
                 // Only not simple types can be Collections
                 if (!typeInfo.IsSimple)
                 {
                     // check if it is an Array
                     typeInfo.IsArray = Tools.IsArray(type);
-
+                    
                     if (typeInfo.IsArray)
                     {
                         // Array? What is its element type?
@@ -147,7 +149,7 @@ namespace Polenter.Serialization.Serializing
                         {
                             typeInfo.ElementType = type.GetElementType();
                         }
-
+                        
                         // How many dimensions
                         typeInfo.ArrayDimensionCount = type.GetArrayRank();
                     }
@@ -159,12 +161,12 @@ namespace Polenter.Serialization.Serializing
                         {
                             // it is Enumerable maybe Collection?
                             typeInfo.IsCollection = Tools.IsCollection(type);
-
+                            
                             if (typeInfo.IsCollection)
                             {
                                 // Sure it is a Collection, but maybe Dictionary also?
                                 typeInfo.IsDictionary = Tools.IsDictionary(type);
-
+                                
                                 // Fill its key and value types, if the listing is generic
                                 bool elementTypeDefinitionFound;
                                 var examinedType = type;
@@ -173,21 +175,22 @@ namespace Polenter.Serialization.Serializing
                                     elementTypeDefinitionFound = fillKeyAndElementType(typeInfo, examinedType);
                                     examinedType = examinedType.BaseType;
                                     // until key and element definition was found, or the base typ is an object
-                                } while (!elementTypeDefinitionFound && examinedType!=null && examinedType!=typeof(object));
+                                }
+                                while (!elementTypeDefinitionFound && examinedType != null && examinedType != typeof(object));
                             }
                         }
                     }
                 }
-#if PORTABLE
+                #if PORTABLE
                 Cache.AddIfNotExists(typeInfo);
-#else
+                #else
                 Cache.Add(typeInfo);
-#endif
+                #endif
             }
-
+            
             return typeInfo;
         }
-
+        
         /// <summary>
         /// 
         /// </summary>
@@ -199,7 +202,7 @@ namespace Polenter.Serialization.Serializing
             if (type.IsGenericType)
             {
                 Type[] arguments = type.GetGenericArguments();
-
+                
                 if (typeInfo.IsDictionary)
                 {
                     // in Dictionary there are keys and values

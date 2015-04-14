@@ -23,7 +23,9 @@ namespace Info.Blockchain.API.ExchangeRates
         {
             var req = new NameValueCollection();
             if (apiCode != null)
+            {
                 req["api_code"] = apiCode;
+            }
 
             string response = HttpClient.Get("ticker", req);
             JObject tickerObj = JObject.Parse(response);
@@ -58,7 +60,9 @@ namespace Info.Blockchain.API.ExchangeRates
             req["currency"] = currency;
             req["value"] = value.ToString();
             if (apiCode != null)
+            {
                 req["api_code"] = apiCode;
+            }
 
             string response = HttpClient.Get("tobtc", req);
             return double.Parse(response);

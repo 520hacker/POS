@@ -55,7 +55,9 @@ namespace Pos.Internals.Extensions
         public static string ToUnsecureString(this SecureString s)
         {
             if (s == null)
+            {
                 return null;
+            }
 
             IntPtr unmanagedString = IntPtr.Zero;
 

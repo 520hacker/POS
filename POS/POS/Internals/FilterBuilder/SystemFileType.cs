@@ -32,7 +32,7 @@ namespace POS.Internals.FilterBuilder
 
         [DllImport("shell32.dll", CharSet = CharSet.Auto)]
         private static extern uint ExtractIconEx(string szFileName, int nIconIndex, IntPtr[] phiconLarge,
-                                                 IntPtr[] phiconSmall, uint nIcons);
+            IntPtr[] phiconSmall, uint nIcons);
 
         [DllImport("user32.dll", EntryPoint = "DestroyIcon", SetLastError = true)]
         private static extern int DestroyIcon(IntPtr hIcon);
@@ -83,7 +83,7 @@ namespace POS.Internals.FilterBuilder
                     }
 
                     //Go to the key that specifies the default icon associates with this file type.
-                    string defaultIcon = defaultValue + "\\DefaultIcon";
+                    string defaultIcon = string.Format("{0}\\DefaultIcon", defaultValue);
                     RegistryKey rkFileIcon = rkRoot.OpenSubKey(defaultIcon);
                     if (rkFileIcon != null)
                     {
@@ -143,8 +143,8 @@ namespace POS.Internals.FilterBuilder
         public static Icon ExtractIconFromFile(string fileAndParam, bool isLarge)
         {
             uint readIconCount = 0;
-            var hDummy = new IntPtr[1] {IntPtr.Zero};
-            var hIconEx = new IntPtr[1] {IntPtr.Zero};
+            var hDummy = new IntPtr[1] { IntPtr.Zero };
+            var hIconEx = new IntPtr[1] { IntPtr.Zero };
 
             try
             {
@@ -162,7 +162,7 @@ namespace POS.Internals.FilterBuilder
                 if (readIconCount > 0 && hIconEx[0] != IntPtr.Zero)
                 {
                     // Get first icon.
-                    var extractedIcon = (Icon) Icon.FromHandle(hIconEx[0]).Clone();
+                    var extractedIcon = (Icon)Icon.FromHandle(hIconEx[0]).Clone();
 
                     return extractedIcon;
                 }
@@ -305,7 +305,7 @@ namespace POS.Internals.FilterBuilder
             public string FileName;
             public int IconIndex;
         }
-
+        
         #endregion
     }
 }

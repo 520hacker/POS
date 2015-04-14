@@ -15,7 +15,9 @@ namespace Pos.Internals.Extensions
         public static void Times(this long value, Action action)
         {
             for (var i = 0; i < value; i++)
+            {
                 action();
+            }
         }
 
         /// <summary>
@@ -26,7 +28,9 @@ namespace Pos.Internals.Extensions
         public static void Times(this long value, Action<long> action)
         {
             for (var i = 0; i < value; i++)
+            {
                 action(i);
+            }
         }
 
         /// <summary>
@@ -36,7 +40,7 @@ namespace Pos.Internals.Extensions
         /// <returns>true or false</returns>
         public static bool IsEven(this long value)
         {
-            return value%2 == 0;
+            return value % 2 == 0;
         }
 
         /// <summary>

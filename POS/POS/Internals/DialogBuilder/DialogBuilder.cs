@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
-using POS.Internals.DialogBuilder;
 using POS.Internals.DialogBuilder.Attributes;
 
 namespace POS.Internals.DialogBuilder
@@ -13,30 +12,30 @@ namespace POS.Internals.DialogBuilder
 
         public DialogBuilder(string title, T item)
         {
-            InitializeComponent();
-            InitializeForm(title);
-            InitializeControls(item);
-            DataItem = item;
+            this.InitializeComponent();
+            this.InitializeForm(title);
+            this.InitializeControls(item);
+            this.DataItem = item;
 
             // We need to ensure that the required fields are clearly marked, so that
             // the user can see which controls they must complete in order for the OK
             // button to become enabled.
-            ValidateControls();
+            this.ValidateControls();
         }
 
         public T DataItem { get; private set; }
 
         private void InitializeForm(string title)
         {
-            Text = title;
-            MaximizeBox = false;
-            MinimizeBox = false;
-            ShowIcon = false;
-            ShowInTaskbar = false;
-            FormBorderStyle = FormBorderStyle.FixedDialog;
-            StartPosition = FormStartPosition.CenterScreen;
-            errorProvider.BlinkStyle = ErrorBlinkStyle.NeverBlink;
-            controls = new List<Control>();
+            this.Text = title;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.errorProvider.BlinkStyle = ErrorBlinkStyle.NeverBlink;
+            this.controls = new List<Control>();
         }
 
         private void InitializeControls(object item)
@@ -44,7 +43,7 @@ namespace POS.Internals.DialogBuilder
             PropertyInfo[] properties = item.GetType().GetProperties();
 
             // Create layout table
-            tableLayoutPanel1.RowCount = properties.Length;
+            this.tableLayoutPanel1.RowCount = properties.Length;
 
             // For each property
             int rowNumber = 0;
@@ -55,11 +54,13 @@ namespace POS.Internals.DialogBuilder
                 {
                     // Get custom attributes
                     object[] attributes = property.GetCustomAttributes(true);
-                    ctrl = ApplyAttributes(ctrl, attributes);
+                    ctrl = this.ApplyAttributes(ctrl, attributes);
 
                     // Disable the control if property read only
                     if (!property.CanWrite)
+                    {
                         ctrl.Enabled = false;
+                    }
 
                     // Set the tab index
                     //ctrl.TabIndex = controls.Count + 1;
@@ -67,21 +68,23 @@ namespace POS.Internals.DialogBuilder
                     // Build label
                     if (ctrl.Visible)
                     {
-                        var tag = (ControlTag) ctrl.Tag;
+                        var tag = (ControlTag)ctrl.Tag;
                         Label label = ControlFactory.CreateLabel(property.Name);
                         if (!string.IsNullOrEmpty(tag.CustomLabel))
+                        {
                             label.Text = tag.CustomLabel;
-                        tableLayoutPanel1.Controls.Add(label, 0, rowNumber);
-                        tableLayoutPanel1.Controls.Add(ctrl, 1, rowNumber);
-                        controls.Add(ctrl);
+                        }
+                        this.tableLayoutPanel1.Controls.Add(label, 0, rowNumber);
+                        this.tableLayoutPanel1.Controls.Add(ctrl, 1, rowNumber);
+                        this.controls.Add(ctrl);
                     }
                 }
                 rowNumber++;
             }
 
             // Resize the form
-            Width = tableLayoutPanel1.Width + 40;
-            Height = tableLayoutPanel1.Height + 90;
+            this.Width = this.tableLayoutPanel1.Width + 40;
+            this.Height = this.tableLayoutPanel1.Height + 90;
         }
 
         /// <summary>
@@ -92,22 +95,28 @@ namespace POS.Internals.DialogBuilder
         /// <returns></returns>
         private Control ApplyAttributes(Control ctrl, object[] attributes)
         {
-            var tag = (ControlTag) ctrl.Tag;
+            var tag = (ControlTag)ctrl.Tag;
             NumericSettingsAttribute attrRange = null;
             DisplaySettingsAttribute attrDisplay = null;
             RequiredFieldAttribute attrRequired = null;
             foreach (object attribute in attributes)
             {
                 if (attribute is NumericSettingsAttribute)
-                    attrRange = (NumericSettingsAttribute) attribute;
+                {
+                    attrRange = (NumericSettingsAttribute)attribute;
+                }
                 else if (attribute is DisplaySettingsAttribute)
-                    attrDisplay = (DisplaySettingsAttribute) attribute;
+                {
+                    attrDisplay = (DisplaySettingsAttribute)attribute;
+                }
                 else if (attribute is RequiredFieldAttribute)
-                    attrRequired = (RequiredFieldAttribute) attribute;
+                {
+                    attrRequired = (RequiredFieldAttribute)attribute;
+                }
             }
 
             // Attach LostFocus handler for input validation
-            ctrl.LostFocus += ctrl_LostFocus;
+            ctrl.LostFocus += this.ctrl_LostFocus;
 
             // Range Attribute
             if (attrRange != null)
@@ -122,16 +131,22 @@ namespace POS.Internals.DialogBuilder
                 ctrl.Enabled = !attrDisplay.ReadOnly;
                 ctrl.Visible = attrDisplay.Visible;
                 if (attrDisplay.Width > 0)
+                {
                     ctrl.Width = attrDisplay.Width;
+                }
             }
 
             // Required Field Attribute
             if (attrRequired != null)
             {
                 if (string.IsNullOrEmpty(attrRequired.Message))
+                {
                     tag.ErrorMessage = "Required";
+                }
                 else
+                {
                     tag.ErrorMessage = attrRequired.Message;
+                }
             }
             return ctrl;
         }
@@ -141,12 +156,12 @@ namespace POS.Internals.DialogBuilder
             // TODO: It would be better to validate just this control and update the
             // OK button accordingly, instead of validating every control on the
             // form.
-            ValidateControls();
+            this.ValidateControls();
         }
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            SaveControlValues();
+            this.SaveControlValues();
         }
 
         private bool ValidateControl(Control control)
@@ -158,14 +173,16 @@ namespace POS.Internals.DialogBuilder
             if (txt != null)
             {
                 // If the textbox is empty, show a warning
-                var tag = (ControlTag) txt.Tag;
+                var tag = (ControlTag)txt.Tag;
                 if (tag.IsRequired && string.IsNullOrEmpty(txt.Text))
                 {
-                    errorProvider.SetError(txt, tag.ErrorMessage);
+                    this.errorProvider.SetError(txt, tag.ErrorMessage);
                     isValid = false;
                 }
                 else
-                    errorProvider.SetError(txt, string.Empty);
+                {
+                    this.errorProvider.SetError(txt, string.Empty);
+                }
             }
             return isValid;
         }
@@ -177,12 +194,14 @@ namespace POS.Internals.DialogBuilder
         private void ValidateControls()
         {
             bool isValid = true;
-            foreach (Control control in controls)
+            foreach (Control control in this.controls)
             {
-                if (!ValidateControl(control))
+                if (!this.ValidateControl(control))
+                {
                     isValid = false;
+                }
             }
-            btnOk.Enabled = isValid;
+            this.btnOk.Enabled = isValid;
         }
 
         /// <summary>
@@ -191,41 +210,50 @@ namespace POS.Internals.DialogBuilder
         private void SaveControlValues()
         {
             // For each TextBox, Dropdown etc...
-            foreach (Control c in controls)
+            foreach (Control c in this.controls)
             {
-                var tag = (ControlTag) c.Tag;
-                PropertyInfo property = DataItem.GetType().GetProperty(tag.PropertyName);
+                var tag = (ControlTag)c.Tag;
+                PropertyInfo property = this.DataItem.GetType().GetProperty(tag.PropertyName);
                 Type type = property.PropertyType;
                 if (c is TextBox)
                 {
-                    var textbox = (TextBox) c;
+                    var textbox = (TextBox)c;
                     if (type == typeof (string))
-                        property.SetValue(DataItem, textbox.Text, null);
+                    {
+                        property.SetValue(this.DataItem, textbox.Text, null);
+                    }
                     else if (type == typeof (char))
-                        property.SetValue(DataItem, Convert.ToChar(textbox.Text), null);
+                    {
+                        property.SetValue(this.DataItem, Convert.ToChar(textbox.Text), null);
+                    }
                 }
                 else if (c is NumericUpDown)
                 {
-                    var numeric = (NumericUpDown) c;
+                    var numeric = (NumericUpDown)c;
                     if (type == typeof (int))
-                        property.SetValue(DataItem, Convert.ToInt32(numeric.Value), null);
+                    {
+                        property.SetValue(this.DataItem, Convert.ToInt32(numeric.Value), null);
+                    }
                     else if (type == typeof (decimal))
-                        property.SetValue(DataItem, Convert.ToDecimal(numeric.Value), null);
+                    {
+                        property.SetValue(this.DataItem, Convert.ToDecimal(numeric.Value), null);
+                    }
                 }
                 else if (c is CheckBox)
                 {
                     var checkbox = c as CheckBox;
-                    property.SetValue(DataItem, checkbox.Checked, null);
+                    property.SetValue(this.DataItem, checkbox.Checked, null);
                 }
                 else if (c is ComboBox)
                 {
                     var dropdown = c as ComboBox;
-                    property.SetValue(DataItem, Enum.Parse(tag.PropertyType, Convert.ToString(dropdown.SelectedItem)),
-                                      null);
+                    property.SetValue(this.DataItem, Enum.Parse(tag.PropertyType, Convert.ToString(dropdown.SelectedItem)),
+                        null);
                 }
             }
         }
     }
+
     public class DialogBuilder : DialogBuilder<object>
     {
         public DialogBuilder(string title, object item) : base(title, item)

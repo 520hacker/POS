@@ -17,7 +17,7 @@ namespace POS.Internals.I18N.Loaders
         /// </summary>
         public MoFileParser()
         {
-            Encoding = Encoding.UTF8;
+            this.Encoding = Encoding.UTF8;
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace POS.Internals.I18N.Loaders
 
             uint revision = reader.ReadUInt32();
             Trace.WriteLine(String.Format("MO File Revision: {0}.{1}.", revision >> 16, revision & 0xffff),
-                            "Lib.Gettext");
+                "Lib.Gettext");
 
             if ((revision >> 16) > 1)
             {
@@ -67,11 +67,10 @@ namespace POS.Internals.I18N.Loaders
 
             Trace.WriteLine(String.Format("MO File contains {0} strings.", stringCount), "Lib.Gettext");
 
-
             var originalTable = new StringOffsetTable[stringCount];
             var translationlTable = new StringOffsetTable[stringCount];
 
-            Trace.WriteLine(String.Format("Trying to parse strings using encoding \"{0}\"...", Encoding), "Lib.Gettext");
+            Trace.WriteLine(String.Format("Trying to parse strings using encoding \"{0}\"...", this.Encoding), "Lib.Gettext");
 
             reader.BaseStream.Seek(originalTableOffset, SeekOrigin.Begin);
             for (int i = 0; i < stringCount; i++)
@@ -87,14 +86,13 @@ namespace POS.Internals.I18N.Loaders
                 translationlTable[i].Offset = reader.ReadInt32();
             }
 
-
             var dict = new Dictionary<string, string[]>(stringCount);
 
             for (int i = 0; i < stringCount; i++)
             {
-                string[] originalStrings = _ReadStrings(reader, originalTable[i].Offset, originalTable[i].Length);
-                string[] translatedStrings = _ReadStrings(reader, translationlTable[i].Offset,
-                                                          translationlTable[i].Length);
+                string[] originalStrings = this._ReadStrings(reader, originalTable[i].Offset, originalTable[i].Length);
+                string[] translatedStrings = this._ReadStrings(reader, translationlTable[i].Offset,
+                    translationlTable[i].Length);
 
                 dict.Add(originalStrings[0], translatedStrings);
             }
@@ -108,7 +106,7 @@ namespace POS.Internals.I18N.Loaders
         {
             reader.BaseStream.Seek(offset, SeekOrigin.Begin);
             byte[] stringBytes = reader.ReadBytes(length);
-            return Encoding.GetString(stringBytes).Split('\0');
+            return this.Encoding.GetString(stringBytes).Split('\0');
         }
 
         #region Nested type: StringOffsetTable
@@ -118,7 +116,7 @@ namespace POS.Internals.I18N.Loaders
             public int Length;
             public int Offset;
         }
-
+        
         #endregion
     }
 }

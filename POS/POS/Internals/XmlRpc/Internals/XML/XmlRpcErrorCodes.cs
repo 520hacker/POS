@@ -3,7 +3,7 @@ namespace Rpc.Internals
     using System;
 
     /// <summary>Standard XML-RPC error codes.</summary>
-    class XmlRpcErrorCodes
+    internal class XmlRpcErrorCodes
     {
         /// <summary></summary>
         public const int PARSE_ERROR_MALFORMED = -32700;

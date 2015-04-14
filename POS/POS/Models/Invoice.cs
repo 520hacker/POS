@@ -7,19 +7,6 @@ namespace POS.Models
 {
     public class Invoice
     {
-        public class InvoiceCurrency
-        {
-            private readonly string name;
-
-            public InvoiceCurrency(string name)
-            {
-                this.name = name;
-            }
-
-            public static InvoiceCurrency EUR { get { return new InvoiceCurrency("EUR"); } }
-            public static InvoiceCurrency BTC { get { return new InvoiceCurrency("BTC"); } }
-        };
-
         public string ID { get; set; }
 
         public DateTime Date { get; set; }
@@ -40,5 +27,32 @@ namespace POS.Models
 
             return ret;
         }
+
+        public class InvoiceCurrency
+        {
+            private readonly string name;
+
+            public InvoiceCurrency(string name)
+            {
+                this.name = name;
+            }
+
+            public static InvoiceCurrency EUR
+            {
+                get
+                {
+                    return new InvoiceCurrency("EUR");
+                }
+            }
+
+            public static InvoiceCurrency BTC
+            {
+                get
+                {
+                    return new InvoiceCurrency("BTC");
+                }
+            }
+        }
+        ;
     }
 }

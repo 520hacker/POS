@@ -8,7 +8,6 @@ namespace Pos.Internals.Extensions
     /// </summary>
     public static class ArrayExtension
     {
-
         ///<summary>
         ///	Check if the array is null or empty
         ///</summary>
@@ -47,7 +46,6 @@ namespace Pos.Internals.Extensions
         {
             return source != null && index >= source.GetLowerBound(dimension) && index <= source.GetUpperBound(dimension);
         }
-
 
         /// <summary>
         /// Combine two arrays into one.
@@ -95,7 +93,9 @@ namespace Pos.Internals.Extensions
         public static Array ClearAll(this Array clear)
         {
             if (clear != null)
+            {
                 Array.Clear(clear, 0, clear.Length);
+            }
             return clear;
         }
 
@@ -116,8 +116,12 @@ namespace Pos.Internals.Extensions
         public static T[] ClearAll<T>(this T[] arrayToClear)
         {
             if (arrayToClear != null)
+            {
                 for (int i = arrayToClear.GetLowerBound(0); i <= arrayToClear.GetUpperBound(0); ++i)
+                {
                     arrayToClear[i] = default(T);
+                }
+            }
             return arrayToClear;
         }
 
@@ -143,7 +147,9 @@ namespace Pos.Internals.Extensions
             {
                 int arrayIndex = at.GetArrayIndex();
                 if (arrayIndex.IsIndexInArray(arrayToClear))
+                {
                     Array.Clear(arrayToClear, arrayIndex, 1);
+                }
             }
             return arrayToClear;
         }
@@ -169,7 +175,9 @@ namespace Pos.Internals.Extensions
             {
                 int arrayIndex = at.GetArrayIndex();
                 if (arrayIndex.IsIndexInArray(arrayToClear))
+                {
                     arrayToClear[arrayIndex] = default(T);
+                }
             }
             return arrayToClear;
         }
@@ -219,7 +227,10 @@ namespace Pos.Internals.Extensions
         /// Contributed by Chris Gessler</remarks>
         public static T[] BlockCopy<T>(this T[] array, int index, int length, bool padToLength)
         {
-            if (array == null) throw new NullReferenceException();
+            if (array == null)
+            {
+                throw new NullReferenceException();
+            }
 
             int n = length;
             T[] b = null;
@@ -233,7 +244,10 @@ namespace Pos.Internals.Extensions
                 }
             }
 
-            if (b == null) b = new T[n];
+            if (b == null)
+            {
+                b = new T[n];
+            }
             Array.Copy(array, index, b, 0, n);
             return b;
         }
@@ -250,9 +264,11 @@ namespace Pos.Internals.Extensions
         public static IEnumerable<T[]> BlockCopy<T>(this T[] array, int count, bool padToLength = false)
         {
             for (int i = 0; i < array.Length; i += count)
+            {
                 yield return array.BlockCopy(i, count, padToLength);
+            }
         }
-
+        
         #endregion
     }
 }

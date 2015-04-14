@@ -1,3 +1,4 @@
+
 #region Copyright © 2010 Pawel Idzikowski [idzikowski@sharpserializer.com]
 
 //  ***********************************************************************
@@ -75,15 +76,15 @@ namespace Polenter.Serialization.Core
             {
                 return true;
             }
-            if (type==typeof(byte[]))
+            if (type == typeof(byte[]))
             {
                 // since v.2.16 is byte[] a simple type
                 return true;
             }
-
+            
             return type.IsPrimitive;
         }
-
+        
         /// <summary>
         ///   Is type an IEnumerable
         /// </summary>
@@ -94,7 +95,7 @@ namespace Polenter.Serialization.Core
             Type referenceType = typeof (IEnumerable);
             return referenceType.IsAssignableFrom(type);
         }
-
+        
         /// <summary>
         ///   Is type ICollection
         /// </summary>
@@ -105,7 +106,7 @@ namespace Polenter.Serialization.Core
             Type referenceType = typeof (ICollection);
             return referenceType.IsAssignableFrom(type);
         }
-
+        
         /// <summary>
         ///   Is type IDictionary
         /// </summary>
@@ -116,7 +117,7 @@ namespace Polenter.Serialization.Core
             Type referenceType = typeof (IDictionary);
             return referenceType.IsAssignableFrom(type);
         }
-
+        
         /// <summary>
         ///   Is it array? It does not matter if singledimensional or multidimensional
         /// </summary>
@@ -126,7 +127,7 @@ namespace Polenter.Serialization.Core
         {
             return type.IsArray;
         }
-
+        
         /// <summary>
         ///   Creates instance from type. There must be a standard constructor (without parameters) in the type.
         /// </summary>
@@ -134,8 +135,11 @@ namespace Polenter.Serialization.Core
         /// <returns></returns>
         public static object CreateInstance(Type type)
         {
-            if (type == null) return null;
-
+            if (type == null)
+            {
+                return null;
+            }
+            
             try
             {
                 object result = Activator.CreateInstance(type);

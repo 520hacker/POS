@@ -65,7 +65,7 @@ namespace Pos.Internals.Extensions
                 {
                     for (int x = 0; x < width; ++x)
                     {
-                        val = (int)(p[0] + brightness);
+                        val = (p[0] + brightness);
 
                         if (val < 0)
                         {
@@ -637,7 +637,7 @@ namespace Pos.Internals.Extensions
 
             Directory.CreateDirectory(tempDirPath);
 
-            string newImagePath = tempDirPath + StringUtilities.GetRandomString(10) + ".png";
+            string newImagePath = string.Format("{0}{1}.png", tempDirPath, StringUtilities.GetRandomString(10));
 
             using (image)
             {

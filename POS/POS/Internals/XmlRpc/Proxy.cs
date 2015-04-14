@@ -6,14 +6,13 @@ namespace Rpc
 {
     public class Proxy : DynamicObject, IRpcProxy
     {
-        public Proxy()
-        {
-
-        }
-
         private readonly RpcClient p;
 
         private readonly string servername;
+
+        public Proxy()
+        {
+        }
 
         public Proxy(Type t, RpcClient p, string servername)
         {
@@ -26,16 +25,16 @@ namespace Rpc
 
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
         {
-            result = p.Call(servername + "." + binder.Name, args);
+            result = this.p.Call(string.Format("{0}.{1}", this.servername, binder.Name), args);
 
             return true;
         }
 
         public override bool TryConvert(ConvertBinder binder, out object result)
         {
-            if (binder.Type == T)
+            if (binder.Type == this.T)
             {
-                result = Activator.CreateInstance(T);
+                result = Activator.CreateInstance(this.T);
 
                 return true;
             }

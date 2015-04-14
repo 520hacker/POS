@@ -13,8 +13,8 @@ namespace Pos.Internals.Extensions
         /// </summary>
         public static bool StateIsWithin(this IDbConnection connection, params ConnectionState[] states)
         {
-            return (connection != null && 
-                    (states != null && states.Length > 0) && 
+            return (connection != null &&
+                    (states != null && states.Length > 0) &&
                     (states.Where(x => (connection.State & x) == x).Count() > 0));
         }
 
@@ -23,7 +23,7 @@ namespace Pos.Internals.Extensions
         /// </summary>
         public static bool IsInState(this IDbConnection connection, ConnectionState state)
         {
-            return (connection != null && 
+            return (connection != null &&
                     (connection.State & state) == state);
         }
 
@@ -33,7 +33,9 @@ namespace Pos.Internals.Extensions
         public static void OpenIfNot(this IDbConnection connection)
         {
             if (!connection.IsInState(ConnectionState.Open))
+            {
                 connection.Open();
+            }
         }
     }
 }

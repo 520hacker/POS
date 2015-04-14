@@ -3,10 +3,9 @@ namespace Rpc.Internals
     using System;
     using System.IO;
     using System.Xml;
-    using Rpc.Internals;
 
     /// <summary>Class to deserialize XML data representing a request.</summary>
-    class XmlRpcRequestDeserializer : XmlRpcDeserializer
+    internal class XmlRpcRequestDeserializer : XmlRpcDeserializer
     {
         static private XmlRpcRequestDeserializer _singleton;
 
@@ -17,7 +16,9 @@ namespace Rpc.Internals
             get
             {
                 if (_singleton == null)
+                {
                     _singleton = new XmlRpcRequestDeserializer();
+                }
 
                 return _singleton;
             }
@@ -34,24 +35,24 @@ namespace Rpc.Internals
 
             lock (this)
             {
-                Reset();
+                this.Reset();
                 while (!done && reader.Read())
                 {
-                    DeserializeNode(reader); // Parent parse...
+                    this.DeserializeNode(reader); // Parent parse...
                     switch (reader.NodeType)
                     {
                         case XmlNodeType.EndElement:
                             switch (reader.Name)
                             {
                                 case METHOD_NAME:
-                                    request.MethodName = _text;
+                                    request.MethodName = this._text;
                                     break;
                                 case METHOD_CALL:
                                     done = true;
                                     break;
                                 case PARAM:
-                                    request.Params.Add(_value);
-                                    _text = null;
+                                    request.Params.Add(this._value);
+                                    this._text = null;
                                     break;
                             }
                             break;

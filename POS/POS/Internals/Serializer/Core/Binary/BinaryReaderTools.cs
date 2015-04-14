@@ -1,3 +1,4 @@
+
 #region Copyright © 2010 Pawel Idzikowski [idzikowski@sharpserializer.com]
 
 //  ***********************************************************************
@@ -43,10 +44,13 @@ namespace Polenter.Serialization.Core.Binary
         ///<returns></returns>
         public static string ReadString(BinaryReader reader)
         {
-            if (!reader.ReadBoolean()) return null;
+            if (!reader.ReadBoolean())
+            {
+                return null;
+            }
             return reader.ReadString();
         }
-
+        
         ///<summary>
         ///</summary>
         ///<param name = "reader"></param>
@@ -55,7 +59,7 @@ namespace Polenter.Serialization.Core.Binary
         {
             // Size
             byte size = reader.ReadByte();
-
+            
             // Number
             switch (size)
             {
@@ -69,7 +73,7 @@ namespace Polenter.Serialization.Core.Binary
                     return reader.ReadInt32();
             }
         }
-
+        
         /// <summary>
         /// </summary>
         /// <returns>empty array if there are no indexes</returns>
@@ -77,9 +81,12 @@ namespace Polenter.Serialization.Core.Binary
         {
             // Count
             int count = ReadNumber(reader);
-
-            if (count == 0) return new int[0];
-
+            
+            if (count == 0)
+            {
+                return new int[0];
+            }
+            
             // Items
             var result = new List<int>();
             for (int i = 0; i < count; i++)
@@ -88,7 +95,7 @@ namespace Polenter.Serialization.Core.Binary
             }
             return result.ToArray();
         }
-
+        
         ///<summary>
         ///</summary>
         ///<param name = "expectedType"></param>
@@ -96,48 +103,108 @@ namespace Polenter.Serialization.Core.Binary
         ///<returns></returns>
         public static object ReadValue(Type expectedType, BinaryReader reader)
         {
-            if (!reader.ReadBoolean()) return null;
+            if (!reader.ReadBoolean())
+            {
+                return null;
+            }
             return readValueCore(expectedType, reader);
         }
-
+        
         private static object readValueCore(Type type, BinaryReader reader)
         {
             try
             {
-                if (type == typeof (byte[])) return readArrayOfByte(reader);
-                if (type == typeof (string)) return reader.ReadString();
-                if (type == typeof (Boolean)) return reader.ReadBoolean();
-                if (type == typeof (Byte)) return reader.ReadByte();
-                if (type == typeof (Char)) return reader.ReadChar();
-                if (type == typeof (DateTime)) return new DateTime(reader.ReadInt64());
-                if (type == typeof(Guid)) return new Guid(reader.ReadBytes(16));
-#if DEBUG || PORTABLE || SILVERLIGHT
-                if (type == typeof(decimal)) return readDecimal(reader);                
-#else
+                if (type == typeof (byte[]))
+                {
+                    return readArrayOfByte(reader);
+                }
+                if (type == typeof (string))
+                {
+                    return reader.ReadString();
+                }
+                if (type == typeof (Boolean))
+                {
+                    return reader.ReadBoolean();
+                }
+                if (type == typeof (Byte))
+                {
+                    return reader.ReadByte();
+                }
+                if (type == typeof (Char))
+                {
+                    return reader.ReadChar();
+                }
+                if (type == typeof (DateTime))
+                {
+                    return new DateTime(reader.ReadInt64());
+                }
+                if (type == typeof(Guid))
+                {
+                    return new Guid(reader.ReadBytes(16));
+                }
+                #if DEBUG || PORTABLE || SILVERLIGHT
+                if (type == typeof(decimal))
+                {
+                    return readDecimal(reader);
+                }
+                #else
                 if (type == typeof (Decimal)) return reader.ReadDecimal();
-#endif
-                if (type == typeof (Double)) return reader.ReadDouble();
-                if (type == typeof (Int16)) return reader.ReadInt16();
-                if (type == typeof (Int32)) return reader.ReadInt32();
-                if (type == typeof (Int64)) return reader.ReadInt64();
-                if (type == typeof (SByte)) return reader.ReadSByte();
-                if (type == typeof (Single)) return reader.ReadSingle();
-                if (type == typeof (UInt16)) return reader.ReadUInt16();
-                if (type == typeof (UInt32)) return reader.ReadUInt32();
-                if (type == typeof (UInt64)) return reader.ReadUInt64();
-
-                if (type == typeof (TimeSpan)) return new TimeSpan(reader.ReadInt64());
-
+                #endif
+                if (type == typeof (Double))
+                {
+                    return reader.ReadDouble();
+                }
+                if (type == typeof (Int16))
+                {
+                    return reader.ReadInt16();
+                }
+                if (type == typeof (Int32))
+                {
+                    return reader.ReadInt32();
+                }
+                if (type == typeof (Int64))
+                {
+                    return reader.ReadInt64();
+                }
+                if (type == typeof (SByte))
+                {
+                    return reader.ReadSByte();
+                }
+                if (type == typeof (Single))
+                {
+                    return reader.ReadSingle();
+                }
+                if (type == typeof (UInt16))
+                {
+                    return reader.ReadUInt16();
+                }
+                if (type == typeof (UInt32))
+                {
+                    return reader.ReadUInt32();
+                }
+                if (type == typeof (UInt64))
+                {
+                    return reader.ReadUInt64();
+                }
+                
+                if (type == typeof (TimeSpan))
+                {
+                    return new TimeSpan(reader.ReadInt64());
+                }
+                
                 // Enumeration
-                if (type.IsEnum) return readEnumeration(type, reader);
-
+                if (type.IsEnum)
+                {
+                    return readEnumeration(type, reader);
+                }
+                
                 // Type
                 if (isType(type))
                 {
                     var typeName = reader.ReadString();
                     return Type.GetType(typeName, true);
                 }
-
+                
                 throw new InvalidOperationException(string.Format("Unknown simple type: {0}", type.FullName));
             }
             catch (Exception ex)
@@ -146,7 +213,7 @@ namespace Polenter.Serialization.Core.Binary
                     string.Format("Invalid type: {0}. See details in the inner exception.", type), ex);
             }
         }
-
+        
         private static object readDecimal(BinaryReader reader)
         {
             var bits = new int[4];
@@ -156,12 +223,12 @@ namespace Polenter.Serialization.Core.Binary
             bits[3] = reader.ReadInt32();
             return new decimal(bits);
         }
-
+        
         private static bool isType(Type type)
         {
             return type == typeof (Type) || type.IsSubclassOf(typeof (Type));
         }
-
+        
         private static object readEnumeration(Type expectedType, BinaryReader reader)
         {
             // read the enum as int
@@ -169,12 +236,15 @@ namespace Polenter.Serialization.Core.Binary
             object result = Enum.ToObject(expectedType, value);
             return result;
         }
-
+        
         private static byte[] readArrayOfByte(BinaryReader reader)
         {
             int length = ReadNumber(reader);
-            if (length == 0) return null;
-
+            if (length == 0)
+            {
+                return null;
+            }
+            
             return reader.ReadBytes(length);
         }
     }

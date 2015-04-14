@@ -1,4 +1,6 @@
-﻿#region License
+﻿
+#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,6 +23,7 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
@@ -28,53 +31,52 @@ using System.Reflection;
 
 namespace Lib.JSON.Serialization
 {
-  /// <summary>
-  /// Contract details for a <see cref="Type"/> used by the <see cref="JsonSerializer"/>.
-  /// </summary>
-  public class JsonObjectContract : JsonContract
-  {
     /// <summary>
-    /// Gets or sets the object member serialization.
+    /// Contract details for a <see cref="Type"/> used by the <see cref="JsonSerializer"/>.
     /// </summary>
-    /// <value>The member object serialization.</value>
-    public MemberSerialization MemberSerialization { get; set; }
-
-    /// <summary>
-    /// Gets the object's properties.
-    /// </summary>
-    /// <value>The object's properties.</value>
-    public JsonPropertyCollection Properties { get; private set; }
-
-    /// <summary>
-    /// Gets the constructor parameters required for any non-default constructor
-    /// </summary>
-    public JsonPropertyCollection ConstructorParameters { get; private set; }
-
-    /// <summary>
-    /// Gets or sets the override constructor used to create the object.
-    /// This is set when a constructor is marked up using the
-    /// JsonConstructor attribute.
-    /// </summary>
-    /// <value>The override constructor.</value>
-    public ConstructorInfo OverrideConstructor { get; set; }
-
-    /// <summary>
-    /// Gets or sets the parametrized constructor used to create the object.
-    /// </summary>
-    /// <value>The parametrized constructor.</value>
-    public ConstructorInfo ParametrizedConstructor { get; set; }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="JsonObjectContract"/> class.
-    /// </summary>
-    /// <param name="underlyingType">The underlying type for the contract.</param>
-    public JsonObjectContract(Type underlyingType)
-      : base(underlyingType)
+    public class JsonObjectContract : JsonContract
     {
-      ContractType = JsonContractType.Object;
-
-      Properties = new JsonPropertyCollection(UnderlyingType);
-      ConstructorParameters = new JsonPropertyCollection(UnderlyingType);
+        /// <summary>
+        /// Gets or sets the object member serialization.
+        /// </summary>
+        /// <value>The member object serialization.</value>
+        public MemberSerialization MemberSerialization { get; set; }
+        
+        /// <summary>
+        /// Gets the object's properties.
+        /// </summary>
+        /// <value>The object's properties.</value>
+        public JsonPropertyCollection Properties { get; private set; }
+        
+        /// <summary>
+        /// Gets the constructor parameters required for any non-default constructor
+        /// </summary>
+        public JsonPropertyCollection ConstructorParameters { get; private set; }
+        
+        /// <summary>
+        /// Gets or sets the override constructor used to create the object.
+        /// This is set when a constructor is marked up using the
+        /// JsonConstructor attribute.
+        /// </summary>
+        /// <value>The override constructor.</value>
+        public ConstructorInfo OverrideConstructor { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the parametrized constructor used to create the object.
+        /// </summary>
+        /// <value>The parametrized constructor.</value>
+        public ConstructorInfo ParametrizedConstructor { get; set; }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JsonObjectContract"/> class.
+        /// </summary>
+        /// <param name="underlyingType">The underlying type for the contract.</param>
+        public JsonObjectContract(Type underlyingType) : base(underlyingType)
+        {
+            this.ContractType = JsonContractType.Object;
+            
+            this.Properties = new JsonPropertyCollection(this.UnderlyingType);
+            this.ConstructorParameters = new JsonPropertyCollection(this.UnderlyingType);
+        }
     }
-  }
 }

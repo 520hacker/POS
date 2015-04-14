@@ -1,3 +1,4 @@
+
 #region Copyright © 2010 Pawel Idzikowski [idzikowski@sharpserializer.com]
 
 //  ***********************************************************************
@@ -42,8 +43,7 @@ namespace Polenter.Serialization.Core
         {
             return GetXmlWriterSettings(Encoding.UTF8);
         }
-
-
+        
         public static XmlWriterSettings GetXmlWriterSettings(Encoding encoding)
         {
             var settings = new XmlWriterSettings();
@@ -52,7 +52,7 @@ namespace Polenter.Serialization.Core
             settings.OmitXmlDeclaration = true;
             return settings;
         }
-
+        
         public static XmlReaderSettings GetXmlReaderSettings()
         {
             var settings = new XmlReaderSettings();
@@ -60,12 +60,11 @@ namespace Polenter.Serialization.Core
             settings.IgnoreWhitespace = true;
             return settings;
         }
-
+        
         public static ITypeNameConverter GetTypeNameConverter(bool includeAssemblyVersion, bool includeCulture,
-                                                              bool includePublicKeyToken)
+            bool includePublicKeyToken)
         {
             return new TypeNameConverter(includeAssemblyVersion, includeCulture, includePublicKeyToken);
         }
-
     }
 }

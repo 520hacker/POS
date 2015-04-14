@@ -15,11 +15,11 @@ namespace POS
 {
     public partial class MainForm : Telerik.WinControls.UI.RadForm
     {
-        DesignerHost host;
+        private DesignerHost host;
 
         public MainForm()
         {
-            InitializeComponent();
+            this.InitializeComponent();
             
             var f = new Panel();
             f.BorderStyle = BorderStyle.FixedSingle;
@@ -48,22 +48,22 @@ namespace POS
             this.FormElement.TitleBar.SystemButtons.Children.Insert(0, undoBtn);
             this.FormElement.TitleBar.SystemButtons.Children.Insert(1, redoBtn);
 
-            host = DesignerHost.CreateHost(f, null, (sender, e) => { propertyGrid.SelectedObject = sender; }, false);
+            this.host = DesignerHost.CreateHost(f, null, (sender, e) => { this.propertyGrid.SelectedObject = sender; }, false);
 
-            host.AddControl(new Button());
+            this.host.AddControl(new Button());
 
-            radPanel1.Controls.Add(host);
+            this.radPanel1.Controls.Add(this.host);
 
-            ProductsView.Groups.Clear();
+            this.ProductsView.Groups.Clear();
 
             Price.PriceChanged += (s, e) =>
             {
-                priceLbl.DigitText = Price.Value; 
-                historyView1.Invalidate();
+                this.priceLbl.DigitText = Price.Value; 
+                this.historyView1.Invalidate();
             };
 
-            productsView1.DataSource = ServiceLocator.Products;
-            productsView1.BestFitColumns();
+            this.productsView1.DataSource = ServiceLocator.Products;
+            this.productsView1.BestFitColumns();
 
             foreach (var pc in ServiceLocator.ProductCategories)
             {
@@ -82,7 +82,7 @@ namespace POS
                     tmp.Items.Add(tmpItem);
                 }
 
-                ProductsView.Groups.Add(tmp);
+                this.ProductsView.Groups.Add(tmp);
             }
 
             #if DEBUG
@@ -91,13 +91,12 @@ namespace POS
             Cursor.Hide();
             #endif
 
-            var PlugInFolder = Application.StartupPath + "\\Plugins";
+            var PlugInFolder = string.Format("{0}\\Plugins", Application.StartupPath);
 
             if (!Directory.Exists(PlugInFolder))
             {
                 Directory.CreateDirectory(PlugInFolder);
             }
-            
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -107,7 +106,7 @@ namespace POS
 
         private void PropertiesBtn_Click(object sender, EventArgs e)
         {
-            propertyGrid.Visible = !propertyGrid.Visible;
+            this.propertyGrid.Visible = !this.propertyGrid.Visible;
         }
 
         private void ImageBtn_Click(object sender, EventArgs e)
@@ -124,7 +123,7 @@ namespace POS
                 var pb = new PictureBox();
                 pb.Image = img;
 
-                host.AddControl(pb);
+                this.host.AddControl(pb);
             }
         }
 
@@ -163,11 +162,11 @@ namespace POS
             var addr = Info.Blockchain.API.Receive.Receive.ReceiveFunds("1HaWUwi5oYQo2RXB5k5JLgJA8MTigNuLeY", "").DestinationAddress;
             var btc = Info.Blockchain.API.ExchangeRates.ExchangeRates.ToBTC("EUR", Price.NumberValue);
 
-            QrCodeDialog.Show("bitcoin:" + addr + "?" + btc, null);
+            QrCodeDialog.Show(string.Format("bitcoin:{0}?{1}", addr, btc), null);
 
             if (await BitcoinPayer.CheckPaymentAsync(addr, btc))
             {
-                notifyIcon1.ShowBalloonTip(5000, "Bitcoin", "Betrag wurde gezahlt", ToolTipIcon.Info);
+                this.notifyIcon1.ShowBalloonTip(5000, "Bitcoin", "Betrag wurde gezahlt", ToolTipIcon.Info);
 
                 ServiceLocator.Invoices = i.ToArray();
 
@@ -176,7 +175,7 @@ namespace POS
             }
             else
             {
-                notifyIcon1.ShowBalloonTip(5000, "Bitcoin", "Betrag wurde nicht gezahlt", ToolTipIcon.Error);
+                this.notifyIcon1.ShowBalloonTip(5000, "Bitcoin", "Betrag wurde nicht gezahlt", ToolTipIcon.Error);
             }
         }
 

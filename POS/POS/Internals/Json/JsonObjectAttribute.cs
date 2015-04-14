@@ -1,4 +1,6 @@
-﻿#region License
+﻿
+#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,53 +23,59 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
 
 namespace Lib.JSON
 {
-  /// <summary>
-  /// Instructs the <see cref="JsonSerializer"/> how to serialize the object.
-  /// </summary>
-  [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Interface, AllowMultiple = false)]
-  public sealed class JsonObjectAttribute : JsonContainerAttribute
-  {
-    private MemberSerialization _memberSerialization = MemberSerialization.OptOut;
-
     /// <summary>
-    /// Gets or sets the member serialization.
+    /// Instructs the <see cref="JsonSerializer"/> how to serialize the object.
     /// </summary>
-    /// <value>The member serialization.</value>
-    public MemberSerialization MemberSerialization
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Interface, AllowMultiple = false)]
+    public sealed class JsonObjectAttribute : JsonContainerAttribute
     {
-      get { return _memberSerialization; }
-      set { _memberSerialization = value; }
+        private MemberSerialization _memberSerialization = MemberSerialization.OptOut;
+        
+        /// <summary>
+        /// Gets or sets the member serialization.
+        /// </summary>
+        /// <value>The member serialization.</value>
+        public MemberSerialization MemberSerialization
+        {
+            get
+            {
+                return this._memberSerialization;
+            }
+            set
+            {
+                this._memberSerialization = value;
+            }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JsonObjectAttribute"/> class.
+        /// </summary>
+        public JsonObjectAttribute()
+        {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JsonObjectAttribute"/> class with the specified member serialization.
+        /// </summary>
+        /// <param name="memberSerialization">The member serialization.</param>
+        public JsonObjectAttribute(MemberSerialization memberSerialization)
+        {
+            this.MemberSerialization = memberSerialization;
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JsonObjectAttribute"/> class with the specified container Id.
+        /// </summary>
+        /// <param name="id">The container Id.</param>
+        public JsonObjectAttribute(string id) : base(id)
+        {
+        }
     }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="JsonObjectAttribute"/> class.
-    /// </summary>
-    public JsonObjectAttribute()
-    {
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="JsonObjectAttribute"/> class with the specified member serialization.
-    /// </summary>
-    /// <param name="memberSerialization">The member serialization.</param>
-    public JsonObjectAttribute(MemberSerialization memberSerialization)
-    {
-      MemberSerialization = memberSerialization;
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="JsonObjectAttribute"/> class with the specified container Id.
-    /// </summary>
-    /// <param name="id">The container Id.</param>
-    public JsonObjectAttribute(string id)
-      : base(id)
-    {
-    }
-  }
 }

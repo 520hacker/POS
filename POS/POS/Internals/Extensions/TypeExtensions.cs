@@ -5,7 +5,8 @@ namespace POS.Internals.Extensions
     /// <summary>
     /// 	Extension methods for the reflection meta data type "Type"
     /// </summary>
-    public static class TypeExtensions {
+    public static class TypeExtensions
+    {
         /// <summary>
         /// 	Creates and returns an instance of the desired type
         /// </summary>
@@ -18,7 +19,8 @@ namespace POS.Internals.Extensions
         /// 		var instance = type.CreateInstance();
         /// 	</code>
         /// </example>
-        public static object CreateInstance(this Type type, params object[] constructorParameters) {
+        public static object CreateInstance(this Type type, params object[] constructorParameters)
+        {
             return CreateInstance<object>(type, constructorParameters);
         }
 
@@ -35,7 +37,8 @@ namespace POS.Internals.Extensions
         /// 		var instance = type.CreateInstance&lt;IDataType&gt;();
         /// 	</code>
         /// </example>
-        public static T CreateInstance<T>(this Type type, params object[] constructorParameters) {
+        public static T CreateInstance<T>(this Type type, params object[] constructorParameters)
+        {
             var instance = Activator.CreateInstance(type, constructorParameters);
             return (T)instance;
         }
@@ -49,13 +52,19 @@ namespace POS.Internals.Extensions
         /// <remarks>
         /// 	Contributed by Michael T, http://about.me/MichaelTran
         /// </remarks>
-        public static bool IsBaseType(this Type type, Type checkingType) {
-            while (type != typeof(object)) {
+        public static bool IsBaseType(this Type type, Type checkingType)
+        {
+            while (type != typeof(object))
+            {
                 if (type == null)
+                {
                     continue;
+                }
 
                 if (type == checkingType)
+                {
                     return true;
+                }
 
                 type = type.BaseType;
             }
@@ -71,14 +80,20 @@ namespace POS.Internals.Extensions
         /// <remarks>
         /// 	Contributed by Michael T, http://about.me/MichaelTran
         /// </remarks>
-        public static bool IsSubclassOfRawGeneric(this Type generic, Type toCheck) {
-            while (toCheck != typeof(object)) {
+        public static bool IsSubclassOfRawGeneric(this Type generic, Type toCheck)
+        {
+            while (toCheck != typeof(object))
+            {
                 if (toCheck == null)
+                {
                     continue;
+                }
 
                 var cur = toCheck.IsGenericType ? toCheck.GetGenericTypeDefinition() : toCheck;
                 if (generic == cur)
+                {
                     return true;
+                }
                 toCheck = toCheck.BaseType;
             }
             return false;
@@ -91,10 +106,11 @@ namespace POS.Internals.Extensions
         /// <param name="genericType">The open generic type.</param>
         /// <param name="typeArguments">The type arguments to close the generic type.</param>
         /// <returns>An instance of the constructed type casted to T.</returns>
-        public static T CreateGenericTypeInstance<T>(this Type genericType, params Type[] typeArguments)  where T : class {
+        public static T CreateGenericTypeInstance<T>(this Type genericType, params Type[] typeArguments) where T : class
+        {
             var constructedType = genericType.MakeGenericType(typeArguments);
             var instance = Activator.CreateInstance(constructedType);
             return (instance as T);
-        } 
+        }
     }
 }

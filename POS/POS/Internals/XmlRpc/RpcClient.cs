@@ -11,6 +11,7 @@ namespace Rpc
             this.Url = url;
         }
 
+        public string Url { get; private set; }
 
         public dynamic CreateProxy<T>()
             where T : IRpcProxy
@@ -18,13 +19,11 @@ namespace Rpc
             return new Proxy(typeof(T), this, typeof(T).Name);
         }
 
-        public string Url { get; private set; }
-
         public object Call(string methodName, params object[] parameters)
         {
             XmlRpcRequest client = new XmlRpcRequest(methodName, parameters);
 
-            XmlRpcResponse response = client.Send(Url);
+            XmlRpcResponse response = client.Send(this.Url);
 
             return response.Value;
         }

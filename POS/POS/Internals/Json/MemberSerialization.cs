@@ -1,4 +1,6 @@
-﻿#region License
+﻿
+#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,27 +23,26 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Lib.JSON
 {
-  /// <summary>
-  /// Specifies the member serialization options for the <see cref="JsonSerializer"/>.
-  /// </summary>
-  public enum MemberSerialization
-  {
     /// <summary>
-    /// All members are serialized by default. Members can be excluded using the <see cref="JsonIgnoreAttribute"/>.
+    /// Specifies the member serialization options for the <see cref="JsonSerializer"/>.
     /// </summary>
-    OptOut,
-    /// <summary>
-    /// Only members must be marked with the <see cref="JsonPropertyAttribute"/> are serialized.
-    /// </summary>
-    OptIn
-  }
+    public enum MemberSerialization
+    {
+        /// <summary>
+        /// All members are serialized by default. Members can be excluded using the <see cref="JsonIgnoreAttribute"/>.
+        /// </summary>
+        OptOut,
+        /// <summary>
+        /// Only members must be marked with the <see cref="JsonPropertyAttribute"/> are serialized.
+        /// </summary>
+        OptIn
+    }
 }

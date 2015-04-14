@@ -1,48 +1,32 @@
 ﻿using System;
-using System.IO;
-using System.Text;
 using System.Windows.Forms;
 using System.Xaml;
-using Polenter.Serialization;
 
 namespace POS.Internals.Designer
 {
     public partial class DesignerHost : UserControl
     {
-        public Control Parent { get; set; }
-
-        public event EventHandler SelectionChanged;
-
         private RuntimeDesigner rd;
 
         public DesignerHost()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
-            rd = new RuntimeDesigner();
+            this.rd = new RuntimeDesigner();
         }
 
         public DesignerHost(Control parent)
         {
             this.Parent = parent;
 
-            InitializeComponent();
+            this.InitializeComponent();
 
-            rd = new RuntimeDesigner();
+            this.rd = new RuntimeDesigner();
         }
 
-        public void AddControl(Control c)
-        {
-            if (SelectionChanged != null)
-            {
-                SelectionChanged(c, null);
-            }
+        public event EventHandler SelectionChanged;
 
-            rd.EnableMoveResize(c);
-
-            Parent.Controls.Add(c);
-        }
-
+        public Control Parent { get; set; }
 
         public static DesignerHost CreateHost(string definition, DragEventHandler dragdrop, EventHandler selected)
         {
@@ -62,7 +46,8 @@ namespace POS.Internals.Designer
             }
 
             parent.DragOver += (sender, e) => { e.Effect = DragDropEffects.All; };
-            parent.DragDrop += (sender, e) => {
+            parent.DragDrop += (sender, e) =>
+            {
                 dragdrop(sender, e);
             };
 
@@ -73,6 +58,18 @@ namespace POS.Internals.Designer
             n.rd.EnableResizing(parent);
 
             return n;
+        }
+
+        public void AddControl(Control c)
+        {
+            if (this.SelectionChanged != null)
+            {
+                this.SelectionChanged(c, null);
+            }
+
+            this.rd.EnableMoveResize(c);
+
+            this.Parent.Controls.Add(c);
         }
     }
 }

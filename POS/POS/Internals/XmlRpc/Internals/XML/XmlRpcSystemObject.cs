@@ -3,14 +3,23 @@ namespace Rpc.Internals
     using System;
     using System.Collections;
     using System.Reflection;
-    using Rpc.Internals;
 
     /// <summary> XML-RPC System object implementation of extended specifications.</summary>
     [XmlRpcExposed]
-    class XmlRpcSystemObject
+    internal class XmlRpcSystemObject
     {
-        private XmlRpcServer _server;
-        static private IDictionary _methodHelp = new Hashtable();
+        private static readonly IDictionary _methodHelp = new Hashtable();
+
+        private readonly XmlRpcServer _server;
+
+        /// <summary>Constructor.</summary>
+        /// <param name="server"><c>XmlRpcServer</c> server to be the system object for.</param>
+        public XmlRpcSystemObject(XmlRpcServer server)
+        {
+            this._server = server;
+            server.Add("system", this);
+            _methodHelp.Add(string.Format("{0}.methodHelp", this.GetType().FullName), "Return a string description.");
+        }
 
         /// <summary>Static <c>IDictionary</c> to hold mappings of method name to associated documentation String</summary>
         static public IDictionary MethodHelp
@@ -19,15 +28,6 @@ namespace Rpc.Internals
             {
                 return _methodHelp;
             }
-        }
-
-        /// <summary>Constructor.</summary>
-        /// <param name="server"><c>XmlRpcServer</c> server to be the system object for.</param>
-        public XmlRpcSystemObject(XmlRpcServer server)
-        {
-            _server = server;
-            server.Add("system", this);
-            _methodHelp.Add(this.GetType().FullName + ".methodHelp", "Return a string description.");
         }
 
         /// <summary>Invoke a method on a given object.</summary>
@@ -41,8 +41,10 @@ namespace Rpc.Internals
         static public Object Invoke(Object target, String methodName, IList parameters)
         {
             if (target == null)
+            {
                 throw new XmlRpcException(XmlRpcErrorCodes.SERVER_ERROR_METHOD,
-                    XmlRpcErrorCodes.SERVER_ERROR_METHOD_MSG + ": Invalid target object.");
+                    string.Format("{0}: Invalid target object.", XmlRpcErrorCodes.SERVER_ERROR_METHOD_MSG));
+            }
 	  
             Type type = target.GetType();
             MethodInfo method = type.GetMethod(methodName);
@@ -50,13 +52,15 @@ namespace Rpc.Internals
             try
             {
                 if (!XmlRpcExposedAttribute.ExposedMethod(target, methodName))
+                {
                     throw new XmlRpcException(XmlRpcErrorCodes.SERVER_ERROR_METHOD,
-                        XmlRpcErrorCodes.SERVER_ERROR_METHOD_MSG + ": Method " + methodName + " is not exposed.");
+                        string.Format("{0}: Method {1} is not exposed.", XmlRpcErrorCodes.SERVER_ERROR_METHOD_MSG, methodName));
+                }
             }
             catch (MissingMethodException me)
             {
                 throw new XmlRpcException(XmlRpcErrorCodes.SERVER_ERROR_METHOD,
-                    XmlRpcErrorCodes.SERVER_ERROR_METHOD_MSG + ": " + me.Message);
+                    string.Format("{0}: {1}", XmlRpcErrorCodes.SERVER_ERROR_METHOD_MSG, me.Message));
             }
 
             Object[] args = new Object[parameters.Count];
@@ -72,8 +76,10 @@ namespace Rpc.Internals
             {
                 Object retValue = method.Invoke(target, args);
                 if (retValue == null)
+                {
                     throw new XmlRpcException(XmlRpcErrorCodes.APPLICATION_ERROR,
-                        XmlRpcErrorCodes.APPLICATION_ERROR_MSG + ": Method returned NULL.");
+                        string.Format("{0}: Method returned NULL.", XmlRpcErrorCodes.APPLICATION_ERROR_MSG));
+                }
                 return retValue;
             }
             catch (XmlRpcException e)
@@ -82,9 +88,9 @@ namespace Rpc.Internals
             }
             catch (ArgumentException ae)
             {
-                Logger.WriteEntry(XmlRpcErrorCodes.SERVER_ERROR_PARAMS_MSG + ": " + ae.Message,
+                Logger.WriteEntry(string.Format("{0}: {1}", XmlRpcErrorCodes.SERVER_ERROR_PARAMS_MSG, ae.Message),
                     LogLevel.Information);
-                String call = methodName + "( ";
+                String call = string.Format("{0}( ", methodName);
                 foreach (Object o in args)
                 {
                     call += o.GetType().Name;
@@ -92,19 +98,19 @@ namespace Rpc.Internals
                 }
                 call += ")";
                 throw new XmlRpcException(XmlRpcErrorCodes.SERVER_ERROR_PARAMS,
-                    XmlRpcErrorCodes.SERVER_ERROR_PARAMS_MSG + ": Arguement type mismatch invoking " + call);
+                    string.Format("{0}: Arguement type mismatch invoking {1}", XmlRpcErrorCodes.SERVER_ERROR_PARAMS_MSG, call));
             }
             catch (TargetParameterCountException tpce)
             {
-                Logger.WriteEntry(XmlRpcErrorCodes.SERVER_ERROR_PARAMS_MSG + ": " + tpce.Message,
+                Logger.WriteEntry(string.Format("{0}: {1}", XmlRpcErrorCodes.SERVER_ERROR_PARAMS_MSG, tpce.Message),
                     LogLevel.Information);
                 throw new XmlRpcException(XmlRpcErrorCodes.SERVER_ERROR_PARAMS,
-                    XmlRpcErrorCodes.SERVER_ERROR_PARAMS_MSG + ": Arguement count mismatch invoking " + methodName);
+                    string.Format("{0}: Arguement count mismatch invoking {1}", XmlRpcErrorCodes.SERVER_ERROR_PARAMS_MSG, methodName));
             }
             catch (TargetInvocationException tie)
             {
                 throw new XmlRpcException(XmlRpcErrorCodes.APPLICATION_ERROR,
-                    XmlRpcErrorCodes.APPLICATION_ERROR_MSG + " Invoked method " + methodName + ": " + tie.Message);
+                    string.Format("{0} Invoked method {1}: {2}", XmlRpcErrorCodes.APPLICATION_ERROR_MSG, methodName, tie.Message));
             }
         }
 
@@ -116,22 +122,28 @@ namespace Rpc.Internals
             IList methods = new ArrayList();
             Boolean considerExposure;
 
-            foreach (DictionaryEntry handlerEntry in _server)
+            foreach (DictionaryEntry handlerEntry in this._server)
             {
                 considerExposure = XmlRpcExposedAttribute.IsExposed(handlerEntry.Value.GetType());
 
                 foreach (MemberInfo mi in handlerEntry.Value.GetType().GetMembers())
                 {
                     if (mi.MemberType != MemberTypes.Method)
+                    {
                         continue;
+                    }
 
                     if (!((MethodInfo)mi).IsPublic)
+                    {
                         continue;
+                    }
 
                     if (considerExposure && !XmlRpcExposedAttribute.IsExposed(mi))
+                    {
                         continue;
+                    }
 
-                    methods.Add(handlerEntry.Key + "." + mi.Name);
+                    methods.Add(string.Format("{0}.{1}", handlerEntry.Key, mi.Name));
                 }
             }
 
@@ -148,18 +160,24 @@ namespace Rpc.Internals
             int index = name.IndexOf('.');
 
             if (index < 0)
+            {
                 return signatures;
+            }
 
             String oName = name.Substring(0, index);
-            Object obj = _server[oName];
+            Object obj = this._server[oName];
 
             if (obj == null)
+            {
                 return signatures;
+            }
 
             MemberInfo[] mi = obj.GetType().GetMember(name.Substring(index + 1));
 	
             if (mi == null || mi.Length != 1) // for now we want a single signature
+            {
                 return signatures;
+            }
 
             MethodInfo method;
 
@@ -169,13 +187,15 @@ namespace Rpc.Internals
             }
             catch (Exception e)
             {
-                Logger.WriteEntry("Attempted methodSignature call on " + mi[0] + " caused: " + e,
+                Logger.WriteEntry(string.Format("Attempted methodSignature call on {0} caused: {1}", mi[0], e),
                     LogLevel.Information);
                 return signatures;
             }
 
             if (!method.IsPublic)
+            {
                 return signatures;
+            }
 
             IList signature = new ArrayList();
             signature.Add(method.ReturnType.Name);
@@ -200,7 +220,7 @@ namespace Rpc.Internals
 
             try 
             {
-                help = (String)_methodHelp[_server.MethodName(name)];
+                help = (String)_methodHelp[this._server.MethodName(name)];
             }
             catch (XmlRpcException e)
             {
@@ -209,10 +229,11 @@ namespace Rpc.Internals
             catch (Exception)
             {
             /* ignored */ }
-            ;
 
             if (help == null)
-                help = "No help available for: " + name;
+            {
+                help = string.Format("No help available for: {0}", name);
+            }
 
             return help;
         }
@@ -232,7 +253,7 @@ namespace Rpc.Internals
                 {
                     XmlRpcRequest req = new XmlRpcRequest((String)call[XmlRpcXmlTokens.METHOD_NAME],
                         (ArrayList)call[XmlRpcXmlTokens.PARAMS]);
-                    Object results = _server.Invoke(req);
+                    Object results = this._server.Invoke(req);
                     IList response = new ArrayList();
                     response.Add(results);
                     responses.Add(response);
@@ -245,7 +266,7 @@ namespace Rpc.Internals
                 catch (Exception e2)
                 {
                     fault.SetFault(XmlRpcErrorCodes.APPLICATION_ERROR,
-                        XmlRpcErrorCodes.APPLICATION_ERROR_MSG + ": " + e2.Message);
+                        string.Format("{0}: {1}", XmlRpcErrorCodes.APPLICATION_ERROR_MSG, e2.Message));
                     responses.Add(fault.Value);
                 }
             }

@@ -4,7 +4,6 @@ namespace POS.Internals.Database
     {
         public void Append(string path, object obj)
         {
-
         }
     }
 }

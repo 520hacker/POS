@@ -54,15 +54,21 @@ namespace Pos.Internals.Extensions
         public static bool IsBetween<T>(this T value, T minValue, T maxValue, IComparer<T> comparer) where T : IComparable<T>
         {
             if (comparer == null)
+            {
                 throw new ArgumentNullException("comparer");
+            }
 
             var minMaxCompare = comparer.Compare(minValue, maxValue);
             if (minMaxCompare < 0)
+            {
                 return ((comparer.Compare(value, minValue) >= 0) && (comparer.Compare(value, maxValue) <= 0));
-                //else if (minMaxCompare == 0)				// unnecessary  'else' below handles this case.
-                //    return (comparer.Compare(value, minValue) == 0);
+            }
+            //else if (minMaxCompare == 0)				// unnecessary  'else' below handles this case.
+            //    return (comparer.Compare(value, minValue) == 0);
             else
+            {
                 return ((comparer.Compare(value, maxValue) >= 0) && (comparer.Compare(value, minValue) <= 0));
+            }
         }
 
         // todo: xml documentation is required

@@ -9,61 +9,60 @@ namespace Pos.Internals.Extensions
     public class SystemUtilities
     {
         #region Private Constants
-
         /// <summary>
         /// Version - NT Workstation
         /// </summary>
         private const int VERNTWORKSTATION = 1;
-
+        
         /// <summary>
         /// Version - Domain Controller
         /// </summary>
         private const int VERNTDOMAINCONTROLLER = 2;
-
+        
         /// <summary>
         /// Version - NT Server
         /// </summary>
         private const int VERNTSERVER = 3;
-
+        
         /// <summary>
         /// Version - Small Business Suite
         /// </summary>
         private const int VERSUITESMALLBUSINESS = 1;
-
+        
         /// <summary>
         /// Version - Enterprise suite.
         /// </summary>
         private const int VERSUITEENTERPRISE = 2;
-
+        
         /// <summary>
         /// Version - Terminal suite
         /// </summary>
         private const int VERSUITETERMINAL = 16;
-
+        
         /// <summary>
         /// Version - Data Center Suite
         /// </summary>
         private const int VERSUITEDATACENTER = 128;
-
+        
         /// <summary>
         /// Version - Single User TS Suite
         /// </summary>
         private const int VERSUITESINGLEUSERTS = 256;
-
+        
         /// <summary>
         /// Version - Personal Suite
         /// </summary>
         private const int VERSUITEPERSONAL = 512;
-
+        
         /// <summary>
         /// Version - Blade Suite
         /// </summary>
         private const int VERSUITEBLADE = 1024;
-
+        
         #endregion
-
+        
         #region Public Properties
-
+        
         /// <summary>
         /// Gets the full version of the operating system running on this computer.
         /// </summary>
@@ -74,7 +73,7 @@ namespace Pos.Internals.Extensions
                 return System.Environment.OSVersion.Version.ToString();
             }
         }
-
+        
         /// <summary>
         /// Gets the major version of the operating system running on this computer.
         /// </summary>
@@ -85,7 +84,7 @@ namespace Pos.Internals.Extensions
                 return System.Environment.OSVersion.Version.Major;
             }
         }
-
+        
         /// <summary>
         /// Gets the minor version of the operating system running on this computer.
         /// </summary>
@@ -96,7 +95,7 @@ namespace Pos.Internals.Extensions
                 return System.Environment.OSVersion.Version.Minor;
             }
         }
-
+        
         /// <summary>
         /// Gets the build version of the operating system running on this computer.
         /// </summary>
@@ -107,7 +106,7 @@ namespace Pos.Internals.Extensions
                 return System.Environment.OSVersion.Version.Build;
             }
         }
-
+        
         /// <summary>
         /// Gets the revision version of the operating system running on this computer.
         /// </summary>
@@ -118,11 +117,11 @@ namespace Pos.Internals.Extensions
                 return System.Environment.OSVersion.Version.Revision;
             }
         }
-
+        
         #endregion
-
+        
         #region Public Methods
-
+        
         /// <summary>
         /// Returns the product type of the operating system running on this computer.
         /// </summary>
@@ -131,9 +130,9 @@ namespace Pos.Internals.Extensions
         {
             OSVERSIONINFOEX versionInfo = new OSVERSIONINFOEX();
             OperatingSystem info = System.Environment.OSVersion;
-
+            
             versionInfo.VersionInfoSize = Marshal.SizeOf(typeof(OSVERSIONINFOEX));
-
+            
             if (!GetVersionEx(ref versionInfo))
             {
                 return string.Empty;
@@ -218,10 +217,10 @@ namespace Pos.Internals.Extensions
                     }
                 }
             }
-
+            
             return string.Empty;
         }
-
+        
         /// <summary>
         /// Returns the service pack information of the operating system running on this computer.
         /// </summary>
@@ -229,19 +228,19 @@ namespace Pos.Internals.Extensions
         public static string GetOSServicePack()
         {
             OSVERSIONINFOEX versionInfo = new OSVERSIONINFOEX();
-
+            
             versionInfo.VersionInfoSize = Marshal.SizeOf(typeof(OSVERSIONINFOEX));
-
+            
             if (!GetVersionEx(ref versionInfo))
             {
                 return string.Empty;
             }
             else
             {
-                return " " + versionInfo.ServicePackVersion;
+                return string.Format(" {0}", versionInfo.ServicePackVersion);
             }
         }
-
+        
         /// <summary>
         /// Returns the name of the operating system running on this computer.
         /// </summary>
@@ -250,7 +249,7 @@ namespace Pos.Internals.Extensions
         {
             OperatingSystem info = System.Environment.OSVersion;
             string name = "UNKNOWN";
-
+            
             switch (info.Platform)
             {
                 case PlatformID.Win32Windows:
@@ -261,7 +260,6 @@ namespace Pos.Internals.Extensions
                             
                             name = "Windows 95";
                             break;                                
-
                         case 10:
                             
                             if (info.Version.Revision.ToString() == "2222A")
@@ -272,17 +270,15 @@ namespace Pos.Internals.Extensions
                             {
                                 name = "Windows 98";
                             }
-
+                            
                             break;                            
-
                         case 90:
                             
                             name = "Windows Me";
                             break;                            
                     }
-
+                    
                     break;                    
-
                 case PlatformID.Win32NT:
                     
                     switch (info.Version.Major)
@@ -291,12 +287,10 @@ namespace Pos.Internals.Extensions
                             
                             name = "Windows NT 3.51";
                             break;                                
-
                         case 4:
                             
                             name = "Windows NT 4.0";
                             break;                                
-
                         case 5:
                             
                             if (info.Version.Minor == 0)
@@ -311,22 +305,21 @@ namespace Pos.Internals.Extensions
                             {
                                 name = "Windows Server 2003";
                             }
-
+                            
                             break;                       
-
                         case 6:
                             
                             name = "Windows Vista";
-
+                            
                             break;                                
                     }
-
+                    
                     break;                    
             }
-
+            
             return name;
         }
-
+        
         /// <summary>
         /// Determines if the system is running Windows XP
         /// or above
@@ -340,25 +333,25 @@ namespace Pos.Internals.Extensions
                 ret = true;
             }
             else if ((System.Environment.OSVersion.Version.Major == 5) &&
-                (System.Environment.OSVersion.Version.Minor >= 1))
+                     (System.Environment.OSVersion.Version.Minor >= 1))
             {
                 ret = true;
             }
-
+            
             return ret;
         }
-
+        
         #endregion
-
+        
         #region Private Methods
-
+        
         [DllImport("kernel32.dll")]
         private static extern bool GetVersionEx(ref OSVERSIONINFOEX versionInfo);
-
+        
         #endregion
-
+        
         #region Private Structures
-
+        
         /// <summary>
         /// Contains OS version info.
         /// </summary>
@@ -369,59 +362,24 @@ namespace Pos.Internals.Extensions
             /// Version info size.
             /// </summary>
             public int VersionInfoSize;
-
-            /// <summary>
-            /// Major version.
-            /// </summary>
-            public int MajorVersion;
-
-            /// <summary>
-            /// Minor version.
-            /// </summary>
-            public int MinorVersion;
-
-            /// <summary>
-            /// Build number.
-            /// </summary>
-            public int BuildNumber;
-
-            /// <summary>
-            /// Platform ID.
-            /// </summary>
-            public int PlatformID;
-
+            
             /// <summary>
             /// Service pack version.
             /// </summary>
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
             public string ServicePackVersion;
-
-            /// <summary>
-            /// Service pack major.
-            /// </summary>
-            public short ServicePackMajor;
-
-            /// <summary>
-            /// Service pack minor.
-            /// </summary>
-            public short ServicePackMinor;
-
+            
             /// <summary>
             /// Suite mask.
             /// </summary>
-            public short SuiteMask;
-
+            public readonly short SuiteMask;
+            
             /// <summary>
             /// Product type.
             /// </summary>
-            public byte ProductType;
-
-            /// <summary>
-            /// Reserved flag.
-            /// </summary>
-            public byte Reserved;
+            public readonly byte ProductType;
         }
-
+        
         #endregion
     }
 }

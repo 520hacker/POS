@@ -27,7 +27,9 @@ namespace Info.Blockchain.API.Receive
             req["method"] = "create";
 
             if (apiCode != null)
+            {
                 req["api_code"] = apiCode;
+            }
 
             string response = HttpClient.Post("api/receive", req);
             JObject topElem = JObject.Parse(response);

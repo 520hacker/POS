@@ -1,4 +1,6 @@
-﻿#region License
+﻿
+#region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,92 +23,102 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Runtime.CompilerServices;
 using Lib.JSON.Utilities;
 
 namespace Lib.JSON.Serialization
 {
-  internal abstract class JsonSerializerInternalBase
-  {
-    private class ReferenceEqualsEqualityComparer : IEqualityComparer<object>
+    internal abstract class JsonSerializerInternalBase
     {
-      bool IEqualityComparer<object>.Equals(object x, object y)
-      {
-        return ReferenceEquals(x, y);
-      }
-
-      int IEqualityComparer<object>.GetHashCode(object obj)
-      {
-#if !PocketPC
-        // put objects in a bucket based on their reference
-        return RuntimeHelpers.GetHashCode(obj);
-#else
+        private class ReferenceEqualsEqualityComparer : IEqualityComparer<object>
+        {
+            bool IEqualityComparer<object>.Equals(object x, object y)
+            {
+                return ReferenceEquals(x, y);
+            }
+            
+            int IEqualityComparer<object>.GetHashCode(object obj)
+            {
+                #if !PocketPC
+                // put objects in a bucket based on their reference
+                return RuntimeHelpers.GetHashCode(obj);
+                #else
         // put all objects in the same bucket so ReferenceEquals is called on all
         return -1;
-#endif
-      }
+                #endif
+            }
+        }
+
+        private ErrorContext _currentErrorContext;
+        private BidirectionalDictionary<string, object> _mappings;
+        
+        internal readonly JsonSerializer Serializer;
+        
+        protected JsonSerializerInternalBase(JsonSerializer serializer)
+        {
+            ValidationUtils.ArgumentNotNull(serializer, "serializer");
+
+            this.Serializer = serializer;
+        }
+        
+        internal BidirectionalDictionary<string, object> DefaultReferenceMappings
+        {
+            get
+            {
+                // override equality comparer for object key dictionary
+                // object will be modified as it deserializes and might have mutable hashcode
+                if (this._mappings == null)
+                {
+                    this._mappings = new BidirectionalDictionary<string, object>(
+                        EqualityComparer<string>.Default,
+                        new ReferenceEqualsEqualityComparer());
+                }
+                
+                return this._mappings;
+            }
+        }
+        
+        protected ErrorContext GetErrorContext(object currentObject, object member, Exception error)
+        {
+            if (this._currentErrorContext == null)
+            {
+                this._currentErrorContext = new ErrorContext(currentObject, member, error);
+            }
+            
+            if (this._currentErrorContext.Error != error)
+            {
+                throw new InvalidOperationException("Current error context error is different to requested error.");
+            }
+
+            return this._currentErrorContext;
+        }
+        
+        protected void ClearErrorContext()
+        {
+            if (this._currentErrorContext == null)
+            {
+                throw new InvalidOperationException("Could not clear error context. Error context is already null.");
+            }
+
+            this._currentErrorContext = null;
+        }
+        
+        protected bool IsErrorHandled(object currentObject, JsonContract contract, object keyValue, Exception ex)
+        {
+            ErrorContext errorContext = this.GetErrorContext(currentObject, keyValue, ex);
+            contract.InvokeOnError(currentObject, this.Serializer.Context, errorContext);
+            
+            if (!errorContext.Handled)
+            {
+                this.Serializer.OnError(new ErrorEventArgs(currentObject, errorContext));
+            }
+            
+            return errorContext.Handled;
+        }
     }
-
-    private ErrorContext _currentErrorContext;
-    private BidirectionalDictionary<string, object> _mappings;
-
-    internal readonly JsonSerializer Serializer;
-
-    protected JsonSerializerInternalBase(JsonSerializer serializer)
-    {
-      ValidationUtils.ArgumentNotNull(serializer, "serializer");
-
-      Serializer = serializer;
-    }
-
-    internal BidirectionalDictionary<string, object> DefaultReferenceMappings
-    {
-      get
-      {
-        // override equality comparer for object key dictionary
-        // object will be modified as it deserializes and might have mutable hashcode
-        if (_mappings == null)
-          _mappings = new BidirectionalDictionary<string, object>(
-            EqualityComparer<string>.Default,
-            new ReferenceEqualsEqualityComparer());
-
-        return _mappings;
-      }
-    }
-
-    protected ErrorContext GetErrorContext(object currentObject, object member, Exception error)
-    {
-      if (_currentErrorContext == null)
-        _currentErrorContext = new ErrorContext(currentObject, member, error);
-
-      if (_currentErrorContext.Error != error)
-        throw new InvalidOperationException("Current error context error is different to requested error.");
-
-      return _currentErrorContext;
-    }
-
-    protected void ClearErrorContext()
-    {
-      if (_currentErrorContext == null)
-        throw new InvalidOperationException("Could not clear error context. Error context is already null.");
-
-      _currentErrorContext = null;
-    }
-
-    protected bool IsErrorHandled(object currentObject, JsonContract contract, object keyValue, Exception ex)
-    {
-      ErrorContext errorContext = GetErrorContext(currentObject, keyValue, ex);
-      contract.InvokeOnError(currentObject, Serializer.Context, errorContext);
-
-      if (!errorContext.Handled)
-        Serializer.OnError(new ErrorEventArgs(currentObject, errorContext));
-
-      return errorContext.Handled;
-    }
-  }
 }

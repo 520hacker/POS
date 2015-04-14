@@ -15,7 +15,7 @@ namespace Rpc.Internals
         AttributeTargets.Class | AttributeTargets.Method,
         AllowMultiple = false,
         Inherited = true)]
-    class XmlRpcExposedAttribute : Attribute
+    internal class XmlRpcExposedAttribute : Attribute
     {
         /// <summary>Check if <paramref>obj</paramref> is an object utilizing the XML-RPC exposed Attribute.</summary>
         /// <param name="obj"><c>Object</c> of a class or method to check for attribute.</param>
@@ -35,10 +35,14 @@ namespace Rpc.Internals
             MethodInfo method = type.GetMethod(methodName);
 
             if (method == null)
-                throw new MissingMethodException("Method " + methodName + " not found.");
+            {
+                throw new MissingMethodException(string.Format("Method {0} not found.", methodName));
+            }
 
             if (!IsExposed(type))
+            {
                 return true;
+            }
 
             return IsExposed(method);
         }
@@ -51,7 +55,9 @@ namespace Rpc.Internals
             foreach (Attribute attr in mi.GetCustomAttributes(true))
             {
                 if (attr is XmlRpcExposedAttribute)
+                {
                     return true;
+                }
             }
             return false;
         }

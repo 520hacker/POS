@@ -1,3 +1,4 @@
+
 #region Copyright © 2010 Pawel Idzikowski [idzikowski@sharpserializer.com]
 
 //  ***********************************************************************
@@ -40,14 +41,14 @@ namespace Polenter.Serialization.Advanced
     public sealed class TypeNameConverter : ITypeNameConverter
     {
         private readonly Dictionary<Type, string> _cache = new Dictionary<Type, string>();
-
+        
         /// <summary>
         /// Since v.2.12 as default the type name is equal to Type.AssemblyQualifiedName
         /// </summary>
         public TypeNameConverter()
         {
         }
-
+        
         /// <summary>
         ///   Some values from the Type.AssemblyQualifiedName can be removed
         /// </summary>
@@ -56,28 +57,28 @@ namespace Polenter.Serialization.Advanced
         /// <param name = "includePublicKeyToken"></param>
         public TypeNameConverter(bool includeAssemblyVersion, bool includeCulture, bool includePublicKeyToken)
         {
-            IncludeAssemblyVersion = includeAssemblyVersion;
-            IncludeCulture = includeCulture;
-            IncludePublicKeyToken = includePublicKeyToken;
+            this.IncludeAssemblyVersion = includeAssemblyVersion;
+            this.IncludeCulture = includeCulture;
+            this.IncludePublicKeyToken = includePublicKeyToken;
         }
-
+        
         /// <summary>
         ///   Version=x.x.x.x will be inserted to the type name
         /// </summary>
         public bool IncludeAssemblyVersion { get; private set; }
-
+        
         /// <summary>
         ///   Culture=.... will be inserted to the type name
         /// </summary>
         public bool IncludeCulture { get; private set; }
-
+        
         /// <summary>
         ///   PublicKeyToken=.... will be inserted to the type name
         /// </summary>
         public bool IncludePublicKeyToken { get; private set; }
-
+        
         #region ITypeNameConverter Members
-
+        
         /// <summary>
         ///   Gives type as text
         /// </summary>
@@ -85,37 +86,40 @@ namespace Polenter.Serialization.Advanced
         /// <returns>string.Empty if the type is null</returns>
         public string ConvertToTypeName(Type type)
         {
-            if (type == null) return string.Empty;
-
-            // Search in cache
-            if (_cache.ContainsKey(type))
+            if (type == null)
             {
-                return _cache[type];
+                return string.Empty;
             }
-
+            
+            // Search in cache
+            if (this._cache.ContainsKey(type))
+            {
+                return this._cache[type];
+            }
+            
             string typename = type.AssemblyQualifiedName;
-
-            if (!IncludeAssemblyVersion)
+            
+            if (!this.IncludeAssemblyVersion)
             {
                 typename = removeAssemblyVersion(typename);
             }
-
-            if (!IncludeCulture)
+            
+            if (!this.IncludeCulture)
             {
                 typename = removeCulture(typename);
             }
-
-            if (!IncludePublicKeyToken)
+            
+            if (!this.IncludePublicKeyToken)
             {
                 typename = removePublicKeyToken(typename);
             }
-
+            
             // Adding to cache
-            _cache.Add(type, typename);
-
+            this._cache.Add(type, typename);
+            
             return typename;
         }
-
+        
         /// <summary>
         ///   Gives back Type from the text.
         /// </summary>
@@ -123,23 +127,26 @@ namespace Polenter.Serialization.Advanced
         /// <returns></returns>
         public Type ConvertToType(string typeName)
         {
-            if (string.IsNullOrEmpty(typeName)) return null;
+            if (string.IsNullOrEmpty(typeName))
+            {
+                return null;
+            }
             Type type = Type.GetType(typeName, true);
             return type;
         }
-
+        
         #endregion
-
+        
         private static string removePublicKeyToken(string typename)
         {
             return Regex.Replace(typename, @", PublicKeyToken=\w+", string.Empty);
         }
-
+        
         private static string removeCulture(string typename)
         {
             return Regex.Replace(typename, @", Culture=\w+", string.Empty);
         }
-
+        
         private static string removeAssemblyVersion(string typename)
         {
             return Regex.Replace(typename, @", Version=\d+.\d+.\d+.\d+", string.Empty);

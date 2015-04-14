@@ -11,31 +11,37 @@ namespace POS
         {
             var t = typeof(T);
 
-            string sqlsc = "CREATE TABLE " + t.Name + "s (";
+            string sqlsc = string.Format("CREATE TABLE {0}s (", t.Name);
             foreach (var p in t.GetProperties())
             {
-                sqlsc += "\n " + p.Name + " ";
+                sqlsc += string.Format("\n {0} ", p.Name);
                 if (p.PropertyType.ToString().Contains("System.Int32"))
+                {
                     sqlsc += " int ";
+                }
                 else if (p.PropertyType.ToString().Contains("System.DateTime"))
+                {
                     sqlsc += " datetime ";
+                }
                 else
+                {
                     sqlsc += " varchar(255) ";
+                }
 
                 sqlsc += ",";
             }
-            return sqlsc.Substring(0, sqlsc.Length - 1) + ")";
+            return string.Format("{0})", sqlsc.Substring(0, sqlsc.Length - 1));
         }
 
         public static void Add<T>(T obj)
         {
-            SqlHelper.query("INSERT INTO " + typeof(T).Name + "s VALUES ()");
+            SqlHelper.query(string.Format("INSERT INTO {0}s VALUES ()", typeof(T).Name));
         }
 
         public static IEnumerable<T> GetItems<T>()
             where T : new()
         {
-            var q = SqlHelper.query("SELECT * FROM " + typeof(T).Name + "s");
+            var q = SqlHelper.query(string.Format("SELECT * FROM {0}s", typeof(T).Name));
             var arr = SqlHelper.fetch_array(q);
 
             var ret = new List<T>();
@@ -81,13 +87,17 @@ namespace POS
                                 }
 
                                 if (prop.CanWrite)
+                                {
                                     prop.SetValue(tmp, v);
+                                }
                             }
                         }
                     }
 
                     if (!ret.Contains(tmp))
+                    {
                         ret.Add(tmp);
+                    }
                 }
             }
 

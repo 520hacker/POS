@@ -1,4 +1,5 @@
 // Siarhei Arkhipenka (c) 2006-2007. email: sbs-arhipenko@yandex.ru
+
 using System.Diagnostics;
 
 namespace POS.Internals.UndoRedo
@@ -10,27 +11,30 @@ namespace POS.Internals.UndoRedo
 
         public UndoRedo()
         {
-            tValue = default(TValue);
+            this.tValue = default(TValue);
         }
 
         public UndoRedo(TValue defaultValue)
         {
-            tValue = defaultValue;
+            this.tValue = defaultValue;
         }
 
         public TValue Value
         {
-            get { return tValue; }
+            get
+            {
+                return this.tValue;
+            }
             set
             {
                 UndoRedoManager.AssertCommand();
                 if (!UndoRedoManager.CurrentCommand.ContainsKey(this))
                 {
                     var change = new Change<TValue>();
-                    change.OldState = tValue;
+                    change.OldState = this.tValue;
                     UndoRedoManager.CurrentCommand[this] = change;
                 }
-                tValue = value;
+                this.tValue = value;
             }
         }
 
@@ -39,21 +43,21 @@ namespace POS.Internals.UndoRedo
         void IUndoRedoMember.OnCommit(object change)
         {
             Debug.Assert(change != null);
-            ((Change<TValue>) change).NewState = tValue;
+            ((Change<TValue>)change).NewState = this.tValue;
         }
 
         void IUndoRedoMember.OnUndo(object change)
         {
             Debug.Assert(change != null);
-            tValue = ((Change<TValue>) change).OldState;
+            this.tValue = ((Change<TValue>)change).OldState;
         }
 
         void IUndoRedoMember.OnRedo(object change)
         {
             Debug.Assert(change != null);
-            tValue = ((Change<TValue>) change).NewState;
+            this.tValue = ((Change<TValue>)change).NewState;
         }
-
+        
         #endregion
     }
 }

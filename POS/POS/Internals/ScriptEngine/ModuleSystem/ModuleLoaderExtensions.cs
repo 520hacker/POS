@@ -12,8 +12,10 @@ namespace POS.Internals.ScriptEngine.ModuleSystem
         {
             var ca = t.GetCustomAttribute<ScriptModuleAttribute>();
 
-            if(ca.AsType)
+            if (ca.AsType)
+            {
                 se.AddHostType(ca.Name != null ? ca.Name : t.Name, t);
+            }
 
             if (ca != null)
             {

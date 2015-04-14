@@ -1,4 +1,6 @@
+
 #region License
+
 // Copyright (c) 2007 James Newton-King
 //
 // Permission is hereby granted, free of charge, to any person
@@ -21,28 +23,27 @@
 // WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
-#endregion
 
-using Creek.Data.JSON.Net.Schema;
+#endregion
 
 namespace Lib.JSON.Schema
 {
-  /// <summary>
-  /// Specifies undefined schema Id handling options for the <see cref="JsonSchemaGenerator"/>.
-  /// </summary>
-  public enum UndefinedSchemaIdHandling
-  {
     /// <summary>
-    /// Do not infer a schema Id.
+    /// Specifies undefined schema Id handling options for the <see cref="JsonSchemaGenerator"/>.
     /// </summary>
-    None = 0,
-    /// <summary>
-    /// Use the .NET type name as the schema Id.
-    /// </summary>
-    UseTypeName = 1,
-    /// <summary>
-    /// Use the assembly qualified .NET type name as the schema Id.
-    /// </summary>
-    UseAssemblyQualifiedName = 2,
-  }
+    public enum UndefinedSchemaIdHandling
+    {
+        /// <summary>
+        /// Do not infer a schema Id.
+        /// </summary>
+        None = 0,
+        /// <summary>
+        /// Use the .NET type name as the schema Id.
+        /// </summary>
+        UseTypeName = 1,
+        /// <summary>
+        /// Use the assembly qualified .NET type name as the schema Id.
+        /// </summary>
+        UseAssemblyQualifiedName = 2,
+    }
 }

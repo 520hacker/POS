@@ -31,7 +31,9 @@ namespace Pos.Internals.Extensions
         public static void ShowHeaders(this TabControl tabControl)
         {
             if (!_hiddenHeaders.ContainsKey(tabControl))
+            {
                 return;
+            }
 
             var opt = _hiddenHeaders[tabControl];
             _hiddenHeaders.Remove(tabControl);
@@ -59,9 +61,13 @@ namespace Pos.Internals.Extensions
         public static void SetHeadersVisible(this TabControl tabControl, bool visible)
         {
             if (visible)
+            {
                 ShowHeaders(tabControl);
+            }
             else
+            {
                 HideHeaders(tabControl);
+            }
         }
     }
 }

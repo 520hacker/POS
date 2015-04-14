@@ -12,19 +12,19 @@ namespace Info.Blockchain.API.BlockExplorer
     {
         public Block(JObject b) : base(b)
         {
-            Version = (int)b["ver"];
-            PreviousBlockHash = (string)b["prev_block"];
-            MerkleRoot = (string)b["mrkl_root"];
-            Bits = (long)b["bits"];
-            Fees = (long)b["fee"];
-            Nonce = (long)b["nonce"];
-            Size = (long)b["size"];
-            Index = (long)b["block_index"];
-            ReceivedTime = b["received_time"] != null ? (long)b["received_time"] : Time;
-            RelayedBy = b["relayed_by"] != null ? (string)b["relayed_by"] : null;
+            this.Version = (int)b["ver"];
+            this.PreviousBlockHash = (string)b["prev_block"];
+            this.MerkleRoot = (string)b["mrkl_root"];
+            this.Bits = (long)b["bits"];
+            this.Fees = (long)b["fee"];
+            this.Nonce = (long)b["nonce"];
+            this.Size = (long)b["size"];
+            this.Index = (long)b["block_index"];
+            this.ReceivedTime = b["received_time"] != null ? (long)b["received_time"] : this.Time;
+            this.RelayedBy = b["relayed_by"] != null ? (string)b["relayed_by"] : null;
 
-            var txs = b["tx"].Select(x => new Transaction((JObject)x, Height, false)).ToList();
-            Transactions = new ReadOnlyCollection<Transaction>(txs);
+            var txs = b["tx"].Select(x => new Transaction((JObject)x, this.Height, false)).ToList();
+            this.Transactions = new ReadOnlyCollection<Transaction>(txs);
         }
 
         /// <summary>

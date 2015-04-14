@@ -6,18 +6,18 @@ namespace POS.Internals.Designer
 {
     public class RuntimeDesigner
     {
-        public Control SelectedControl { get; set; }
-
         public event EventHandler SelectionChanged;
+
+        public Control SelectedControl { get; set; }
 
         public void EnableResizing(Control c)
         {
             c.Click += (sender, e) =>
             {
-                if (SelectionChanged != null)
+                if (this.SelectionChanged != null)
                 {
-                    SelectedControl = (Control)sender;
-                    SelectionChanged(sender, e);
+                    this.SelectedControl = (Control)sender;
+                    this.SelectionChanged(sender, e);
                 }
             };
 
@@ -26,13 +26,14 @@ namespace POS.Internals.Designer
 
         public void EnableMoveResize(Control c)
         {
-            c.Click += (sender, e) => {
-                if (SelectionChanged != null)
+            c.Click += (sender, e) =>
+            {
+                if (this.SelectionChanged != null)
                 {
-                    SelectedControl = (Control)sender;
-                    SelectionChanged(sender, e);
+                    this.SelectedControl = (Control)sender;
+                    this.SelectionChanged(sender, e);
                 }
-                    };
+            };
 
             ControlMover.Init(c, ControlMover.Direction.Any);
             new Resizer(c);

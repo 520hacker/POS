@@ -30,7 +30,9 @@ namespace POS.Internals.Extensions
         {
             string line = null;
             while ((line = reader.ReadLine()) != null)
+            {
                 yield return line;
+            }
         }
 
         /// <summary>
@@ -51,7 +53,9 @@ namespace POS.Internals.Extensions
         public static void IterateLines(this TextReader reader, Action<string> action)
         {
             foreach (var line in reader.IterateLines())
+            {
                 action(line);
+            }
         }
     }
 }

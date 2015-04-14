@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using Pos.Internals.Extensions;
+using System.Windows.Forms;
 
 namespace Pos.Internals.Extensions
 {
     public class HotKeysManager : NativeWindow
     {
-        private Form owner;
-        private List<HotKeysData> registerHotKeys;
+        private readonly Form owner;
+        private readonly List<HotKeysData> registerHotKeys;
 
         /// <summary>
         /// Occurs when [hot key press].
@@ -21,11 +20,12 @@ namespace Pos.Internals.Extensions
         /// Initializes a new instance of the <see cref="HotKeysManager"/> class.
         /// </summary>
         /// <param name="owner">The owner.</param>
-        public HotKeysManager(Form owner) {
+        public HotKeysManager(Form owner)
+        {
             this.AssignHandle(owner.Handle);
             this.owner = owner;
             this.registerHotKeys = new List<HotKeysData>();
-            owner.HandleCreated += new EventHandler(owner_HandleCreated);
+            owner.HandleCreated += new EventHandler(this.owner_HandleCreated);
         }
 
         /// <summary>
@@ -33,9 +33,9 @@ namespace Pos.Internals.Extensions
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        void owner_HandleCreated(object sender, EventArgs e)
+        private void owner_HandleCreated(object sender, EventArgs e)
         {
-            this.AssignHandle(owner.Handle);
+            this.AssignHandle(this.owner.Handle);
         }
 
         /// <summary>
@@ -43,17 +43,16 @@ namespace Pos.Internals.Extensions
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="modifiers">The modifiers.</param>
-        public void AddHotKey(Keys key, HotKeyModifiers modifiers) {
+        public void AddHotKey(Keys key, HotKeyModifiers modifiers)
+        {
             if (this.registerHotKeys.Contains(
                 new HotKeysData { Key = key, Modifiers = modifiers },
-                new HotKeyEqualityComparer())) {
-                    return;
+                new HotKeyEqualityComparer()))
+            {
+                return;
             }
 
-            RegisterHotKeys(key, modifiers);
-
-
-
+            this.RegisterHotKeys(key, modifiers);
         }
 
         /// <summary>
@@ -61,12 +60,13 @@ namespace Pos.Internals.Extensions
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="modifiers">The modifiers.</param>
-        public void RemoveHotKey(Keys key, HotKeyModifiers modifiers) {
-            if (registerHotKeys.Contains(new HotKeysData { Key = key, Modifiers = modifiers }, new HotKeyEqualityComparer()))
+        public void RemoveHotKey(Keys key, HotKeyModifiers modifiers)
+        {
+            if (this.registerHotKeys.Contains(new HotKeysData { Key = key, Modifiers = modifiers }, new HotKeyEqualityComparer()))
             {
-                var data = registerHotKeys.Find(hk => hk.Key == key && hk.Modifiers == modifiers);
+                var data = this.registerHotKeys.Find(hk => hk.Key == key && hk.Modifiers == modifiers);
                 this.UnregisterHotKeys(data);
-                registerHotKeys.Remove(data);
+                this.registerHotKeys.Remove(data);
             }
         }
 
@@ -74,8 +74,9 @@ namespace Pos.Internals.Extensions
         /// Releases unmanaged resources and performs other cleanup operations before the
         /// <see cref="HotKeysManager"/> is reclaimed by garbage collection.
         /// </summary>
-        ~HotKeysManager() { 
-            this.registerHotKeys.ForEach(hk=>this.UnregisterHotKeys(hk));
+        ~HotKeysManager()
+        { 
+            this.registerHotKeys.ForEach(hk => this.UnregisterHotKeys(hk));
         }
 
         /// <summary>
@@ -83,19 +84,22 @@ namespace Pos.Internals.Extensions
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="modifiers">The modifiers.</param>
-        private void RegisterHotKeys(Keys key, HotKeyModifiers modifiers) {
+        private void RegisterHotKeys(Keys key, HotKeyModifiers modifiers)
+        {
             var atomName = string.Empty;
             IntPtr atomId;
 
-            atomName = key.ToString() + modifiers.ToString() + Environment.TickCount.ToString();
+            atomName = string.Format("{0}{1}{2}", key.ToString(), modifiers.ToString(), Environment.TickCount.ToString());
             atomName = atomName.Substring(0, Math.Min(atomName.Length, 255));
 
             atomId = GlobalAddAtom(atomName);
-            if (atomId == IntPtr.Zero) {
+            if (atomId == IntPtr.Zero)
+            {
                 throw new Exception("Unable to save shortcut atom !");
             }
 
-            if (!RegisterHotKey(this.owner.Handle, atomId.ToInt32(), (int)modifiers, (int)key)) {
+            if (!RegisterHotKey(this.owner.Handle, atomId.ToInt32(), (int)modifiers, (int)key))
+            {
                 GlobalDeleteAtom(atomId);
                 throw new Exception("Unable to save shortcut !");
             }
@@ -107,7 +111,8 @@ namespace Pos.Internals.Extensions
         /// Unregisters the hot keys.
         /// </summary>
         /// <param name="data">The data.</param>
-        private void UnregisterHotKeys(HotKeysData data) {
+        private void UnregisterHotKeys(HotKeysData data)
+        {
             UnregisterHotKey(this.owner.Handle, data.AtomID.ToInt32());
             GlobalDeleteAtom(data.AtomID);
         }
@@ -120,17 +125,16 @@ namespace Pos.Internals.Extensions
         {
             base.WndProc(ref m);
 
-            if (m.Msg == WM_HOTKEY) {
+            if (m.Msg == WM_HOTKEY)
+            {
                 IntPtr wParam = m.WParam;
 
-                var data = registerHotKeys.Where(hk => hk.AtomID.Equals(wParam));
+                var data = this.registerHotKeys.Where(hk => hk.AtomID.Equals(wParam));
                 if (data.Any())
                 {
                     this.OnHotKeysPress(this, new HotKeysEventArgs(data.First().Key, data.First().Modifiers));
                 }
             }
-
-
         }
 
         /// <summary>
@@ -138,13 +142,16 @@ namespace Pos.Internals.Extensions
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="HotKeysEventArgs"/> instance containing the event data.</param>
-        public virtual void OnHotKeysPress(object sender, HotKeysEventArgs e) {
-            if (this.HotKeyPress != null) {
+        public virtual void OnHotKeysPress(object sender, HotKeysEventArgs e)
+        {
+            if (this.HotKeyPress != null)
+            {
                 this.HotKeyPress(sender, e);
             }
         }
 
         #region HotKeysData
+        
         private struct HotKeysData
         {
             /// <summary>
@@ -154,7 +161,7 @@ namespace Pos.Internals.Extensions
             /// The key.
             /// </value>
             public Keys Key;
-
+            
             /// <summary>
             /// Gets or sets the modifiers.
             /// </summary>
@@ -162,17 +169,17 @@ namespace Pos.Internals.Extensions
             /// The modifiers.
             /// </value>
             public HotKeyModifiers Modifiers;
-
+            
             /// <summary>
             /// Gets or sets the atom ID.
             /// </summary>
             /// <value>
             /// The atom ID.
             /// </value>
-            public IntPtr AtomID;
-
-            public static HotKeysData Empty = new HotKeysData();
-
+            public readonly IntPtr AtomID;
+            
+            public static readonly HotKeysData Empty = new HotKeysData();
+            
             /// <summary>
             /// Initializes a new instance of the <see cref="HotKeysData"/> struct.
             /// </summary>
@@ -185,7 +192,7 @@ namespace Pos.Internals.Extensions
                 this.Modifiers = modifiers;
                 this.AtomID = atomId;
             }
-
+            
             /// <summary>
             /// Returns a <see cref="System.String"/> that represents this instance.
             /// </summary>
@@ -194,20 +201,9 @@ namespace Pos.Internals.Extensions
             /// </returns>
             public override string ToString()
             {
-                return Modifiers.ToString() + "+" + Key.ToString();
+                return string.Format("{0}+{1}", this.Modifiers.ToString(), this.Key.ToString());
             }
-
-            /// <summary>
-            /// Returns a hash code for this instance.
-            /// </summary>
-            /// <returns>
-            /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
-            /// </returns>
-            public override int GetHashCode()
-            {
-                return base.GetHashCode();
-            }
-
+            
             /// <summary>
             /// Determines whether the specified <see cref="System.Object"/> is equal to this instance.
             /// </summary>
@@ -219,13 +215,14 @@ namespace Pos.Internals.Extensions
             {
                 return this.AtomID.Equals(obj);
             }
-
         }
+        
         #endregion
-
+        
         #region HotKeyEqualityComparer
-        private class HotKeyEqualityComparer : IEqualityComparer<HotKeysData> {
-
+        
+        private class HotKeyEqualityComparer : IEqualityComparer<HotKeysData>
+        {
             /// <summary>
             /// Equalses the specified x.
             /// </summary>
@@ -234,10 +231,10 @@ namespace Pos.Internals.Extensions
             /// <returns></returns>
             public bool Equals(HotKeysData x, HotKeysData y)
             {
-                return x.Key == y.Key
-                    && x.Modifiers == y.Modifiers;
+                return x.Key == y.Key &&
+                       x.Modifiers == y.Modifiers;
             }
-
+            
             /// <summary>
             /// Returns a hash code for this instance.
             /// </summary>
@@ -250,9 +247,11 @@ namespace Pos.Internals.Extensions
                 return obj.GetHashCode();
             }
         }
-        #endregion
 
+        #endregion
+        
         #region P/Invoke
+        
         private const int WM_HOTKEY = 0x312;
 
         [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
@@ -263,10 +262,9 @@ namespace Pos.Internals.Extensions
 
         [DllImport("user32.dll")]
         private static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vk);
-
+        
         [DllImport("user32.dll")]
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
         #endregion
-
     }
 }

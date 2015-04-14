@@ -3,6 +3,7 @@
 #define LINQBRIDGE_LIB
 
 #region License, Terms and Author(s)
+
 //
 // LINQBridge
 // Copyright (c) 2007-9 Atif Aziz, Joseph Albahari. All rights reserved.
@@ -27,21 +28,22 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
+
 #endregion
 
 // $Id: Enumerable.cs 240 2010-10-19 21:49:03Z azizatif $
 
 namespace System.Linq
 {
-    #region Imports
+#region Imports
 
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
+using System;
+using System.Collections;
+using System.Collections.Generic;
     using System.Diagnostics;
-    using LinqBridge;
+using LinqBridge;
 
-    #endregion
+#endregion
 
     /// <summary>
     /// Provides a set of static (Shared in Visual Basic) methods for 
@@ -351,7 +353,7 @@ namespace System.Linq
         /// <summary>
         /// Base implementation of First operator.
         /// </summary>
-        
+
         private static TSource FirstImpl<TSource>(
             this IEnumerable<TSource> source, 
             Func<TSource> empty)
@@ -485,7 +487,7 @@ namespace System.Linq
         /// <summary>
         /// Base implementation of Single operator.
         /// </summary>
-        
+
         private static TSource SingleImpl<TSource>(
             this IEnumerable<TSource> source,
             Func<TSource> empty)
@@ -608,7 +610,7 @@ namespace System.Linq
         /// <summary>
         /// Inverts the order of the elements in a sequence.
         /// </summary>
- 
+
         public static IEnumerable<TSource> Reverse<TSource>(
             this IEnumerable<TSource> source)
         {
@@ -691,7 +693,7 @@ namespace System.Linq
                 { 
                     if (!e.MoveNext())
                         yield break;
-                    
+
                     if (!predicate(e.Current, i))
                         break;
                 }
@@ -911,7 +913,7 @@ namespace System.Linq
             CheckNotNull(elementSelector, "elementSelector");
 
             var lookup = new Lookup<TKey, TElement>(comparer);
-            
+
             foreach (var item in source)
             {
                 var key = keySelector(item);
@@ -1159,7 +1161,7 @@ namespace System.Linq
         /// Returns the elements of the specified sequence or the specified 
         /// value in a singleton collection if the sequence is empty.
         /// </summary>
-        
+
         public static IEnumerable<TSource> DefaultIfEmpty<TSource>(
             this IEnumerable<TSource> source,
             TSource defaultValue)
@@ -1619,7 +1621,7 @@ namespace System.Linq
         /// <see cref="IEnumerable{T}" /> according to specified key 
         /// selector and element selector functions.
         /// </summary>
-        
+
         public static Dictionary<TKey, TElement> ToDictionary<TSource, TKey, TElement>(
             this IEnumerable<TSource> source, 
             Func<TSource, TKey> keySelector, 
@@ -1749,7 +1751,7 @@ namespace System.Linq
             var lookup = inner.ToLookup(innerKeySelector, comparer);
             return outer.Select(o => resultSelector(o, lookup[outerKeySelector(o)]));
         }
-        
+
         [DebuggerStepThrough]
         private static void CheckNotNull<T>(T value, string name) where T : class
         {
@@ -1778,13 +1780,13 @@ namespace System.Linq
 
 namespace System.Linq
 {
-    #region Imports
+#region Imports
 
     using System;
-    using System.Collections.Generic;
+using System.Collections.Generic;
 
-    #endregion
-    
+#endregion
+
     // This partial implementation was template-generated:
     // Sat, 03 Oct 2009 09:42:39 GMT
 
@@ -1818,7 +1820,7 @@ namespace System.Linq
         {
             return source.Select(selector).Sum();
         }
-        
+
         /// <summary>
         /// Computes the average of a sequence of nullable <see cref="System.Int32" /> values.
         /// </summary>
@@ -1856,7 +1858,7 @@ namespace System.Linq
         {
             return source.Select(selector).Average();
         }
-        
+
 
         /// <summary>
         /// Computes the sum of a sequence of <see cref="System.Int32" /> values.
@@ -1886,7 +1888,7 @@ namespace System.Linq
         {
             return source.Select(selector).Sum();
         }
-        
+
         /// <summary>
         /// Computes the average of a sequence of <see cref="System.Int32" /> values.
         /// </summary>
@@ -1924,7 +1926,7 @@ namespace System.Linq
         {
             return source.Select(selector).Average();
         }
-        
+
         /// <summary>
         /// Returns the minimum value in a sequence of nullable 
         /// <see cref="System.Int32" /> values.
@@ -1934,7 +1936,7 @@ namespace System.Linq
             this IEnumerable<int?> source) 
         {
             CheckNotNull(source, "source");
-            
+
             return MinMaxImpl(source.Where(x => x != null), null, (min, x) => min < x);
         }
 
@@ -1959,7 +1961,7 @@ namespace System.Linq
             this IEnumerable<int?> source) 
         {
             CheckNotNull(source, "source");
-            
+
             return MinMaxImpl(source.Where(x => x != null), 
                 null, (max, x) => x == null || (max != null && x.Value < max.Value));
         }
@@ -2004,7 +2006,7 @@ namespace System.Linq
         {
             return source.Select(selector).Sum();
         }
-        
+
         /// <summary>
         /// Computes the average of a sequence of nullable <see cref="System.Int64" /> values.
         /// </summary>
@@ -2042,7 +2044,7 @@ namespace System.Linq
         {
             return source.Select(selector).Average();
         }
-        
+
 
         /// <summary>
         /// Computes the sum of a sequence of <see cref="System.Int64" /> values.
@@ -2072,7 +2074,7 @@ namespace System.Linq
         {
             return source.Select(selector).Sum();
         }
-        
+
         /// <summary>
         /// Computes the average of a sequence of <see cref="System.Int64" /> values.
         /// </summary>
@@ -2110,7 +2112,7 @@ namespace System.Linq
         {
             return source.Select(selector).Average();
         }
-        
+
         /// <summary>
         /// Returns the minimum value in a sequence of nullable 
         /// <see cref="System.Int64" /> values.
@@ -2120,7 +2122,7 @@ namespace System.Linq
             this IEnumerable<long?> source) 
         {
             CheckNotNull(source, "source");
-            
+
             return MinMaxImpl(source.Where(x => x != null), null, (min, x) => min < x);
         }
 
@@ -2145,7 +2147,7 @@ namespace System.Linq
             this IEnumerable<long?> source) 
         {
             CheckNotNull(source, "source");
-            
+
             return MinMaxImpl(source.Where(x => x != null), 
                 null, (max, x) => x == null || (max != null && x.Value < max.Value));
         }
@@ -2190,7 +2192,7 @@ namespace System.Linq
         {
             return source.Select(selector).Sum();
         }
-        
+
         /// <summary>
         /// Computes the average of a sequence of nullable <see cref="System.Single" /> values.
         /// </summary>
@@ -2228,7 +2230,7 @@ namespace System.Linq
         {
             return source.Select(selector).Average();
         }
-        
+
 
         /// <summary>
         /// Computes the sum of a sequence of <see cref="System.Single" /> values.
@@ -2258,7 +2260,7 @@ namespace System.Linq
         {
             return source.Select(selector).Sum();
         }
-        
+
         /// <summary>
         /// Computes the average of a sequence of <see cref="System.Single" /> values.
         /// </summary>
@@ -2296,7 +2298,7 @@ namespace System.Linq
         {
             return source.Select(selector).Average();
         }
-        
+
         /// <summary>
         /// Returns the minimum value in a sequence of nullable 
         /// <see cref="System.Single" /> values.
@@ -2306,7 +2308,7 @@ namespace System.Linq
             this IEnumerable<float?> source) 
         {
             CheckNotNull(source, "source");
-            
+
             return MinMaxImpl(source.Where(x => x != null), null, (min, x) => min < x);
         }
 
@@ -2331,7 +2333,7 @@ namespace System.Linq
             this IEnumerable<float?> source) 
         {
             CheckNotNull(source, "source");
-            
+
             return MinMaxImpl(source.Where(x => x != null), 
                 null, (max, x) => x == null || (max != null && x.Value < max.Value));
         }
@@ -2376,7 +2378,7 @@ namespace System.Linq
         {
             return source.Select(selector).Sum();
         }
-        
+
         /// <summary>
         /// Computes the average of a sequence of nullable <see cref="System.Double" /> values.
         /// </summary>
@@ -2414,7 +2416,7 @@ namespace System.Linq
         {
             return source.Select(selector).Average();
         }
-        
+
 
         /// <summary>
         /// Computes the sum of a sequence of <see cref="System.Double" /> values.
@@ -2444,7 +2446,7 @@ namespace System.Linq
         {
             return source.Select(selector).Sum();
         }
-        
+
         /// <summary>
         /// Computes the average of a sequence of <see cref="System.Double" /> values.
         /// </summary>
@@ -2482,7 +2484,7 @@ namespace System.Linq
         {
             return source.Select(selector).Average();
         }
-        
+
         /// <summary>
         /// Returns the minimum value in a sequence of nullable 
         /// <see cref="System.Double" /> values.
@@ -2492,7 +2494,7 @@ namespace System.Linq
             this IEnumerable<double?> source) 
         {
             CheckNotNull(source, "source");
-            
+
             return MinMaxImpl(source.Where(x => x != null), null, (min, x) => min < x);
         }
 
@@ -2517,7 +2519,7 @@ namespace System.Linq
             this IEnumerable<double?> source) 
         {
             CheckNotNull(source, "source");
-            
+
             return MinMaxImpl(source.Where(x => x != null), 
                 null, (max, x) => x == null || (max != null && x.Value < max.Value));
         }
@@ -2562,7 +2564,7 @@ namespace System.Linq
         {
             return source.Select(selector).Sum();
         }
-        
+
         /// <summary>
         /// Computes the average of a sequence of nullable <see cref="System.Decimal" /> values.
         /// </summary>
@@ -2600,7 +2602,7 @@ namespace System.Linq
         {
             return source.Select(selector).Average();
         }
-        
+
 
         /// <summary>
         /// Computes the sum of a sequence of <see cref="System.Decimal" /> values.
@@ -2630,7 +2632,7 @@ namespace System.Linq
         {
             return source.Select(selector).Sum();
         }
-        
+
         /// <summary>
         /// Computes the average of a sequence of <see cref="System.Decimal" /> values.
         /// </summary>
@@ -2668,7 +2670,7 @@ namespace System.Linq
         {
             return source.Select(selector).Average();
         }
-        
+
         /// <summary>
         /// Returns the minimum value in a sequence of nullable 
         /// <see cref="System.Decimal" /> values.
@@ -2678,7 +2680,7 @@ namespace System.Linq
             this IEnumerable<decimal?> source) 
         {
             CheckNotNull(source, "source");
-            
+
             return MinMaxImpl(source.Where(x => x != null), null, (min, x) => min < x);
         }
 
@@ -2703,7 +2705,7 @@ namespace System.Linq
             this IEnumerable<decimal?> source) 
         {
             CheckNotNull(source, "source");
-            
+
             return MinMaxImpl(source.Where(x => x != null), 
                 null, (max, x) => x == null || (max != null && x.Value < max.Value));
         }
@@ -2760,11 +2762,11 @@ namespace System
 
 namespace System.Linq
 {
-    #region Imports
+#region Imports
 
-    using System.Collections.Generic;
+using System.Collections.Generic;
 
-    #endregion
+#endregion
 
     /// <summary>
     /// Represents a collection of objects that have a common key.
@@ -2826,14 +2828,14 @@ namespace System.Linq
 
 namespace System.Linq
 {
-    #region Imports
+#region Imports
 
-    using System;
-    using System.Collections;
+using System;
+using System.Collections;
     using System.Collections.Generic;
-    using IEnumerable=System.Collections.IEnumerable;
+using IEnumerable=System.Collections.IEnumerable;
 
-    #endregion
+#endregion
 
     /// <summary>
     /// Represents a collection of keys each mapped to one or more values.
@@ -2900,7 +2902,7 @@ namespace System.Linq
         {
             if (resultSelector == null) 
                 throw new ArgumentNullException("resultSelector");
-            
+
             foreach (var pair in _map)
                 yield return resultSelector(pair.Key, pair.Value);
         }
@@ -2925,14 +2927,14 @@ namespace System.Linq
 
 namespace LinqBridge
 {
-    #region Imports
+#region Imports
 
-    using System;
-    using System.Collections;
+using System;
+using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
+using System.Linq;
 
-    #endregion
+#endregion
 
     internal sealed class OrderedEnumerable<T, K> : IOrderedEnumerable<T>
     {
@@ -2981,7 +2983,7 @@ namespace LinqBridge
             //
 
             var list = _source.Select(new Func<T, int, Tuple<T, int>>(TagPosition)).ToList();
-            
+
             list.Sort((x, y) => 
             {
                 //
@@ -3041,13 +3043,13 @@ namespace LinqBridge
 
 namespace LinqBridge
 {
-    #region Imports
+#region Imports
 
-    using System;
+using System;
     using System.Collections.Generic;
-    using System.Text;
+using System.Text;
 
-    #endregion
+#endregion
 
     [ Serializable ]
     internal struct Tuple<TFirst, TSecond> : IEquatable<Tuple<TFirst, TSecond>>

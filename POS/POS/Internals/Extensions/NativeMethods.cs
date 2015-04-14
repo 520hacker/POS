@@ -23,10 +23,7 @@ namespace Pos.Internals.Extensions
 
         private enum FO_Func : uint
         {
-            FO_MOVE = 0x0001,
-            FO_COPY = 0x0002,
             FO_DELETE = 0x0003,
-            FO_RENAME = 0x0004,
         }
 
         public static void SHAddToRecentDocs(string fileName)
@@ -48,7 +45,7 @@ namespace Pos.Internals.Extensions
                 shf.fFlags = FOF_ALLOWUNDO | FOF_NOCONFIRMATION;
             }
 
-            shf.pFrom = fileName + '\0';
+            shf.pFrom = string.Format("{0}{1}", fileName, '\0');
             SHFileOperation(ref shf);
         }
 
@@ -68,8 +65,6 @@ namespace Pos.Internals.Extensions
             [MarshalAs(UnmanagedType.LPWStr)]
             public string pTo;
             public ushort fFlags;
-            public int fAnyOperationsAborted;
-            public IntPtr hNameMappings;
             [MarshalAs(UnmanagedType.LPWStr)]
             public string lpszProgressTitle;
         }

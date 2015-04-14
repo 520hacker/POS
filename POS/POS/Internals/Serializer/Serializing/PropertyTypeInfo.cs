@@ -1,4 +1,5 @@
-﻿#region Copyright © 2010 Pawel Idzikowski [idzikowski@sharpserializer.com]
+﻿
+#region Copyright © 2010 Pawel Idzikowski [idzikowski@sharpserializer.com]
 
 //  ***********************************************************************
 //  Project: sharpSerializer
@@ -50,12 +51,12 @@ namespace Polenter.Serialization.Serializing
         ///<param name = "valueType"></param>
         public PropertyTypeInfo(TProperty property, Type valueType)
         {
-            Property = property;
-            ExpectedPropertyType = valueType;
-            ValueType = property.Type;
-            Name = property.Name;
+            this.Property = property;
+            this.ExpectedPropertyType = valueType;
+            this.ValueType = property.Type;
+            this.Name = property.Name;
         }
-
+        
         ///<summary>
         ///</summary>
         ///<param name = "property"></param>
@@ -63,28 +64,28 @@ namespace Polenter.Serialization.Serializing
         ///<param name = "valueType"></param>
         public PropertyTypeInfo(TProperty property, Type expectedPropertyType, Type valueType)
         {
-            Property = property;
-            ExpectedPropertyType = expectedPropertyType;
-            ValueType = valueType;
-            Name = property.Name;
+            this.Property = property;
+            this.ExpectedPropertyType = expectedPropertyType;
+            this.ValueType = valueType;
+            this.Name = property.Name;
         }
-
+        
         /// <summary>
         ///   Of what type should be this property
         /// </summary>
         public Type ExpectedPropertyType { get; set; }
-
+        
         /// <summary>
         ///   Of what type is the property value. If it is null - then the value type is equal to expectedPropertyType
         ///   and does not need to be additionally serialized
         /// </summary>
         public Type ValueType { get; set; }
-
+        
         /// <summary>
         ///   Property name
         /// </summary>
         public string Name { get; set; }
-
+        
         /// <summary>
         ///   Property itself
         /// </summary>

@@ -1,41 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Lib.JSON.Utilities
 {
-  internal struct StringReference
-  {
-    private readonly char[] _chars;
-    private readonly int _startIndex;
-    private readonly int _length;
-
-    public char[] Chars
+    internal struct StringReference
     {
-      get { return _chars; }
-    }
+        public StringReference(char[] chars, int startIndex, int length) : this()
+        {
+            this.Chars = chars;
+            this.StartIndex = startIndex;
+            this.Length = length;
+        }
 
-    public int StartIndex
-    {
-      get { return _startIndex; }
-    }
+        public char[] Chars { get; private set; }
 
-    public int Length
-    {
-      get { return _length; }
-    }
+        public int StartIndex { get; private set; }
 
-    public StringReference(char[] chars, int startIndex, int length)
-    {
-      _chars = chars;
-      _startIndex = startIndex;
-      _length = length;
-    }
+        public int Length { get; private set; }
 
-    public override string ToString()
-    {
-      return new string(_chars, _startIndex, _length);
+        public override string ToString()
+        {
+            return new string(this.Chars, this.StartIndex, this.Length);
+        }
     }
-  }
 }

@@ -12,14 +12,14 @@ namespace POS.Internals.Bitcoin.BlockExplorer
     {
         public InventoryData(JObject i)
         {
-            Hash = (string)i["hash"];
-            Type = (string)i["type"];
-            InitialTime = (long)i["initial_time"];
-            LastTime = (long)i["last_time"];
-            InitialIP = (string)i["initial_ip"];
-            NConnected = (int)i["nconnected"];
-            RelayedCount = (int)i["relayed_count"];
-            RelayedPercent = (int)i["relayed_percent"];
+            this.Hash = (string)i["hash"];
+            this.Type = (string)i["type"];
+            this.InitialTime = (long)i["initial_time"];
+            this.LastTime = (long)i["last_time"];
+            this.InitialIP = (string)i["initial_ip"];
+            this.NConnected = (int)i["nconnected"];
+            this.RelayedCount = (int)i["relayed_count"];
+            this.RelayedPercent = (int)i["relayed_percent"];
         }
 
         /// <summary>

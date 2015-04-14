@@ -7,7 +7,8 @@ namespace Pos.Internals.Extensions
     /// <summary>
     ///   Extension methods for System.Windows.Forms.Control.
     /// </summary>
-    public static class ControlExtensions {
+    public static class ControlExtensions
+    {
         /// <summary>
         ///   Returns <c>true</c> if target control is in design mode or one of the target's parent is in design mode.
         ///   Othervise returns <c>false</c>.
@@ -23,14 +24,18 @@ namespace Pos.Internals.Extensions
         /// 
         ///   Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy
         /// </remarks>
-        public static bool IsInWinDesignMode(this Control target) {
+        public static bool IsInWinDesignMode(this Control target)
+        {
             var ret = false;
 
             var ctl = target;
-            while (false == object.ReferenceEquals(ctl, null)) {
+            while (false == object.ReferenceEquals(ctl, null))
+            {
                 var site = ctl.Site;
-                if (false == object.ReferenceEquals(site, null)) {
-                    if (site.DesignMode) {
+                if (false == object.ReferenceEquals(site, null))
+                {
+                    if (site.DesignMode)
+                    {
                         ret = true;
                         break;
                     }
@@ -56,14 +61,18 @@ namespace Pos.Internals.Extensions
         /// 
         ///   Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy
         /// </remarks>
-        public static bool IsInWinRuntimeMode(this Control target) {
+        public static bool IsInWinRuntimeMode(this Control target)
+        {
             var ret = true;
 
             var ctl = target;
-            while (false == object.ReferenceEquals(ctl, null)) {
+            while (false == object.ReferenceEquals(ctl, null))
+            {
                 var site = ctl.Site;
-                if (false == object.ReferenceEquals(site, null)) {
-                    if (site.DesignMode) {
+                if (false == object.ReferenceEquals(site, null))
+                {
+                    if (site.DesignMode)
+                    {
                         ret = false;
                         break;
                     }
@@ -87,11 +96,14 @@ namespace Pos.Internals.Extensions
         /// <remarks>
         ///   Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy
         /// </remarks>
-        public static void RunInUIThread(this Control target, Action action) {
-            if (target.InvokeRequired) {
+        public static void RunInUIThread(this Control target, Action action)
+        {
+            if (target.InvokeRequired)
+            {
                 target.Invoke(action);
             }
-            else {
+            else
+            {
                 action();
             }
         }
@@ -110,11 +122,14 @@ namespace Pos.Internals.Extensions
         /// <remarks>
         ///   Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy
         /// </remarks>
-        public static IEnumerable<T> FindParentsOfType<T>(this Control target) where T : class {
+        public static IEnumerable<T> FindParentsOfType<T>(this Control target) where T : class
+        {
             var ctl = target.Parent;
-            while (false == object.ReferenceEquals(ctl, null)) {
+            while (false == object.ReferenceEquals(ctl, null))
+            {
                 var typedControl = ctl as T;
-                if (false == object.ReferenceEquals(typedControl, null)) {
+                if (false == object.ReferenceEquals(typedControl, null))
+                {
                     yield return typedControl;
                 }
 
@@ -135,7 +150,8 @@ namespace Pos.Internals.Extensions
         ///   Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy
         /// </remarks>
         /// <returns>Enumerable object with child controls of specified type.</returns>
-        public static IEnumerable<T> FindChildsOfType<T>(this Control target) where T : class {
+        public static IEnumerable<T> FindChildsOfType<T>(this Control target) where T : class
+        {
             var result = FindChildsOfType<T>(target, false);
             return result;
         }
@@ -152,16 +168,21 @@ namespace Pos.Internals.Extensions
         ///   Contributed by tencokacistromy, http://www.codeplex.com/site/users/view/tencokacistromy
         /// </remarks>
         /// <returns>Enumerable object with child controls of specified type.</returns>
-        public static IEnumerable<T> FindChildsOfType<T>(this Control target, bool searchChildrenInReturnedControls) where T : class {
-            foreach (Control child in target.Controls) {
+        public static IEnumerable<T> FindChildsOfType<T>(this Control target, bool searchChildrenInReturnedControls) where T : class
+        {
+            foreach (Control child in target.Controls)
+            {
                 var typedControl = child as T;
-                if (false == object.ReferenceEquals(typedControl, null)) {
+                if (false == object.ReferenceEquals(typedControl, null))
+                {
                     yield return typedControl;
                 }
 
-                if (child.HasChildren) {
+                if (child.HasChildren)
+                {
                     var subChilds = FindChildsOfType<T>(child);
-                    foreach (var subChild in subChilds) {
+                    foreach (var subChild in subChilds)
+                    {
                         yield return subChild;
                     }
                 }

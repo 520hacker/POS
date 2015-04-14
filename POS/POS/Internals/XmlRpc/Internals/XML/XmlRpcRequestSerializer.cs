@@ -2,13 +2,12 @@ namespace Rpc.Internals
 {
     using System;
     using System.Xml;
-    using Rpc.Internals;
 
     /// <summary>Class responsible for serializing an XML-RPC request.</summary>
     /// <remarks>This class handles the request envelope, depending on <c>XmlRpcSerializer</c>
     /// to serialize the payload.</remarks>
     /// <seealso cref="XmlRpcSerializer"/>
-    class XmlRpcRequestSerializer : XmlRpcSerializer
+    internal class XmlRpcRequestSerializer : XmlRpcSerializer
     {
         static private XmlRpcRequestSerializer _singleton;
 
@@ -18,7 +17,9 @@ namespace Rpc.Internals
             get
             {
                 if (_singleton == null)
+                {
                     _singleton = new XmlRpcRequestSerializer();
+                }
 
                 return _singleton;
             }
@@ -39,7 +40,7 @@ namespace Rpc.Internals
             {
                 output.WriteStartElement(PARAM);
                 output.WriteStartElement(VALUE);
-                SerializeObject(output, param);
+                this.SerializeObject(output, param);
                 output.WriteEndElement();
                 output.WriteEndElement();
             }

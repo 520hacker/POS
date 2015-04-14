@@ -15,7 +15,7 @@ namespace POS.UI
             {
                 var newP = new PointF(old.X + 15, old.Y + 15);
 
-                gr.DrawString(s.ID, Font, Brushes.Black, newP);
+                gr.DrawString(s.ID, this.Font, Brushes.Black, newP);
 
                 old = newP;
             }

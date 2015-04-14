@@ -1,19 +1,25 @@
 namespace Rpc.Internals
 {
     using System;
-    using System.Runtime.Remoting.Proxies;
     using System.Runtime.Remoting.Messaging;
+    using System.Runtime.Remoting.Proxies;
 
     /// <summary>This class provides support for creating local proxies of XML-RPC remote objects</summary>
     /// <remarks>
     /// To create a local proxy you need to create a local C# interface and then, via <i>createProxy</i>
     /// associate that interface with a remote object at a given URL.
     /// </remarks>
-    class XmlRpcClientProxy : RealProxy
+    internal class XmlRpcClientProxy : RealProxy
     {
-        private String _remoteObjectName;
-        private String _url;
-        private XmlRpcRequest _client = new XmlRpcRequest();
+        private readonly String _remoteObjectName;
+        private readonly String _url;
+        private readonly XmlRpcRequest _client = new XmlRpcRequest();
+
+        private XmlRpcClientProxy(String remoteObjectName, String url, Type t) : base(t)
+        {
+            this._remoteObjectName = remoteObjectName;
+            this._url = url;
+        }
 
         /// <summary>Factory method to create proxies.</summary>
         /// <remarks>
@@ -30,25 +36,21 @@ namespace Rpc.Internals
             return new XmlRpcClientProxy(remoteObjectName, url, anInterface).GetTransparentProxy();
         }
 
-        private XmlRpcClientProxy(String remoteObjectName, String url, Type t) : base(t)
-        {
-            _remoteObjectName = remoteObjectName;
-            _url = url;
-        }
-
         /// <summary>The local method dispatcher - do not invoke.</summary>
         override public IMessage Invoke(IMessage msg)
         {
             IMethodCallMessage methodMessage = (IMethodCallMessage)msg;
 
-            _client.MethodName = _remoteObjectName + "." + methodMessage.MethodName;
-            _client.Params.Clear();
+            this._client.MethodName = string.Format("{0}.{1}", this._remoteObjectName, methodMessage.MethodName);
+            this._client.Params.Clear();
             foreach (Object o in methodMessage.Args)
-                _client.Params.Add(o);
+            {
+                this._client.Params.Add(o);
+            }
 
             try
             {
-                Object ret = _client.Invoke(_url);
+                Object ret = this._client.Invoke(this._url);
                 return new ReturnMessage(ret,null,0,
                     methodMessage.LogicalCallContext, methodMessage);
             }

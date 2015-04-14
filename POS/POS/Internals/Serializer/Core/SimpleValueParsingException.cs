@@ -1,3 +1,4 @@
+
 #region Copyright © 2010 Pawel Idzikowski [idzikowski@sharpserializer.com]
 
 //  ***********************************************************************
@@ -30,7 +31,8 @@ using System;
 #if PORTABLE
 #elif SILVERLIGHT
 #else
-    using System.Runtime.Serialization;
+using System.Runtime.Serialization;
+
 #endif
 
 namespace Polenter.Serialization.Core
@@ -38,11 +40,11 @@ namespace Polenter.Serialization.Core
     /// <summary>
     ///   Occures if the simple value can not be restored from its text representation
     /// </summary>
-#if PORTABLE
-#elif SILVERLIGHT
-#else
+    #if PORTABLE
+    #elif SILVERLIGHT
+    #else
     [Serializable]
-#endif
+    #endif
     public class SimpleValueParsingException : Exception
     {
         ///<summary>
@@ -50,14 +52,14 @@ namespace Polenter.Serialization.Core
         public SimpleValueParsingException()
         {
         }
-
+        
         ///<summary>
         ///</summary>
         ///<param name = "message"></param>
         public SimpleValueParsingException(string message) : base(message)
         {
         }
-
+        
         ///<summary>
         ///</summary>
         ///<param name = "message"></param>
@@ -65,10 +67,10 @@ namespace Polenter.Serialization.Core
         public SimpleValueParsingException(string message, Exception innerException) : base(message, innerException)
         {
         }
-
-#if PORTABLE
-#elif SILVERLIGHT
-#else
+        
+        #if PORTABLE
+        #elif SILVERLIGHT
+        #else
         /// <summary>
         /// </summary>
         /// <param name = "info"></param>
@@ -76,6 +78,6 @@ namespace Polenter.Serialization.Core
         protected SimpleValueParsingException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
-#endif
+        #endif
     }
 }

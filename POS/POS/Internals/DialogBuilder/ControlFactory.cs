@@ -27,7 +27,7 @@ namespace POS.Internals.DialogBuilder
             {
                 ctrl = new TextBox();
                 var textbox = ctrl as TextBox;
-                textbox.Text = (string) property.GetValue(item, null);
+                textbox.Text = (string)property.GetValue(item, null);
                 textbox.Margin = new Padding(3, 3, 16, 0);
             }
             else if (type == typeof (char))
@@ -69,7 +69,9 @@ namespace POS.Internals.DialogBuilder
                 {
                     dropdown.Items.Add(name);
                     if (name == value)
+                    {
                         dropdown.SelectedIndex = dropdown.Items.Count - 1;
+                    }
                 }
             }
             else if (type == typeof (DateTime))
@@ -78,9 +80,13 @@ namespace POS.Internals.DialogBuilder
                 var date = ctrl as DateTimePicker;
                 DateTime dateValue = Convert.ToDateTime(property.GetValue(item, null));
                 if (dateValue < date.MinDate)
+                {
                     dateValue = date.MinDate;
+                }
                 if (dateValue > date.MaxDate)
+                {
                     dateValue = date.MaxDate;
+                }
                 date.Value = dateValue;
             }
             if (ctrl != null)
@@ -101,7 +107,7 @@ namespace POS.Internals.DialogBuilder
         internal static Label CreateLabel(string text)
         {
             var label = new Label();
-            label.Text = GetLabel(text) + ":";
+            label.Text = string.Format("{0}:", GetLabel(text));
             label.AutoSize = true;
             label.Margin = new Padding(3, 6, 6, 0);
             return label;
@@ -127,7 +133,9 @@ namespace POS.Internals.DialogBuilder
                 else
                 {
                     if (Char.IsUpper(c))
+                    {
                         sb.Append(' ');
+                    }
                     sb.Append(c);
                 }
             }

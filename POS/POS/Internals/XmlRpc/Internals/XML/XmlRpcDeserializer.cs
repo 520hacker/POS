@@ -2,25 +2,17 @@ namespace Rpc.Internals
 {
     using System;
     using System.Collections;
+    using System.Globalization;
     using System.IO;
     using System.Xml;
-    using System.Globalization;
-    using Rpc.Internals;
-
-    /// <summary>Parser context, we maintain contexts in a stack to avoiding recursion. </summary>
-    struct Context
-    {
-        public String Name;
-        public Object Container;
-    }
 
     /// <summary>Basic XML-RPC data deserializer.</summary>
     /// <remarks>Uses <c>XmlTextReader</c> to parse the XML data. This level of the class 
     /// only handles the tokens common to both Requests and Responses. This class is not useful in and of itself
     /// but is designed to be subclassed.</remarks>
-    class XmlRpcDeserializer : XmlRpcXmlTokens
+    internal class XmlRpcDeserializer : XmlRpcXmlTokens
     {
-        private static DateTimeFormatInfo _dateFormat = new DateTimeFormatInfo();
+        private static readonly DateTimeFormatInfo _dateFormat = new DateTimeFormatInfo();
 
         private Object _container;
         private Stack _containerStack;
@@ -35,7 +27,7 @@ namespace Rpc.Internals
         /// <summary>Basic constructor.</summary>
         public XmlRpcDeserializer()
         {
-            Reset();
+            this.Reset();
             _dateFormat.FullDateTimePattern = ISO_DATETIME;
         }
 
@@ -57,80 +49,96 @@ namespace Rpc.Internals
             {
                 case XmlNodeType.Element:
                     if (Logger.Delegate != null)
-                        Logger.WriteEntry("START " + reader.Name, LogLevel.Information);
+                    {
+                        Logger.WriteEntry(string.Format("START {0}", reader.Name), LogLevel.Information);
+                    }
                     switch (reader.Name)
                     {
                         case VALUE:
-                            _value = null;
-                            _text = null;
+                            this._value = null;
+                            this._text = null;
                             break;
                         case STRUCT:
-                            PushContext();
-                            _container = new Hashtable();
+                            this.PushContext();
+                            this._container = new Hashtable();
                             break;
                         case ARRAY:
-                            PushContext();
-                            _container = new ArrayList();
+                            this.PushContext();
+                            this._container = new ArrayList();
                             break;
                     }
                     break;
                 case XmlNodeType.EndElement:
                     if (Logger.Delegate != null)
-                        Logger.WriteEntry("END " + reader.Name, LogLevel.Information);
+                    {
+                        Logger.WriteEntry(string.Format("END {0}", reader.Name), LogLevel.Information);
+                    }
                     switch (reader.Name)
                     {
                         case BASE64:
-                            _value = Convert.FromBase64String(_text);
+                            this._value = Convert.FromBase64String(this._text);
                             break;
                         case BOOLEAN:
-                            int val = Int16.Parse(_text);
+                            int val = Int16.Parse(this._text);
                             if (val == 0)
-                                _value = false;
+                            {
+                                this._value = false;
+                            }
                             else if (val == 1)
-                                _value = true;
+                            {
+                                this._value = true;
+                            }
                             break;
                         case STRING:
-                            _value = _text;
+                            this._value = this._text;
                             break;
                         case DOUBLE:
-                            _value = Double.Parse(_text);
+                            this._value = Double.Parse(this._text);
                             break;
                         case INT:
                         case ALT_INT:
-                            _value = Int32.Parse(_text);
+                            this._value = Int32.Parse(this._text);
                             break;
                         case DATETIME:
                             #if __MONO__
 		    _value = DateParse(_text);
                             #else
-                            _value = DateTime.ParseExact(_text, "F", _dateFormat);
+                            this._value = DateTime.ParseExact(this._text, "F", _dateFormat);
                             #endif
                             break;
                         case NAME:
-                            _name = _text;
+                            this._name = this._text;
                             break;
                         case VALUE:
-                            if (_value == null)
-                                _value = _text; // some kits don't use <string> tag, they just do <value>
+                            if (this._value == null)
+                            {
+                                this._value = this._text; // some kits don't use <string> tag, they just do <value>
+                            }
 
-                            if ((_container != null) && (_container is IList)) // in an array?  If so add value to it.
-                                ((IList)_container).Add(_value);
+                            if ((this._container != null) && (this._container is IList)) // in an array?  If so add value to it.
+                            {
+                                ((IList)this._container).Add(this._value);
+                            }
                             break;
                         case MEMBER:
-                            if ((_container != null) && (_container is IDictionary)) // in an struct?  If so add value to it.
-                                ((IDictionary)_container).Add(_name, _value);
+                            if ((this._container != null) && (this._container is IDictionary)) // in an struct?  If so add value to it.
+                            {
+                                ((IDictionary)this._container).Add(this._name, this._value);
+                            }
                             break;
                         case ARRAY:
                         case STRUCT:
-                            _value = _container;
-                            PopContext();
+                            this._value = this._container;
+                            this.PopContext();
                             break;
                     }
                     break;
                 case XmlNodeType.Text:
                     if (Logger.Delegate != null)
-                        Logger.WriteEntry("Text " + reader.Value, LogLevel.Information);
-                    _text = reader.Value;
+                    {
+                        Logger.WriteEntry(string.Format("Text {0}", reader.Value), LogLevel.Information);
+                    }
+                    this._text = reader.Value;
                     break;
                 default:
                     break;
@@ -144,15 +152,15 @@ namespace Rpc.Internals
         public Object Deserialize(String xmlData)
         {
             StringReader sr = new StringReader(xmlData);
-            return Deserialize(sr);
+            return this.Deserialize(sr);
         }
 
         /// <summary>Pop a Context of the stack, an Array or Struct has closed.</summary>
         private void PopContext()
         {
-            Context c = (Context)_containerStack.Pop();
-            _container = c.Container;
-            _name = c.Name;
+            Context c = (Context)this._containerStack.Pop();
+            this._container = c.Container;
+            this._name = c.Name;
         }
 
         /// <summary>Push a Context on the stack, an Array or Struct has opened.</summary>
@@ -160,20 +168,20 @@ namespace Rpc.Internals
         {
             Context context;
 
-            context.Container = _container;
-            context.Name = _name;
+            context.Container = this._container;
+            context.Name = this._name;
 
-            _containerStack.Push(context);
+            this._containerStack.Push(context);
         }
 
         /// <summary>Reset the private state of the deserializer.</summary>
         protected void Reset()
         {
-            _text = null;
-            _value = null;
-            _name = null;
-            _container = null;
-            _containerStack = new Stack();
+            this._text = null;
+            this._value = null;
+            this._name = null;
+            this._container = null;
+            this._containerStack = new Stack();
         }
         #if __MONO__
     private DateTime DateParse(String str)

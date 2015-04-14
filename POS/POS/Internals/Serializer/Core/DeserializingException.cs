@@ -1,3 +1,4 @@
+
 #region Copyright © 2010 Pawel Idzikowski [idzikowski@sharpserializer.com]
 
 //  ***********************************************************************
@@ -27,10 +28,10 @@
 #endregion
 
 using System;
-
 #if PORTABLE
 #else
 using System.Runtime.Serialization;
+
 #endif
 
 namespace Polenter.Serialization.Core
@@ -38,11 +39,11 @@ namespace Polenter.Serialization.Core
     /// <summary>
     ///   Can occure during deserialization
     /// </summary>
-#if PORTABLE
-#elif SILVERLIGHT    
-#else
+    #if PORTABLE
+    #elif SILVERLIGHT    
+    #else
     [Serializable]
-#endif
+    #endif
     public class DeserializingException : Exception
     {
         //
@@ -51,20 +52,19 @@ namespace Polenter.Serialization.Core
         // and
         //    http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dncscol/html/csharp07192001.asp
         //
-
         ///<summary>
         ///</summary>
         public DeserializingException()
         {
         }
-
+        
         ///<summary>
         ///</summary>
         ///<param name = "message"></param>
         public DeserializingException(string message) : base(message)
         {
         }
-
+        
         ///<summary>
         ///</summary>
         ///<param name = "message"></param>
@@ -72,10 +72,10 @@ namespace Polenter.Serialization.Core
         public DeserializingException(string message, Exception inner) : base(message, inner)
         {
         }
-
-#if PORTABLE
-#elif SILVERLIGHT
-#else
+        
+        #if PORTABLE
+        #elif SILVERLIGHT
+        #else
         /// <summary>
         /// </summary>
         /// <param name = "info"></param>
@@ -83,6 +83,6 @@ namespace Polenter.Serialization.Core
         protected DeserializingException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
-#endif
+        #endif
     }
 }

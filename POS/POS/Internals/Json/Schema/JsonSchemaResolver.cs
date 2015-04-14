@@ -22,45 +22,40 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 #endregion
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Text;
-using System.Globalization;
-using Lib.JSON.Utilities;
 
 namespace Lib.JSON.Schema
 {
-  /// <summary>
-  /// Resolves <see cref="JsonSchema"/> from an id.
-  /// </summary>
-  public class JsonSchemaResolver
-  {
     /// <summary>
-    /// Gets or sets the loaded schemas.
+    /// Resolves <see cref="JsonSchema"/> from an id.
     /// </summary>
-    /// <value>The loaded schemas.</value>
-    public IList<JsonSchema> LoadedSchemas { get; protected set; }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="JsonSchemaResolver"/> class.
-    /// </summary>
-    public JsonSchemaResolver()
+    public class JsonSchemaResolver
     {
-      LoadedSchemas = new List<JsonSchema>();
+        /// <summary>
+        /// Gets or sets the loaded schemas.
+        /// </summary>
+        /// <value>The loaded schemas.</value>
+        public IList<JsonSchema> LoadedSchemas { get; protected set; }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JsonSchemaResolver"/> class.
+        /// </summary>
+        public JsonSchemaResolver()
+        {
+            this.LoadedSchemas = new List<JsonSchema>();
+        }
+        
+        /// <summary>
+        /// Gets a <see cref="JsonSchema"/> for the specified id.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>A <see cref="JsonSchema"/> for the specified id.</returns>
+        public virtual JsonSchema GetSchema(string id)
+        {
+            JsonSchema schema = this.LoadedSchemas.SingleOrDefault(s => s.Id == id);
+            return schema;
+        }
     }
-
-    /// <summary>
-    /// Gets a <see cref="JsonSchema"/> for the specified id.
-    /// </summary>
-    /// <param name="id">The id.</param>
-    /// <returns>A <see cref="JsonSchema"/> for the specified id.</returns>
-    public virtual JsonSchema GetSchema(string id)
-    {
-      JsonSchema schema = LoadedSchemas.SingleOrDefault(s => s.Id == id);
-      return schema;
-    }
-  }
 }

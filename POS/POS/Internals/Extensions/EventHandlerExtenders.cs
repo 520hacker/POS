@@ -83,7 +83,7 @@ namespace Pos.Internals.Extensions
         /// <param name="sender">The sender object instance to pass to subscribers.</param>
         /// <param name="e">The EventArgs (or derivative) to pass to subscribers.</param>
         public static void RaiseEvent<TEventArgs>(this EventHandler<TEventArgs> eventHandler, object sender,
-                                                  TEventArgs e)
+            TEventArgs e)
             where TEventArgs : EventArgs
         {
             if (eventHandler != null)

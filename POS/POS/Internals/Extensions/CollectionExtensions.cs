@@ -95,7 +95,7 @@ namespace Pos.Internals.Extensions
 
             return (from t in enumeration.Take(count)
                     select t)
-                    .Count() == count;
+                             .Count() == count;
         }
 
         /// <summary>

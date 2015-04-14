@@ -1,3 +1,4 @@
+
 #region Copyright © 2010 Pawel Idzikowski [idzikowski@sharpserializer.com]
 
 //  ***********************************************************************
@@ -27,11 +28,10 @@
 #endregion
 
 using System;
-
-
 #if PORTABLE
 #else
 using System.Runtime.Serialization;
+
 #endif
 
 namespace Polenter.Serialization.Core
@@ -39,11 +39,11 @@ namespace Polenter.Serialization.Core
     /// <summary>
     ///   Occurs if no instance of a type can be created. Maybe the type lacks on a public standard (parameterless) constructor?
     /// </summary>
-#if PORTABLE
-#elif SILVERLIGHT
-#else
+    #if PORTABLE
+    #elif SILVERLIGHT
+    #else
     [Serializable]
-#endif
+    #endif
     public class CreatingInstanceException : Exception
     {
         ///<summary>
@@ -51,14 +51,14 @@ namespace Polenter.Serialization.Core
         public CreatingInstanceException()
         {
         }
-
+        
         ///<summary>
         ///</summary>
         ///<param name = "message"></param>
         public CreatingInstanceException(string message) : base(message)
         {
         }
-
+        
         ///<summary>
         ///</summary>
         ///<param name = "message"></param>
@@ -66,11 +66,10 @@ namespace Polenter.Serialization.Core
         public CreatingInstanceException(string message, Exception innerException) : base(message, innerException)
         {
         }
-
-
-#if PORTABLE
-#elif SILVERLIGHT
-#else
+        
+        #if PORTABLE
+        #elif SILVERLIGHT
+        #else
         /// <summary>
         /// </summary>
         /// <param name = "info"></param>
@@ -78,7 +77,6 @@ namespace Polenter.Serialization.Core
         protected CreatingInstanceException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
-#endif
-
+        #endif
     }
 }

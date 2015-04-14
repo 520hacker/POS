@@ -9,13 +9,12 @@ namespace Info.Blockchain.API.BlockExplorer
     /// </summary>
     public class SimpleBlock
     {
-
         public SimpleBlock(JObject b, bool? mainChain = false)
         {
-            Height = (long)b["height"];
-            Hash = (string)b["hash"];
-            Time = (long)b["time"];
-            MainChain = mainChain != null ? mainChain.Value : (bool)b["main_chain"];
+            this.Height = (long)b["height"];
+            this.Hash = (string)b["hash"];
+            this.Time = (long)b["time"];
+            this.MainChain = mainChain != null ? mainChain.Value : (bool)b["main_chain"];
         }
 
         /// <summary>

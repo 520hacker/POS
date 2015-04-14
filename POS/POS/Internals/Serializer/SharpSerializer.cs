@@ -1,6 +1,4 @@
-
 #region Copyright © 2010 Pawel Idzikowski [idzikowski@sharpserializer.com]
-
 //  ***********************************************************************
 //  Project: sharpSerializer
 //  Web: http://www.sharpserializer.com
@@ -24,20 +22,16 @@
 //      3. This notice may not be removed or altered from any source distribution.
 //  
 //  ***********************************************************************
-
 #endregion
-
 using System;
 using System.IO;
-using System.Xml;
+using System.Runtime.CompilerServices;
 using Polenter.Serialization.Advanced;
-using Polenter.Serialization.Advanced.Binary;
 using Polenter.Serialization.Advanced.Deserializing;
 using Polenter.Serialization.Advanced.Serializing;
 using Polenter.Serialization.Core;
 using Polenter.Serialization.Deserializing;
 using Polenter.Serialization.Serializing;
-using System.Runtime.CompilerServices;
 
 namespace Polenter.Serialization
 {
@@ -53,7 +47,7 @@ namespace Polenter.Serialization
         
         public SharpSerializer()
         {
-            initialize(new SharpSerializerBinarySettings());
+            this.initialize(new SharpSerializerBinarySettings());
         }
         
         /// <summary>
@@ -63,8 +57,10 @@ namespace Polenter.Serialization
         public SharpSerializer(SharpSerializerBinarySettings settings)
         {
             if (settings == null)
+            {
                 throw new ArgumentNullException("settings");
-            initialize(settings);
+            }
+            this.initialize(settings);
         }
         
         /// <summary>
@@ -75,11 +71,15 @@ namespace Polenter.Serialization
         public SharpSerializer(IPropertySerializer serializer, IPropertyDeserializer deserializer)
         {
             if (serializer == null)
+            {
                 throw new ArgumentNullException("serializer");
+            }
             if (deserializer == null)
+            {
                 throw new ArgumentNullException("deserializer");
-            _serializer = serializer;
-            _deserializer = deserializer;
+            }
+            this._serializer = serializer;
+            this._deserializer = deserializer;
         }
         
         /// <summary>
@@ -90,13 +90,15 @@ namespace Polenter.Serialization
         {
             get
             {
-                if (_propertyProvider == null)
-                    _propertyProvider = new PropertyProvider();
-                return _propertyProvider;
+                if (this._propertyProvider == null)
+                {
+                    this._propertyProvider = new PropertyProvider();
+                }
+                return this._propertyProvider;
             }
             set
             {
-                _propertyProvider = value;
+                this._propertyProvider = value;
             }
         }
         
@@ -107,24 +109,26 @@ namespace Polenter.Serialization
         {
             get
             {
-                if (_rootName == null)
-                    _rootName = "Root";
-                return _rootName;
+                if (this._rootName == null)
+                {
+                    this._rootName = "Root";
+                }
+                return this._rootName;
             }
             set
             {
-                _rootName = value;
+                this._rootName = value;
             }
         }
         
         private void initialize(SharpSerializerBinarySettings settings)
         {
             // PropertiesToIgnore
-            PropertyProvider.PropertiesToIgnore = settings.AdvancedSettings.PropertiesToIgnore;
-            PropertyProvider.AttributesToIgnore = settings.AdvancedSettings.AttributesToIgnore;
+            this.PropertyProvider.PropertiesToIgnore = settings.AdvancedSettings.PropertiesToIgnore;
+            this.PropertyProvider.AttributesToIgnore = settings.AdvancedSettings.AttributesToIgnore;
             
             //RootName
-            RootName = settings.AdvancedSettings.RootName;
+            this.RootName = settings.AdvancedSettings.RootName;
             
             // TypeNameConverter)
             ITypeNameConverter typeNameConverter = settings.AdvancedSettings.TypeNameConverter ??
@@ -149,8 +153,8 @@ namespace Polenter.Serialization
                 reader = new SizeOptimizedBinaryReader(typeNameConverter, settings.Encoding);
             }
             
-            _deserializer = new BinaryPropertyDeserializer(reader);
-            _serializer = new BinaryPropertySerializer(writer);
+            this._deserializer = new BinaryPropertyDeserializer(reader);
+            this._serializer = new BinaryPropertySerializer(writer);
         }
         
         #region Serializing/Deserializing methods
@@ -164,10 +168,10 @@ namespace Polenter.Serialization
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void Serialize(object data, string filename)
         {
-            createDirectoryIfNeccessary(filename);
+            this.createDirectoryIfNeccessary(filename);
             using (Stream stream = new FileStream(filename, FileMode.Create, FileAccess.Write))
             {
-                Serialize(data, stream);
+                this.Serialize(data, stream);
             }
         }
         
@@ -193,20 +197,22 @@ namespace Polenter.Serialization
         public void Serialize(object data, Stream stream)
         {
             if (data == null)
+            {
                 throw new ArgumentNullException("data");
+            }
             
-            var factory = new PropertyFactory(PropertyProvider);
+            var factory = new PropertyFactory(this.PropertyProvider);
             
-            Property property = factory.CreateProperty(RootName, data);
+            Property property = factory.CreateProperty(this.RootName, data);
             
             try
             {
-                _serializer.Open(stream);
-                _serializer.Serialize(property);
+                this._serializer.Open(stream);
+                this._serializer.Serialize(property);
             }
             finally
             {
-                _serializer.Close();
+                this._serializer.Close();
             }
         }
         
@@ -221,7 +227,7 @@ namespace Polenter.Serialization
         {
             using (var stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
             {
-                return Deserialize(stream);
+                return this.Deserialize(stream);
             }
         }
         
@@ -239,9 +245,9 @@ namespace Polenter.Serialization
             try
             {
                 // Deserialize Property
-                _deserializer.Open(stream);
-                Property property = _deserializer.Deserialize();
-                _deserializer.Close();
+                this._deserializer.Open(stream);
+                Property property = this._deserializer.Deserialize();
+                this._deserializer.Close();
                 
                 // create object from Property
                 var factory = new ObjectFactory();
@@ -254,7 +260,6 @@ namespace Polenter.Serialization
                     "An error occured during the deserialization. Details are in the inner exception.", exception);
             }
         }
-    
         #endregion
     }
 }

@@ -12,10 +12,10 @@ namespace Info.Blockchain.API.BlockExplorer
     {
         public LatestBlock(JObject b) : base(b, true)
         {
-            Index = (long)b["block_index"];
+            this.Index = (long)b["block_index"];
 
             var txs = b["txIndexes"].AsJEnumerable().Select(x => (long)x).ToList();
-            TransactionIndexes = txs.AsReadOnly();
+            this.TransactionIndexes = txs.AsReadOnly();
         }
 
         /// <summary>

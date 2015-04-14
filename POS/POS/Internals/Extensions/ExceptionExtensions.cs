@@ -20,7 +20,10 @@ namespace Pos.Internals.Extensions
         [Obsolete("Use GetBaseException instead")]
         public static Exception GetOriginalException(this Exception exception)
         {
-            if (exception.InnerException == null) return exception;
+            if (exception.InnerException == null)
+            {
+                return exception;
+            }
 
             return exception.InnerException.GetOriginalException();
         }
@@ -38,8 +41,7 @@ namespace Pos.Internals.Extensions
         /// </note>
         public static IEnumerable<string> Messages(this Exception exception)
         {
-            return exception != null ?
-                                         new List<string>(exception.InnerException.Messages()) { exception.Message } : Enumerable.Empty<string>();
+            return exception != null ? new List<string>(exception.InnerException.Messages()) { exception.Message } : Enumerable.Empty<string>();
         }
 
         ///<summary>
@@ -55,9 +57,7 @@ namespace Pos.Internals.Extensions
         /// </note>
         public static IEnumerable<Exception> Exceptions(this Exception exception)
         {
-            return exception != null ?
-                                         new List<Exception>(exception.InnerException.Exceptions()) { exception } : Enumerable.Empty<Exception>();
+            return exception != null ? new List<Exception>(exception.InnerException.Exceptions()) { exception } : Enumerable.Empty<Exception>();
         }
-
     }
 }

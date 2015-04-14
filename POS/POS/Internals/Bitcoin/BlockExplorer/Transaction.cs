@@ -12,31 +12,31 @@ namespace Info.Blockchain.API.BlockExplorer
     {
         public Transaction(JObject t, long? blockHeight = null, bool? doubleSpend = null)
         {
-            DoubleSpend = doubleSpend != null ? doubleSpend.Value : (bool)t["double_spend"];
-            BlockHeight = blockHeight != null ? blockHeight.Value : -1;
+            this.DoubleSpend = doubleSpend != null ? doubleSpend.Value : (bool)t["double_spend"];
+            this.BlockHeight = blockHeight != null ? blockHeight.Value : -1;
             
             // this mitigates the bug where unconfirmed txs lack the block height field
-            if (BlockHeight == -1)
+            if (this.BlockHeight == -1)
             {
                 JToken height = t["block_height"];
                 if (height != null)
                 {
-                    BlockHeight = (long)t["block_height"];
+                    this.BlockHeight = (long)t["block_height"];
                 }
             }
 
-            Time = (long)t["time"];
-            RelayedBy = (string)t["relayed_by"];
-            Hash = (string)t["hash"];
-            Index = (long)t["tx_index"];
-            Version = (int)t["ver"];
-            Size = (long)t["size"];
+            this.Time = (long)t["time"];
+            this.RelayedBy = (string)t["relayed_by"];
+            this.Hash = (string)t["hash"];
+            this.Index = (long)t["tx_index"];
+            this.Version = (int)t["ver"];
+            this.Size = (long)t["size"];
 
             var ins = t["inputs"].AsJEnumerable().Select(x => new Input((JObject)x)).ToList();
-            Inputs = new ReadOnlyCollection<Input>(ins);
+            this.Inputs = new ReadOnlyCollection<Input>(ins);
 
             var outs = t["out"].AsJEnumerable().Select(x => new Output((JObject)x)).ToList();
-            Outputs = new ReadOnlyCollection<Output>(outs);
+            this.Outputs = new ReadOnlyCollection<Output>(outs);
         }
 
         /// <summary>

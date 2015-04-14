@@ -105,7 +105,6 @@ namespace Pos.Internals.Extensions
             }
         }
 
-
         /// <summary>
         /// Decryptes a <see cref="string">string</see> using the supplied key. Decoding is done using RSA encryption.
         /// </summary>
@@ -373,7 +372,7 @@ namespace Pos.Internals.Extensions
             startString = Regex.Escape(startString);
             endString = Regex.Escape(endString);
 
-            Regex regex = new Regex("(?<=" + startString + ").*(?=" + endString + ")");
+            Regex regex = new Regex(string.Format("(?<={0}).*(?={1})", startString, endString));
 
             matches = regex.Matches(s);
 
@@ -386,7 +385,7 @@ namespace Pos.Internals.Extensions
             {
                 if (matches[0].ToString().IndexOf(Regex.Unescape(startString)) > -1)
                 {
-                    s = matches[0].ToString() + Regex.Unescape(endString);
+                    s = string.Format("{0}{1}", matches[0].ToString(), Regex.Unescape(endString));
 
                     return s.FindBetween(Regex.Unescape(startString), Regex.Unescape(endString));
                 }
@@ -420,7 +419,7 @@ namespace Pos.Internals.Extensions
 
             if (!result.StartsWith(prefix))
             {
-                result = prefix + result;
+                result = string.Format("{0}{1}", prefix, result);
             }
 
             return result;
@@ -469,17 +468,17 @@ namespace Pos.Internals.Extensions
             {
                 if (value.Length == 7)
                 {
-                    strReturnValue = value.Substring(0, 3) + "-" + value.Substring(3, 4);
+                    strReturnValue = string.Format("{0}-{1}", value.Substring(0, 3), value.Substring(3, 4));
                 }
                 else if (value.Length == 10)
                 {
-                    strReturnValue = "(" + value.Substring(0, 3) + ") " + value.Substring(3, 3) + "-" + value.Substring(6, 4);
+                    strReturnValue = string.Format("({0}) {1}-{2}", value.Substring(0, 3), value.Substring(3, 3), value.Substring(6, 4));
                 }
                 else if (value.Length > 10)
                 {
                     string strExtensionFormat = string.Empty.PadLeft(value.Length - 10, Convert.ToChar("#"));
 
-                    strReturnValue = "(" + value.Substring(0, 3) + ") " + value.Substring(3, 3) + "-" + value.Substring(6, 4) + " x" + value.Substring(10);
+                    strReturnValue = string.Format("({0}) {1}-{2} x{3}", value.Substring(0, 3), value.Substring(3, 3), value.Substring(6, 4), value.Substring(10));
                 }
             }
             else
@@ -634,16 +633,7 @@ namespace Pos.Internals.Extensions
         /// </example>
         public static bool IsValidUrl(this string url)
         {
-            string strRegex = @"(file|gopher|news|nntp|telnet|http|ftp|https|ftps|sftp):\/\/"
-                + "?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?" // user@
-                + @"(([0-9]{1,3}\.){3}[0-9]{1,3}" // IP- 199.194.52.184
-                + "|" // allows either IP or domain
-                + @"([0-9a-z_!~*'()-]+\.)*" // tertiary domain(s)- www.
-                + @"([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]" // second level domain
-                + @"(\.[a-z]{2,6})?)" // first level domain- .com or .museum is optional
-                + "(:[0-9]{1,5})?" // port number- :80
-                + "((/?)|" // a slash isn't required if there is no file name
-                + "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$";
+            string strRegex = string.Format("{0}?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?{1}|{2}{3}{4}(:[0-9]{{1,5}})?((/?)|(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$", @"(file|gopher|news|nntp|telnet|http|ftp|https|ftps|sftp):\/\/", @"(([0-9]{1,3}\.){3}[0-9]{1,3}", @"([0-9a-z_!~*'()-]+\.)*", @"([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]", @"(\.[a-z]{2,6})?)");
 
             return new Regex(strRegex).IsMatch(url);
         }
@@ -941,7 +931,7 @@ namespace Pos.Internals.Extensions
         /// </example>
         public static string RemovePrefix(this string s, string prefix)
         {
-            return Regex.Replace(s, "^" + prefix, System.String.Empty, RegexOptions.IgnoreCase);
+            return Regex.Replace(s, string.Format("^{0}", prefix), System.String.Empty, RegexOptions.IgnoreCase);
         }
 
         /// <summary>
@@ -974,7 +964,7 @@ namespace Pos.Internals.Extensions
         /// </example>
         public static string RemoveSuffix(this string s, string suffix)
         {
-            return Regex.Replace(s, suffix + "$", System.String.Empty, RegexOptions.IgnoreCase);
+            return Regex.Replace(s, string.Format("{0}$", suffix), System.String.Empty, RegexOptions.IgnoreCase);
         }
 
         /// <summary>
@@ -1072,7 +1062,7 @@ namespace Pos.Internals.Extensions
 
             string sentence = s.ToLower();
 
-            return sentence[0].ToString().ToUpper() + sentence.Substring(1);
+            return string.Format("{0}{1}", sentence[0].ToString().ToUpper(), sentence.Substring(1));
         }
 
         /// <summary>
@@ -1315,11 +1305,11 @@ namespace Pos.Internals.Extensions
 
             foreach (string token in tokens)
             {
-                if (ignoreShortWords == true
-                    && token != tokens[0]
-                    && ignoreWords.Contains(token.ToLower()))
+                if (ignoreShortWords == true &&
+                    token != tokens[0] &&
+                    ignoreWords.Contains(token.ToLower()))
                 {
-                    sb.Append(token + " ");
+                    sb.AppendFormat("{0} ", token);
                 }
                 else
                 {
@@ -1597,7 +1587,7 @@ namespace Pos.Internals.Extensions
         /// </example>
         public static int WordInstanceCount(this string s, string word)
         {
-            Regex r = new Regex(@"\b" + word + @"\b", RegexOptions.IgnoreCase);
+            Regex r = new Regex(string.Format("{0}{1}{2}", @"\b", word, @"\b"), RegexOptions.IgnoreCase);
             MatchCollection mc = r.Matches(s);
             return mc.Count;
         }
@@ -1693,7 +1683,7 @@ namespace Pos.Internals.Extensions
                         counter = 0;
                     }
 
-                    sb.Append(strings[i] + ' ');
+                    sb.AppendFormat("{0}{1}", strings[i], ' ');
                 }
             }
 

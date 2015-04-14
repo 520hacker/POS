@@ -1,3 +1,4 @@
+
 #region Copyright © 2010 Pawel Idzikowski [idzikowski@sharpserializer.com]
 
 //  ***********************************************************************
@@ -45,17 +46,17 @@ namespace Polenter.Serialization.Core.Binary
             // Write size
             byte size = NumberSize.GetNumberSize(number);
             writer.Write(size);
-
+            
             // Write number
             if (size > NumberSize.Zero)
             {
                 switch (size)
                 {
                     case NumberSize.B1:
-                        writer.Write((byte) number);
+                        writer.Write((byte)number);
                         break;
                     case NumberSize.B2:
-                        writer.Write((Int16) number);
+                        writer.Write((Int16)number);
                         break;
                     default:
                         writer.Write(number);
@@ -63,7 +64,7 @@ namespace Polenter.Serialization.Core.Binary
                 }
             }
         }
-
+        
         ///<summary>
         ///</summary>
         ///<param name = "numbers"></param>
@@ -72,15 +73,14 @@ namespace Polenter.Serialization.Core.Binary
         {
             // Length
             WriteNumber(numbers.Length, writer);
-
+            
             // Numbers
             foreach (int number in numbers)
             {
                 WriteNumber(number, writer);
             }
         }
-
-
+        
         ///<summary>
         ///</summary>
         ///<param name = "value"></param>
@@ -97,7 +97,7 @@ namespace Polenter.Serialization.Core.Binary
                 writeValueCore(value, writer);
             }
         }
-
+        
         /// <summary>
         ///   BinaryWriter.Write(string...) can not be used as it produces exception if the text is null.
         /// </summary>
@@ -116,42 +116,45 @@ namespace Polenter.Serialization.Core.Binary
                 writer.Write(text);
             }
         }
-
+        
         private static void writeValueCore(object value, BinaryWriter writer)
         {
-            if (value == null) throw new ArgumentNullException("value", "Written data can not be null.");
-
+            if (value == null)
+            {
+                throw new ArgumentNullException("value", "Written data can not be null.");
+            }
+            
             // Write argument data
             Type type = value.GetType();
-
+            
             if (type == typeof (byte[]))
             {
-                writeArrayOfByte((byte[]) value, writer);
+                writeArrayOfByte((byte[])value, writer);
                 return;
             }
             if (type == typeof (string))
             {
-                writer.Write((string) value);
+                writer.Write((string)value);
                 return;
             }
             if (type == typeof (Boolean))
             {
-                writer.Write((bool) value);
+                writer.Write((bool)value);
                 return;
             }
             if (type == typeof (Byte))
             {
-                writer.Write((byte) value);
+                writer.Write((byte)value);
                 return;
             }
             if (type == typeof (Char))
             {
-                writer.Write((Char) value);
+                writer.Write((Char)value);
                 return;
             }
             if (type == typeof (DateTime))
             {
-                writer.Write(((DateTime) value).Ticks);
+                writer.Write(((DateTime)value).Ticks);
                 return;
             }
             if (type == typeof(Guid))
@@ -159,88 +162,88 @@ namespace Polenter.Serialization.Core.Binary
                 writer.Write(((Guid)value).ToByteArray());
                 return;
             }
-#if DEBUG || PORTABLE || SILVERLIGHT
+            #if DEBUG || PORTABLE || SILVERLIGHT
             if (type == typeof(decimal))
             {
                 writeDecimal((decimal)value, writer);
                 return;
             }
-#else
+            #else
             if (type == typeof (Decimal))
             {
                 writer.Write((Decimal) value);
                 return;
             }
-#endif
+            #endif
             if (type == typeof (Double))
             {
-                writer.Write((Double) value);
+                writer.Write((Double)value);
                 return;
             }
             if (type == typeof (Int16))
             {
-                writer.Write((Int16) value);
+                writer.Write((Int16)value);
                 return;
             }
             if (type == typeof (Int32))
             {
-                writer.Write((Int32) value);
+                writer.Write((Int32)value);
                 return;
             }
             if (type == typeof (Int64))
             {
-                writer.Write((Int64) value);
+                writer.Write((Int64)value);
                 return;
             }
             if (type == typeof (SByte))
             {
-                writer.Write((SByte) value);
+                writer.Write((SByte)value);
                 return;
             }
             if (type == typeof (Single))
             {
-                writer.Write((Single) value);
+                writer.Write((Single)value);
                 return;
             }
             if (type == typeof (UInt16))
             {
-                writer.Write((UInt16) value);
+                writer.Write((UInt16)value);
                 return;
             }
             if (type == typeof (UInt32))
             {
-                writer.Write((UInt32) value);
+                writer.Write((UInt32)value);
                 return;
             }
             if (type == typeof (UInt64))
             {
-                writer.Write((UInt64) value);
+                writer.Write((UInt64)value);
                 return;
             }
-
+            
             if (type == typeof (TimeSpan))
             {
-                writer.Write(((TimeSpan) value).Ticks);
+                writer.Write(((TimeSpan)value).Ticks);
                 return;
             }
-
+            
             // Enumeration
             if (type.IsEnum)
             {
                 writer.Write(Convert.ToInt32(value));
                 return;
             }
-
+            
             // Type
             if (isType(type))
             {
                 writer.Write(((Type)value).AssemblyQualifiedName);
                 return;
             }
-
+            
             throw new InvalidOperationException(string.Format("Unknown simple type: {0}", type.FullName));
         }
-
+        
         private static void writeDecimal(decimal value, BinaryWriter writer)
         {
             var bits = decimal.GetBits(value);
@@ -249,12 +252,12 @@ namespace Polenter.Serialization.Core.Binary
             writer.Write(bits[2]);
             writer.Write(bits[3]);
         }
-
+        
         private static bool isType(Type type)
         {
             return type == typeof(Type) || type.IsSubclassOf(typeof(Type));
         }
-
+        
         private static void writeArrayOfByte(byte[] data, BinaryWriter writer)
         {
             WriteNumber(data.Length, writer);

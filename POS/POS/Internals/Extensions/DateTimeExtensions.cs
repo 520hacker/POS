@@ -6,7 +6,6 @@
 // <date>2009-07-08</date>
 // <summary>Contains date-related extensions.</summary>
 using System;
-using Pos.Internals.Extensions;
 
 namespace Pos.Internals.Extensions
 {
@@ -244,7 +243,6 @@ namespace Pos.Internals.Extensions
                     }
 
                     break;
-
                 case System.DayOfWeek.Wednesday:
 
                     switch (dayOfWeek)
@@ -266,7 +264,6 @@ namespace Pos.Internals.Extensions
                     }
 
                     break;
-
                 case System.DayOfWeek.Thursday:
 
                     switch (dayOfWeek)
@@ -288,7 +285,6 @@ namespace Pos.Internals.Extensions
                     }
 
                     break;
-
                 case System.DayOfWeek.Friday:
                     switch (dayOfWeek)
                     {
@@ -309,7 +305,6 @@ namespace Pos.Internals.Extensions
                     }
 
                     break;
-
                 case System.DayOfWeek.Saturday:
 
                     switch (dayOfWeek)
@@ -616,7 +611,6 @@ namespace Pos.Internals.Extensions
                     }
 
                     break;
-
                 case System.DayOfWeek.Monday:
 
                     switch (dayOfWeek)
@@ -638,7 +632,6 @@ namespace Pos.Internals.Extensions
                     }
 
                     break;
-
                 case System.DayOfWeek.Tuesday:
 
                     switch (dayOfWeek)
@@ -660,7 +653,6 @@ namespace Pos.Internals.Extensions
                     }
 
                     break;
-
                 case System.DayOfWeek.Wednesday:
 
                     switch (dayOfWeek)
@@ -682,7 +674,6 @@ namespace Pos.Internals.Extensions
                     }
 
                     break;
-
                 case System.DayOfWeek.Thursday:
 
                     switch (dayOfWeek)
@@ -704,7 +695,6 @@ namespace Pos.Internals.Extensions
                     }
 
                     break;
-
                 case System.DayOfWeek.Friday:
 
                     switch (dayOfWeek)
@@ -726,7 +716,6 @@ namespace Pos.Internals.Extensions
                     }
 
                     break;
-
                 case System.DayOfWeek.Saturday:
 
                     switch (dayOfWeek)
@@ -1073,21 +1062,21 @@ namespace Pos.Internals.Extensions
                 {
                     if (totalMinutes == 1)
                     {
-                        return totalMinutes.ToString() + " minute ago";
+                        return string.Format("{0} minute ago", totalMinutes.ToString());
                     }
                     else
                     {
-                        return totalMinutes.ToString() + " minutes ago";
+                        return string.Format("{0} minutes ago", totalMinutes.ToString());
                     }
                 }
 
                 if (ts.Hours == 1)
                 {
-                    return ts.Hours.ToString() + " hour ago";
+                    return string.Format("{0} hour ago", ts.Hours.ToString());
                 }
                 else
                 {
-                    return ts.Hours.ToString() + " hours ago";
+                    return string.Format("{0} hours ago", ts.Hours.ToString());
                 }
             }
             else if (ts.Days == 1)
@@ -1096,7 +1085,7 @@ namespace Pos.Internals.Extensions
             }
             else if (ts.Days >= 2 && ts.Days <= 5)
             {
-                return ts.Days.ToString() + " days ago";
+                return string.Format("{0} days ago", ts.Days.ToString());
             }
             else if (ts.Days >= 6 && ts.Days <= 12)
             {
@@ -1154,7 +1143,7 @@ namespace Pos.Internals.Extensions
                 s = value.ToString("MMMM dd, yyyy");
             }
 
-            s += " @ " + value.ToString("t").ToLower();
+            s += string.Format(" @ {0}", value.ToString("t").ToLower());
 
             return s;
         }
@@ -1178,17 +1167,17 @@ namespace Pos.Internals.Extensions
         {
             int offset = TimeZone.CurrentTimeZone.GetUtcOffset(DateTime.Now).Hours;
 
-            string timeZone = "+" + offset.ToString().PadLeft(2, '0');
+            string timeZone = string.Format("+{0}", offset.ToString().PadLeft(2, '0'));
 
             if (offset < 0)
             {
                 int i = offset * -1;
 
-                timeZone = "-" + i.ToString().PadLeft(2, '0');
+                timeZone = string.Format("-{0}", i.ToString().PadLeft(2, '0'));
             }
 
             return value.ToString(
-                "ddd, dd MMM yyyy HH:mm:ss " + timeZone.PadRight(5, '0'),
+                string.Format("ddd, dd MMM yyyy HH:mm:ss {0}", timeZone.PadRight(5, '0')),
                 System.Globalization.CultureInfo.GetCultureInfo("en-US"));
         }
 
@@ -1205,7 +1194,7 @@ namespace Pos.Internals.Extensions
             int hours = diff.Hours;
             int minutes = diff.Minutes;
 
-            return diff.Days + "d, " + diff.Hours + "h, " + diff.Minutes + "m";
+            return string.Format("{0}d, {1}h, {2}m", diff.Days, diff.Hours, diff.Minutes);
         }
 
         #region Selectors
@@ -1260,129 +1249,11 @@ namespace Pos.Internals.Extensions
             ws.ReferenceValue = value;
             return ws;
         }
-
+        
         #endregion
     }
-
+    
     #region TimeSelector
-
-    /// <summary>
-    /// Weeks, Years, Days helper class.
-    /// </summary>
-    public abstract class TimeSelector
-    {
-        /// <summary>
-        /// Used by class to calculate time differences.
-        /// </summary>
-        private TimeSpan timeSpan;
-
-        /// <summary>
-        /// Gets a time in the past.
-        /// </summary>
-        public DateTime Ago 
-        { 
-            get 
-            {
-                return DateTime.Now - this.timeSpan; 
-            } 
-        }
-
-        /// <summary>
-        /// Gets a time in the future.
-        /// </summary>
-        public DateTime FromNow 
-        { 
-            get 
-            {
-                return DateTime.Now + this.timeSpan; 
-            } 
-        }
-
-        /// <summary>
-        /// Sets an internal reference value.
-        /// </summary>
-        internal int ReferenceValue
-        {
-            set
-            {
-                this.timeSpan = this.MyTimeSpan(value);
-            }
-        }
-
-        /// <summary>
-        /// Determines time in past from a date.
-        /// </summary>
-        /// <param name="dt">Date for which to relate the past date.</param>
-        /// <returns>Date prior to this instance.</returns>
-        public DateTime AgoSince(DateTime dt)
-        {
-            return dt - this.timeSpan;
-        }
-
-        /// <summary>
-        /// Determines a time in the future.
-        /// </summary>
-        /// <param name="dt">Date for which to relate the future date.</param>
-        /// <returns>A future date.</returns>
-        public DateTime From(DateTime dt)
-        {
-            return dt + this.timeSpan;
-        }
-
-        /// <summary>
-        /// Abstract time span helper method.
-        /// </summary>
-        /// <param name="refValue">Reference value.</param>
-        /// <returns>A time span.</returns>
-        protected abstract TimeSpan MyTimeSpan(int refValue);
-    }
-
-    /// <summary>
-    /// Weeks helper class.
-    /// </summary>
-    public class WeekSelector : TimeSelector
-    {
-        /// <summary>
-        /// Abstract time span helper method.
-        /// </summary>
-        /// <param name="refValue">Reference value.</param>
-        /// <returns>A time span.</returns>
-        protected override TimeSpan MyTimeSpan(int refValue) 
-        { 
-            return new TimeSpan(7 * refValue, 0, 0, 0); 
-        }
-    }
-
-    /// <summary>
-    /// Days helper class.
-    /// </summary>
-    public class DaysSelector : TimeSelector
-    {
-        /// <summary>
-        /// Abstract time span helper method.
-        /// </summary>
-        /// <param name="refValue">Reference value.</param>
-        /// <returns>A time span.</returns>
-        protected override TimeSpan MyTimeSpan(int refValue) 
-        { 
-            return new TimeSpan(refValue, 0, 0, 0); 
-        }
-    }
-
-    /// <summary>
-    /// Years helper class.
-    /// </summary>
-    public class YearsSelector : TimeSelector
-    {
-        /// <summary>
-        /// Abstract time span helper method.
-        /// </summary>
-        /// <param name="refValue">Reference value.</param>
-        /// <returns>A time span.</returns>
-        protected override TimeSpan MyTimeSpan(int refValue)
-        {
-            return new TimeSpan(365 * refValue, 0, 0, 0);
-        }
-    }
+    
     #endregion
 }

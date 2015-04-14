@@ -128,7 +128,6 @@ namespace Pos.Internals.Extensions
         public static string FileSizeFormatted(this long fileSize, int decimals)
         {
             return SizeFormatter.Format(fileSize, decimals);
-            
         }
 
         /// <summary>
@@ -185,7 +184,6 @@ namespace Pos.Internals.Extensions
             return mime;
         }
 
-
         /// <summary>
         /// Displays a folder in Windows Explorer.
         /// </summary>
@@ -215,7 +213,7 @@ namespace Pos.Internals.Extensions
         /// </example>
         public static void ShowInWindowsExplorer(this FileInfo fileInfo)
         {
-            string argument = @"/select, " + fileInfo.FullName;
+            string argument = string.Format("{0}{1}", @"/select, ", fileInfo.FullName);
 
             System.Diagnostics.Process.Start("explorer.exe", argument);
         }
@@ -236,7 +234,7 @@ namespace Pos.Internals.Extensions
             catch (Exception)
             {
                 // create a dummy file to extract the icon from
-                string tempPath = Path.GetTempPath() + StringUtilities.GetRandomString(10) + fileInfo.Extension;
+                string tempPath = string.Format("{0}{1}{2}", Path.GetTempPath(), StringUtilities.GetRandomString(10), fileInfo.Extension);
 
                 File.Create(tempPath);
 

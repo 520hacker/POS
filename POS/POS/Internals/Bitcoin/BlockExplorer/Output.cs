@@ -11,12 +11,12 @@ namespace Info.Blockchain.API.BlockExplorer
     {
         public Output(JObject o, bool? spent = null)
         {
-            N = (int)o["n"];
-            Value = (long)o["value"];
-            Address = (string)o["addr"];
-            TxIndex = (long)o["tx_index"];
-            Script = (string)o["script"];
-            Spent = spent != null ? spent.Value : (bool)o["spent"];
+            this.N = (int)o["n"];
+            this.Value = (long)o["value"];
+            this.Address = (string)o["addr"];
+            this.TxIndex = (long)o["tx_index"];
+            this.Script = (string)o["script"];
+            this.Spent = spent != null ? spent.Value : (bool)o["spent"];
         }
 
         /// <summary>
