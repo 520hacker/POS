@@ -16,7 +16,6 @@ namespace POS
     public partial class MainForm : Telerik.WinControls.UI.RadForm
     {
         DesignerHost host;
-        PlugInManager _pm;
 
         public MainForm()
         {
@@ -92,21 +91,13 @@ namespace POS
             Cursor.Hide();
             #endif
 
-            _pm = new PlugInManager(this);
+            var PlugInFolder = Application.StartupPath + "\\Plugins";
 
-            _pm.PlugInFolder = Application.StartupPath + "\\Plugins";
-
-            if (!Directory.Exists(_pm.PlugInFolder))
+            if (!Directory.Exists(PlugInFolder))
             {
-                Directory.CreateDirectory(_pm.PlugInFolder);
+                Directory.CreateDirectory(PlugInFolder);
             }
-
-            _pm.LoadPlugIns();
-
-            foreach (var p in _pm.PlugIns)
-            {
-                p.PlugInProxy.Load();
-            }
+            
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)

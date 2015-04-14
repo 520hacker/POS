@@ -10,5 +10,6 @@ retruct to #hsql
 continue DbContext
 
 change pluginsystem to js,vb
+add pluginloader
 
 create standardlib

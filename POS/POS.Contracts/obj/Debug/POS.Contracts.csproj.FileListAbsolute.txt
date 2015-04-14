@@ -1,5 +1,0 @@
-C:\Users\filmee24\Documents\GitHub\POS\POS\POS.Contracts\bin\Debug\POS.Contracts.dll
-C:\Users\filmee24\Documents\GitHub\POS\POS\POS.Contracts\bin\Debug\POS.Contracts.pdb
-C:\Users\filmee24\Documents\GitHub\POS\POS\POS.Contracts\obj\Debug\POS.Contracts.csprojResolveAssemblyReference.cache
-C:\Users\filmee24\Documents\GitHub\POS\POS\POS.Contracts\obj\Debug\POS.Contracts.dll
-C:\Users\filmee24\Documents\GitHub\POS\POS\POS.Contracts\obj\Debug\POS.Contracts.pdb

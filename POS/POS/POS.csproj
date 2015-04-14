@@ -253,7 +253,6 @@
     <Compile Include="Internals\VoucherID.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\ProductCategory.cs" />
-    <Compile Include="PlugInManager.cs" />
     <Compile Include="Internals\Bitcoin\APIException.cs" />
     <Compile Include="Internals\Bitcoin\BlockExplorer\Address.cs" />
     <Compile Include="Internals\Bitcoin\BlockExplorer\Block.cs" />
@@ -570,12 +569,6 @@
     <None Include="Resources\home.ico" />
     <None Include="Resources\box.ico" />
     <None Include="Resources\application_x_desktop.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\POS.Contracts\POS.Contracts.csproj">
-      <Project>{F481A8B5-16F1-455F-8FA0-E4636AC1529F}</Project>
-      <Name>POS.Contracts</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
