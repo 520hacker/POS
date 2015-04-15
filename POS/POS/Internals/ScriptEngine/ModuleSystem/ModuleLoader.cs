@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.ClearScript.Windows;
 using Pos.Internals.ScriptEngine.ModuleSystem;
@@ -24,18 +25,18 @@ namespace POS.Internals.ScriptEngine.ModuleSystem
                     var meca = me.GetCustomAttribute<ScriptFunctionAttribute>();
                     if (meca != null)
                     {
-                        se.AddHostObject(meca.Name != null ? meca.Name : me.Name, Delegate.CreateDelegate(t, me));
+                        //se.AddHostObject(meca.Name != null ? meca.Name : me.Name, me.(t));
                     }
                 }
-                foreach (var me in t.GetProperties())
+            }
+            foreach (var me in t.GetProperties())
+            {
+                var meca = me.GetCustomAttribute<ScriptMemberAttribute>();
+                if (meca != null)
                 {
-                    var meca = me.GetCustomAttribute<ScriptMemberAttribute>();
-                    if (meca != null)
-                    {
-                        var tmp = Activator.CreateInstance(t);
+                    var tmp = Activator.CreateInstance(t);
 
-                        se.AddHostObject(meca.Name != null ? meca.Name : me.Name, me.GetValue(tmp, null));
-                    }
+                    se.AddHostObject(meca.Name != null ? meca.Name : me.Name, me.GetValue(tmp, null));
                 }
             }
         }

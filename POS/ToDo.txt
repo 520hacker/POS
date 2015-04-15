@@ -16,5 +16,3 @@ create standardlib
 	add eval func
 	add import func
 	add using func
-
-add Pluginmanager
