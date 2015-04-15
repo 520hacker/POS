@@ -7,7 +7,7 @@ using Std.Internals;
 namespace Std
 {
     [ScriptModule(AsType=false)]
-    public class MySqlModule
+    public class HSqlModule
     {
         private SqlHelper helper = new SqlHelper();
 
