@@ -13,5 +13,8 @@ change pluginsystem to js,vb
 add pluginloader
 
 create standardlib
+	add eval func
+	add import func
+	add using func
 
 add Pluginmanager
