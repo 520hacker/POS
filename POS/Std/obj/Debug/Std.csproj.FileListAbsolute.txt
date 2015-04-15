@@ -1,1 +1,13 @@
 C:\Users\filmee24\Documents\GitHub\POS\POS\Std\obj\Debug\Std.csprojResolveAssemblyReference.cache
+C:\Users\filmee24\Documents\GitHub\POS\POS\Std\bin\Debug\Std.dll
+C:\Users\filmee24\Documents\GitHub\POS\POS\Std\bin\Debug\Std.pdb
+C:\Users\filmee24\Documents\GitHub\POS\POS\Std\bin\Debug\POS.exe
+C:\Users\filmee24\Documents\GitHub\POS\POS\Std\bin\Debug\SharpHsql.dll
+C:\Users\filmee24\Documents\GitHub\POS\POS\Std\bin\Debug\log4net.dll
+C:\Users\filmee24\Documents\GitHub\POS\POS\Std\bin\Debug\POS.pdb
+C:\Users\filmee24\Documents\GitHub\POS\POS\Std\bin\Debug\SharpHsql.xml
+C:\Users\filmee24\Documents\GitHub\POS\POS\Std\bin\Debug\log4net.xml
+C:\Users\filmee24\Documents\GitHub\POS\POS\Std\obj\Debug\Std.dll
+C:\Users\filmee24\Documents\GitHub\POS\POS\Std\obj\Debug\Std.pdb
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\Std.dll
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\Std.pdb

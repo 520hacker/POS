@@ -10,8 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>POS</RootNamespace>
     <AssemblyName>POS</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -53,6 +54,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -279,7 +281,7 @@
     <Compile Include="Internals\ScriptEngine\Clearscript\Windows\WindowsScriptEngineFlags.cs" />
     <Compile Include="Internals\ScriptEngine\Clearscript\Windows\WindowsScriptItem.cs" />
     <Compile Include="Internals\ScriptEngine\JScriptEngine.cs" />
-    <Compile Include="Internals\ScriptEngine\ModuleSystem\ModuleLoaderExtensions.cs" />
+    <Compile Include="Internals\ScriptEngine\ModuleSystem\ModuleLoader.cs" />
     <Compile Include="Internals\ScriptEngine\ModuleSystem\ScriptMemberAttribute.cs" />
     <Compile Include="Internals\ScriptEngine\ModuleSystem\ScriptFunctionAttribute.cs" />
     <Compile Include="Internals\ScriptEngine\ModuleSystem\ScriptModuleAttribute.cs" />
@@ -312,6 +314,7 @@
     <Compile Include="Internals\UndoRedo\CommandDoneType.cs" />
     <Compile Include="Internals\XmlRpc\Internals\LogLevel.cs" />
     <Compile Include="Internals\XmlRpc\Internals\XML\Context.cs" />
+    <Compile Include="PluginLoader.cs" />
     <Compile Include="UI\DigitalDisplayControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

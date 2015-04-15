@@ -6,7 +6,7 @@ using Pos.Internals.ScriptEngine.ModuleSystem;
 
 namespace POS.Internals.ScriptEngine.ModuleSystem
 {
-    public static class ModuleLoaderExtensions
+    public static class ModuleLoader
     {
         public static void Load(this WindowsScriptEngine se, Type t)
         {

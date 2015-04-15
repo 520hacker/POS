@@ -3,8 +3,14 @@ using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
+using Microsoft.ClearScript;
+using Microsoft.ClearScript.Windows;
 using POS.Internals;
+using POS.Internals.ScriptEngine;
+using POS.Internals.ScriptEngine.ModuleSystem;
+using POS.Internals.ScriptEngine.ModuleSystem;
 using POS.Models;
 using POS.Properties;
 using Pos.Internals.Extensions;
@@ -38,6 +44,8 @@ namespace POS
 
             var p = Application.StartupPath;
 
+            PluginLoader.Load(Application.StartupPath + "\\Plugins");
+            
             if (!Directory.Exists(string.Format("{0}\\data", p)))
             {
                 Directory.CreateDirectory(string.Format("{0}\\data", p));

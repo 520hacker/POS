@@ -17,9 +17,4 @@ create standardlib
 	add import func
 	add using func
 
-	StdLib
-		base64_encode
-		base64_decode
-		...
-
 add Pluginmanager
