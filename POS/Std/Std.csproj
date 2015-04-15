@@ -43,11 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileModule.cs" />
     <Compile Include="HSqlModule.cs" />
     <Compile Include="Internals\SqlHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\POS\POS.csproj">
       <Project>{6FC93089-6F1D-49DA-B94B-D64E7B020355}</Project>
