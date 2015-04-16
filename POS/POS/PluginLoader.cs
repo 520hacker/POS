@@ -16,18 +16,20 @@ namespace POS
 
         public static List<dynamic> Plugins { get; set; }
 
-        public static object Call(string func, params object[] p)
+        public static object[] Call(string func, params object[] p)
         {
+            var ret = new List<object>();
+
             foreach (var e in _engines)
             {
                 var host = new HostFunctions();
                 ((IScriptableObject)host).OnExposedToScriptCode(e);
                 var del = (Delegate)host.func<object>(p.Length, e.Script[func]);
 
-                return del.DynamicInvoke(p);
+                ret.Add(del.DynamicInvoke(p));
             }
 
-            return null;
+            return ret.ToArray();
         }
 
         public static dynamic[] Load(string startupPath)

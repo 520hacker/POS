@@ -45,6 +45,7 @@ namespace POS
             var p = Application.StartupPath;
 
             var ps = PluginLoader.Load(Application.StartupPath + "\\Plugins");
+            var fs = PluginLoader.Call("init");
             
             if (!Directory.Exists(string.Format("{0}\\data", p)))
             {

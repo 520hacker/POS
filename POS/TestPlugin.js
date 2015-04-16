@@ -8,4 +8,5 @@ var plugin =
     onClose: close
 };
 
-plugin;
+//plugin;
+filesize("Std.dll");

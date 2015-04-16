@@ -1,4 +1,4 @@
-function init() { }
+function init() { return filesize("Std.dll"); }
 function close() { }
 
 var plugin =
