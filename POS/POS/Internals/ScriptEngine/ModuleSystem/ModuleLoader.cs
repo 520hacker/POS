@@ -22,7 +22,7 @@ namespace POS.Internals.ScriptEngine.ModuleSystem
                 }
                 foreach (var me in t.GetMethods())
                 {
-                   // if (me.IsStatic)
+                    if (me.IsStatic)
                     {
                         var meca = me.GetCustomAttribute<ScriptFunctionAttribute>();
                         if (meca != null)
