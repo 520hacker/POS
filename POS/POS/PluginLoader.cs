@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using Microsoft.ClearScript;
-using Microsoft.ClearScript.Windows;
 using POS.Internals.ScriptEngine;
 using POS.Internals.ScriptEngine.ModuleSystem;
 
@@ -12,48 +12,47 @@ namespace POS
 {
     public static class PluginLoader
     {
-        private static List<ScriptEngine> _engines = new List<ScriptEngine>();
+        private static ScriptEngine _engine = new JScriptEngine();
 
         public static List<dynamic> Plugins { get; set; }
+
+        public static void Eval(string src)
+        {
+            _engine.Evaluate(src);
+        }
 
         public static object[] Call(string func, params object[] p)
         {
             var ret = new List<object>();
+      
+            var host = new HostFunctions();
+            ((IScriptableObject)host).OnExposedToScriptCode(_engine);
+            var del = (Delegate)host.func<object>(p.Length, _engine.Script[func]);
 
-            foreach (var e in _engines)
-            {
-                var host = new HostFunctions();
-                ((IScriptableObject)host).OnExposedToScriptCode(e);
-                var del = (Delegate)host.func<object>(p.Length, e.Script[func]);
-
-                ret.Add(del.DynamicInvoke(p));
-            }
-
+            ret.Add(del.DynamicInvoke(p));
+            
             return ret.ToArray();
+        }
+
+        public static void AddObject(string name, object obj)
+        {
+            _engine.AddHostObject(name, obj);
+        }
+
+        public static void AddType(string name, Type type)
+        {
+            _engine.AddHostType(name, type);
         }
 
         public static dynamic[] Load(string startupPath)
         {
             var ret = new List<dynamic>();
 
-            foreach (var p in Directory.GetFiles(startupPath))
+            foreach (var p in Directory.GetFiles(startupPath, "*.js"))
             {
-                WindowsScriptEngine se = null;
+                ModuleLoader.Load(_engine, Assembly.LoadFile(Application.StartupPath + "\\Std.dll"));
 
-                if (p.EndsWith(".js"))
-                {
-                    se = new JScriptEngine();
-                }
-                else if (p.EndsWith(".vb"))
-                {
-                    se = new VBScriptEngine();
-                }
-
-                ModuleLoader.Load(se, Assembly.LoadFile(Application.StartupPath + "\\Std.dll"));
-
-                ret.Add(se.Evaluate(File.ReadAllText(p)));
-
-                _engines.Add(se);
+                ret.Add(_engine.Evaluate(File.ReadAllText(p)));
             }
 
             Plugins = ret;

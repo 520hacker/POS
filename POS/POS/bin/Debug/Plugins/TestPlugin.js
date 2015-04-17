@@ -1,4 +1,6 @@
-function init() { return filesize("Std.dll"); }
+include(".\\Plugins\\test.js.inc");
+
+function init() { return size_format(filesize("Std.dll"), 2); }
 function close() { }
 
 var plugin =
@@ -7,5 +9,7 @@ var plugin =
     init: init,
     onClose: close
 };
+
+showHelloWorld();
 
 plugin;

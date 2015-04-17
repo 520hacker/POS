@@ -1,5 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
+using System.Windows.Forms;
+using POS;
+using POS.Internals;
 using Pos.Internals.ScriptEngine.ModuleSystem;
 
 namespace Std
@@ -11,6 +15,18 @@ namespace Std
         public static string Base64Encode(string raw)
         {
             return Pos.Internals.Extensions.StringExtensions.Base64Encode(raw);
+        }
+
+        [ScriptFunction(Name = "size_format")]
+        public static string SizeFormat(int target, int deci)
+        {
+            return SizeFormatter.Format(target, deci);
+        }
+
+        [ScriptFunction(Name = "alert")]
+        public static void Alert(string content)
+        {
+            MessageBox.Show(content);
         }
 
         [ScriptFunction(Name = "base64_decode")]

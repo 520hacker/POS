@@ -10,7 +10,7 @@ namespace POS.Internals.ScriptEngine.ModuleSystem
     {
         public delegate object StaticMethodFunc(params object[] args);
 
-        public static void Load(this WindowsScriptEngine se, Type t)
+        public static void Load(this JScriptEngine se, Type t)
         {
             var ca = t.GetCustomAttribute<ScriptModuleAttribute>();
 
@@ -22,6 +22,7 @@ namespace POS.Internals.ScriptEngine.ModuleSystem
                 {
                     se.AddHostType(ca.Name != null ? ca.Name : t.Name, t);
                 }
+
                 foreach (var me in t.GetMethods())
                 {
                     if (me.IsStatic)
@@ -45,7 +46,7 @@ namespace POS.Internals.ScriptEngine.ModuleSystem
             }
         }
 
-        public static void Load(this WindowsScriptEngine se, Assembly ass)
+        public static void Load(this JScriptEngine se, Assembly ass)
         {
             foreach (var t in ass.GetTypes())
             {

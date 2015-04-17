@@ -81,6 +81,17 @@ namespace POS
                                         v = item.Value;
                                     }
                                 }
+                                if (prop.PropertyType.Name == typeof(int).Name)
+                                {
+                                    try
+                                    {
+                                        v = int.Parse(item.Value.ToString());
+                                    }
+                                    catch
+                                    {
+                                        v = item.Value;
+                                    }
+                                }
                                 else
                                 {
                                     v = item.Value;

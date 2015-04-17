@@ -44,6 +44,8 @@ namespace POS
 
             var p = Application.StartupPath;
 
+            PluginLoader.AddObject("include", fn => {PluginLoader.Eval(File.ReadAllText(fn));});
+
             var ps = PluginLoader.Load(Application.StartupPath + "\\Plugins");
             var fs = PluginLoader.Call("init");
             
