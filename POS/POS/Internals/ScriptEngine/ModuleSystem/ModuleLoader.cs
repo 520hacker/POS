@@ -8,6 +8,8 @@ namespace POS.Internals.ScriptEngine.ModuleSystem
 {
     public static class ModuleLoader
     {
+        public delegate object StaticMethodFunc(params object[] args);
+
         public static void Load(this WindowsScriptEngine se, Type t)
         {
             var ca = t.GetCustomAttribute<ScriptModuleAttribute>();
@@ -27,11 +29,12 @@ namespace POS.Internals.ScriptEngine.ModuleSystem
                         var meca = me.GetCustomAttribute<ScriptFunctionAttribute>();
                         if (meca != null)
                         {
-                            se.AddHostObject(meca.Name != null ? meca.Name : me.Name, me.CreateDelegate(t));
+                            se.AddHostObject(meca.Name != null ? meca.Name : me.Name, new StaticMethodFunc(args => me.Invoke(null, args)));
                         }
                     }
                 }
             }
+
             foreach (var me in t.GetProperties())
             {
                 var meca = me.GetCustomAttribute<ScriptMemberAttribute>();
