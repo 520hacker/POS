@@ -12,7 +12,7 @@ namespace POS
 {
     public static class PluginLoader
     {
-        private static ScriptEngine _engine = new JScriptEngine();
+        private static JScriptEngine _engine = new JScriptEngine();
 
         public static List<dynamic> Plugins { get; set; }
 
@@ -47,6 +47,14 @@ namespace POS
         public static dynamic[] Load(string startupPath)
         {
             var ret = new List<dynamic>();
+
+            _engine.AddHostObject("ns", new Action<string, string>((ns, n) =>
+            {
+                _engine.Execute(n + "=" + ns + ";");
+            }));
+            _engine.AddHostObject("host", new ExtendedHostFunctions());
+            _engine.AddHostObject("clr", new ExtendedHostFunctions().lib("System", "System.Core", "System.Windows.Forms", typeof(Telerik.WinControls.UI.RadTextBoxControl).Assembly.FullName));
+
 
             foreach (var p in Directory.GetFiles(startupPath, "*.js"))
             {
