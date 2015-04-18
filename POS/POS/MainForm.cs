@@ -91,12 +91,13 @@ namespace POS
             Cursor.Hide();
             #endif
 
-            var PlugInFolder = string.Format("{0}\\Plugins", Application.StartupPath);
+            PluginLoader.AddObject("add_pay_button", new Action<Button>(AddPayButton));
+        }
 
-            if (!Directory.Exists(PlugInFolder))
-            {
-                Directory.CreateDirectory(PlugInFolder);
-            }
+        public void AddPayButton(Button btn) {
+            btn.Dock = DockStyle.Right;
+
+            payFooter.Controls.Add(btn);
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
