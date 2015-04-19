@@ -48,12 +48,9 @@ namespace POS
 
             foreach (var p in arr)
             {
-                foreach (dynamic item in p)
-                {
-                    var tmp = new T();
+                var tmp = new T();
                    
-                    ret.Add(tmp.From<T>(item));
-                }
+                ret.Add(tmp.From(p));
             }
 
             return ret;

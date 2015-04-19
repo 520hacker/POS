@@ -19,9 +19,9 @@ namespace POS.Models
         {
             var p = new Product();
 
-            p.Category = d.Category;
-            p.Price = d.Price;
-            p.Tax = d.Tax;
+            p.Category = d["Category"];
+            p.Price = d["Price"];
+            p.Tax = d["Tax"];
 
             return p;
         }
