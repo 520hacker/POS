@@ -39,7 +39,7 @@ namespace POS
         }
 
         public static IEnumerable<T> GetItems<T>()
-            where T : new()
+            where T : IDBObject<T>, new()
         {
             var q = SqlHelper.query(string.Format("SELECT * FROM {0}s", typeof(T).Name));
             var arr = SqlHelper.fetch_array(q);
@@ -48,67 +48,11 @@ namespace POS
 
             foreach (var p in arr)
             {
-                foreach (var item in p)
+                foreach (dynamic item in p)
                 {
                     var tmp = new T();
-                    foreach (var prop in tmp.GetType().GetProperties())
-                    {
-                        if (prop.Name.ToLower() == item.Key.ToLower())
-                        {
-                            if (item.Value != null)
-                            {
-                                object v;
-
-                                if (prop.PropertyType.Name == typeof(byte[]).Name)
-                                {
-                                    try
-                                    {
-                                        v = Convert.FromBase64String(item.Value.ToString());
-                                    }
-                                    catch
-                                    {
-                                        v = item.Value;
-                                    }
-                                }
-                                if (prop.PropertyType.Name == typeof(double).Name)
-                                {
-                                    try
-                                    {
-                                        v = double.Parse(item.Value.ToString());
-                                    }
-                                    catch
-                                    {
-                                        v = item.Value;
-                                    }
-                                }
-                                if (prop.PropertyType.Name == typeof(int).Name)
-                                {
-                                    try
-                                    {
-                                        v = int.Parse(item.Value.ToString());
-                                    }
-                                    catch
-                                    {
-                                        v = item.Value;
-                                    }
-                                }
-                                else
-                                {
-                                    v = item.Value;
-                                }
-
-                                if (prop.CanWrite)
-                                {
-                                    prop.SetValue(tmp, v);
-                                }
-                            }
-                        }
-                    }
-
-                    if (!ret.Contains(tmp))
-                    {
-                        ret.Add(tmp);
-                    }
+                   
+                    ret.Add(tmp.From<T>(item));
                 }
             }
 

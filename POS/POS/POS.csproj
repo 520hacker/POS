@@ -181,6 +181,7 @@
     <Compile Include="Internals\FilterBuilder\Helpers.cs" />
     <Compile Include="Internals\FilterBuilder\SystemFileType.cs" />
     <Compile Include="Internals\History.cs" />
+    <Compile Include="Internals\IDBObject.cs" />
     <Compile Include="Internals\Json\Bson\BsonArray.cs" />
     <Compile Include="Internals\Json\Bson\BsonObject.cs" />
     <Compile Include="Internals\Json\Bson\BsonProperty.cs" />

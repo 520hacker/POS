@@ -5,7 +5,7 @@ using POS.Internals;
 
 namespace POS.Models
 {
-    public class Invoice
+    public class Invoice : IDBObject<Invoice>
     {
         public string ID { get; set; }
 
@@ -17,6 +17,12 @@ namespace POS.Models
 
         public InvoiceCurrency Currency { get; set; }
         
+        public Invoice From(dynamic d)
+        {
+            // TODO: Implement this method
+            throw new NotImplementedException();
+        }
+
         public static Invoice New()
         {
             var ret = new Invoice();
