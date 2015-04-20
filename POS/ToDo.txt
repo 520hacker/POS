@@ -17,3 +17,5 @@ create standardlib
 	add import func
 	add using func
 	add asynchronus function
+
+add window to represent status and prices in second monitor

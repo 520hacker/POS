@@ -144,6 +144,16 @@ namespace POS
             var i = new List<Invoice>();
             i.Add(inv);
 
+            var sWindow = WindowManager.GetStatusWindow();
+            if (sWindow != null)
+            {
+                var ctrl = new Label();
+                ctrl.Text = "Danke für Ihren Einkauf";
+                ctrl.Font = new Font("Arial", 24);
+
+                sWindow.SetDisplay(ctrl);
+            }
+
             ServiceLocator.Invoices = i.ToArray();
 
             ServiceLocator.ProductHistory.Clear();

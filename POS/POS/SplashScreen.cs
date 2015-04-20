@@ -15,6 +15,7 @@ using POS.Models;
 using POS.Properties;
 using Pos.Internals.Extensions;
 using Telerik.WinControls;
+using POS.Internals.Database;
 
 namespace POS
 {

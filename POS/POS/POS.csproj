@@ -310,9 +310,16 @@
     <Compile Include="Internals\Serializer\Core\SingleDimensionalArrayProperty.cs" />
     <Compile Include="Internals\SqlHelper.cs" />
     <Compile Include="Internals\SizeFormatter.cs" />
+    <Compile Include="Internals\StatusWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Internals\StatusWindow.Designer.cs">
+      <DependentUpon>StatusWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Internals\Taskbar.cs" />
     <Compile Include="Internals\UndoRedo\CommandDoneEventArgs.cs" />
     <Compile Include="Internals\UndoRedo\CommandDoneType.cs" />
+    <Compile Include="Internals\WindowManager.cs" />
     <Compile Include="Internals\XmlRpc\Internals\LogLevel.cs" />
     <Compile Include="Internals\XmlRpc\Internals\XML\Context.cs" />
     <Compile Include="PluginLoader.cs" />
@@ -608,6 +615,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Internals\DialogBuilder\DialogBuilder.resx">
       <DependentUpon>DialogBuilder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Internals\StatusWindow.resx">
+      <DependentUpon>StatusWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\DigitalDisplayControl.resx">
       <DependentUpon>DigitalDisplayControl.cs</DependentUpon>
