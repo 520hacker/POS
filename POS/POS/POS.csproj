@@ -43,12 +43,6 @@
     <ApplicationIcon>currency_dollar_red.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net">
-      <HintPath>..\..\..\..\..\Downloads\SharpHSQL_1_0_3_3_bin\log4net.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpHsql">
-      <HintPath>..\..\..\..\..\Downloads\SharpHSQL_1_0_3_3_bin\SharpHsql.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Configuration" />
@@ -180,7 +174,6 @@
     <Compile Include="Internals\FilterBuilder\Helpers.cs" />
     <Compile Include="Internals\FilterBuilder\SystemFileType.cs" />
     <Compile Include="Internals\History.cs" />
-    <Compile Include="Internals\IDBObject.cs" />
     <Compile Include="Internals\Json\Bson\BsonArray.cs" />
     <Compile Include="Internals\Json\Bson\BsonObject.cs" />
     <Compile Include="Internals\Json\Bson\BsonProperty.cs" />
@@ -598,7 +591,6 @@
     <Compile Include="Internals\Serializer\Core\ReferenceTargetProperty.cs" />
     <Compile Include="Internals\Serializer\Core\SimpleProperty.cs" />
     <Compile Include="Internals\Serializer\Core\SingleDimensionalArrayProperty.cs" />
-    <Compile Include="Internals\SqlHelper.cs" />
     <Compile Include="Internals\SizeFormatter.cs" />
     <Compile Include="Internals\StatusWindow.cs">
       <SubType>Form</SubType>

@@ -102,6 +102,8 @@ namespace POS
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            DbContext.Close();
+
             Application.Exit();
         }
 

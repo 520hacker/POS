@@ -1,64 +1,39 @@
-﻿using System;
+﻿using Creek.Database.Api;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using POS.Internals;
 
 namespace POS
 {
     public class DbContext
     {
-        public static string AddTable<T>()
+        private static IOdb db;
+
+        public static void Open(string filename)
         {
-            var t = typeof(T);
-
-            string sqlsc = string.Format("CREATE TABLE {0}s (", t.Name);
-            foreach (var p in t.GetProperties())
-            {
-                sqlsc += string.Format("\n {0} ", p.Name);
-                if (p.PropertyType.ToString().Contains("System.Int32"))
-                {
-                    sqlsc += " int ";
-                }
-                else if (p.PropertyType.ToString().Contains("System.DateTime"))
-                {
-                    sqlsc += " datetime ";
-                }
-                else
-                {
-                    sqlsc += " varchar(255) ";
-                }
-
-                sqlsc += ",";
-            }
-            return string.Format("{0})", sqlsc.Substring(0, sqlsc.Length - 1));
+            db = Creek.Database.OdbFactory.Open(filename);
         }
 
-        public static void Add<T>(T obj)
+        public static void Add(object obj)
         {
-            SqlHelper.query(string.Format("INSERT INTO {0}s VALUES ()", typeof(T).Name));
+            db.Store(obj);
         }
 
         public static IEnumerable<T> GetItems<T>()
-            where T : IDBObject<T>, new()
+            where T : new()
         {
-            var q = SqlHelper.query(string.Format("SELECT * FROM {0}s", typeof(T).Name));
-            var arr = SqlHelper.fetch_array(q);
-
-            var ret = new List<T>();
-
-            foreach (var p in arr)
-            {
-                var tmp = new T();
-                   
-                ret.Add(tmp.From(p));
-            }
-
-            return ret;
+            return db.QueryAndExecute<T>();
         }
 
-        public static string Insert(object obj)
+        public static void Delete(object obj)
         {
-            return null;
+            db.Delete(obj);
+        }
+
+        public static void Close()
+        {
+            if(!db.IsClosed())
+                db.Close();
         }
     }
 }
