@@ -50,7 +50,8 @@ namespace POS.Internals.ScriptEngine.ModuleSystem
         {
             foreach (var t in ass.GetTypes())
             {
-                Load(se, t);
+                if(!t.IsAbstract)
+                    Load(se, t);
             }
         }
     }

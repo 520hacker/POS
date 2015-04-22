@@ -14,13 +14,18 @@ namespace POS
     {
         private static JScriptEngine _engine = new JScriptEngine();
 
+        public static JScriptEngine GetEngine()
+        {
+            return _engine;
+        }
+
         public static dynamic Script { get { return _engine.Script; } }
 
         public static List<dynamic> Plugins { get; set; }
 
-        public static void Eval(string src)
+        public static object Eval(string src)
         {
-            _engine.Evaluate(src);
+            return _engine.Evaluate(src);
         }
 
         public static object[] Call(string func, params object[] p)

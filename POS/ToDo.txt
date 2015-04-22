@@ -4,9 +4,6 @@ add multilanguage
 
 
 create standardlib
-	add eval func
-	add import func
-	add using func
 	add asynchronus function
 
 	add function to add custom settings group

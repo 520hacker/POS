@@ -12,6 +12,13 @@ var plugin =
     onClose: close
 };
 
+var req = new XMLHttpRequest();
+req.open("get", "http://www.google.de/?q=c++");
+
+req.send(null);
+
+alert(req.responseText);
+
 showHelloWorld();
 
 var btn = new sys.Windows.Forms.Button();

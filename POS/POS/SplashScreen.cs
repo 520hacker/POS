@@ -47,8 +47,10 @@ namespace POS
 
             ServiceLocator.LanguageCatalog.Load(p + "\\locale\\de_DE.mo");
 
-            PluginLoader.AddObject("include", new Action<string>(fn => {PluginLoader.Eval(File.ReadAllText(fn));}));
-            
+            PluginLoader.AddObject("include", new Action<string>(fn => { PluginLoader.Eval(File.ReadAllText(fn)); }));
+            PluginLoader.AddObject("eval", new Func<string, object>(fn => { return PluginLoader.Eval(fn); }));
+            PluginLoader.AddObject("import", new Action<string>(fn => { ModuleLoader.Load(PluginLoader.GetEngine(), Assembly.LoadFile(fn)); }));
+
             if (!Directory.Exists(string.Format("{0}\\data", p)))
             {
                 Directory.CreateDirectory(string.Format("{0}\\data", p));

@@ -47,12 +47,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="XmlModule.cs" />
+    <Compile Include="TaskModule.cs" />
     <Compile Include="GettextModule.cs" />
     <Compile Include="UtilitiesModule.cs" />
     <Compile Include="FileModule.cs" />
     <Compile Include="HSqlModule.cs" />
     <Compile Include="Internals\SqlHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XmlHttpRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\POS\POS.csproj">
