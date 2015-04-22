@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using POS.Internals;
 using POS.Models;
@@ -9,11 +10,11 @@ namespace POS
     {
         public static History<Product> ProductHistory = new History<Product>();
 
-        public static ProductCategory[] ProductCategories { get; set; }
+        public static List<ProductCategory> ProductCategories { get; set; }
 
-        public static Product[] Products { get; set; }
+        public static List<Product> Products { get; set; }
 
-        public static Invoice[] Invoices { get; set; }
+        public static List<Invoice> Invoices { get; set; }
 
         public static string DataPath
         {

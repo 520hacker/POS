@@ -19,7 +19,7 @@ namespace POS
             db.Store(obj);
         }
 
-        public static IEnumerable<T> GetItems<T>()
+        public static IObjectSet<T> GetItems<T>()
             where T : new()
         {
             return db.QueryAndExecute<T>();

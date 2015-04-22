@@ -94,7 +94,8 @@ namespace POS
             PluginLoader.AddObject("add_pay_button", new Action<Button>(AddPayButton));
         }
 
-        public void AddPayButton(Button btn) {
+        public void AddPayButton(Button btn)
+        {
             btn.Dock = DockStyle.Right;
 
             payFooter.Controls.Add(btn);
@@ -136,60 +137,57 @@ namespace POS
             ServiceLocator.ProductHistory.RemoveLast();
         }
 
-        private void paywithEuroBtn_Click(object sender, EventArgs e)
+        private void Pay(Invoice.InvoiceCurrency curr, Action<double> callback)
         {
             var inv = Invoice.New();
-            inv.Products = new List<Product>(ServiceLocator.Products);
+            inv.Products = ServiceLocator.Products;
             inv.TotalPrice = Price.NumberValue;
-            inv.Currency = Invoice.InvoiceCurrency.EUR;
+            inv.Currency = curr;
 
-            var i = new List<Invoice>();
-            i.Add(inv);
+            if (callback != null)
+                callback(inv.TotalPrice);
 
-            var sWindow = WindowManager.GetStatusWindow();
-            if (sWindow != null)
-            {
-                var ctrl = new Label();
-                ctrl.Text = "Danke für Ihren Einkauf";
-                ctrl.Font = new Font("Arial", 24);
-
-                sWindow.SetDisplay(ctrl);
-            }
-
-            ServiceLocator.Invoices = i.ToArray();
+            ServiceLocator.Invoices.Add(inv);
 
             ServiceLocator.ProductHistory.Clear();
+            ServiceLocator.Products.Clear();
             Price.Clear();
         }
 
-        private async void paywithBTCBtn_Click(object sender, EventArgs e)
+        private void paywithEuroBtn_Click(object sender, EventArgs e)
         {
-            var inv = Invoice.New();
-            inv.Products = new List<Product>(ServiceLocator.Products);
-            inv.TotalPrice = Price.NumberValue;
-            inv.Currency = Invoice.InvoiceCurrency.BTC;
-
-            var i = new List<Invoice>();
-            i.Add(inv);
-
-            var addr = Info.Blockchain.API.Receive.Receive.ReceiveFunds("1HaWUwi5oYQo2RXB5k5JLgJA8MTigNuLeY", "").DestinationAddress;
-            var btc = Info.Blockchain.API.ExchangeRates.ExchangeRates.ToBTC("EUR", Price.NumberValue);
-
-            QrCodeDialog.Show(string.Format("bitcoin:{0}?{1}", addr, btc), null);
-
-            if (await BitcoinPayer.CheckPaymentAsync(addr, btc))
+            Pay(Invoice.InvoiceCurrency.EUR, p =>
             {
-                this.notifyIcon1.ShowBalloonTip(5000, "Bitcoin", "Betrag wurde gezahlt", ToolTipIcon.Info);
+                var sWindow = WindowManager.GetStatusWindow();
+                if (sWindow != null)
+                {
+                    var ctrl = new Label();
+                    ctrl.Text = "Danke für Ihren Einkauf";
+                    ctrl.Font = new Font("Arial", 24);
 
-                ServiceLocator.Invoices = i.ToArray();
+                    sWindow.SetDisplay(ctrl);
+                }
+            });
+        }
 
-                ServiceLocator.ProductHistory.Clear();
-                Price.Clear();
-            }
-            else
+        private void paywithBTCBtn_Click(object sender, EventArgs e)
+        {
+            Pay(Invoice.InvoiceCurrency.BTC, async p =>
             {
-                this.notifyIcon1.ShowBalloonTip(5000, "Bitcoin", "Betrag wurde nicht gezahlt", ToolTipIcon.Error);
-            }
+                var addr = Info.Blockchain.API.Receive.Receive.ReceiveFunds("1HaWUwi5oYQo2RXB5k5JLgJA8MTigNuLeY", "").DestinationAddress;
+                var btc = Info.Blockchain.API.ExchangeRates.ExchangeRates.ToBTC("EUR", Price.NumberValue);
+
+                QrCodeDialog.Show(string.Format("bitcoin:{0}?{1}", addr, btc), null);
+
+                if (await BitcoinPayer.CheckPaymentAsync(addr, btc))
+                {
+                    this.notifyIcon1.ShowBalloonTip(5000, "Bitcoin", "Betrag wurde gezahlt", ToolTipIcon.Info);
+                }
+                else
+                {
+                    this.notifyIcon1.ShowBalloonTip(5000, "Bitcoin", "Betrag wurde nicht gezahlt", ToolTipIcon.Error);
+                }
+            });
         }
 
         private void btcddressTb_TextChanged(object sender, EventArgs e)

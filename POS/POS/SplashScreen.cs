@@ -65,16 +65,13 @@ namespace POS
                 ThemeResolutionService.LoadPackageFile(f);
             }
 
-            ServiceLocator.ProductCategories = DataStorage.ReadProductCategories();
-            ServiceLocator.Products = DataStorage.ReadProducts();
-            ServiceLocator.Invoices = DataStorage.ReadInvoices();
-
-            var t = new List<Product>(ServiceLocator.Products);
-            t.Add(new Product { Category = 0, ID = "Rose", Price = 0.81, Tax = 0.19, Image = Resources.box.ToBytes(ImageFormat.Png) });
-
-            ServiceLocator.Products = t.ToArray();
-
             DbContext.Open(p + "\\data\\data");
+
+            ServiceLocator.ProductCategories = DbContext.GetItems<ProductCategory>().ToList<ProductCategory>();
+            ServiceLocator.Products = DbContext.GetItems<Product>().ToList<Product>();
+            ServiceLocator.Invoices = DbContext.GetItems<Invoice>().ToList<Invoice>();
+
+            ServiceLocator.Products.Add(new Product { Category = 0, ID = "Rose", Price = 0.81, Tax = 0.19, Image = Resources.box.ToBytes(ImageFormat.Png) });
 
             //var r = DbContext.GetItems<Product>();
 
