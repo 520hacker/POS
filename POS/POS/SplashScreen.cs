@@ -47,8 +47,7 @@ namespace POS
 
             PluginLoader.AddObject("include", new Action<string>(fn => {PluginLoader.Eval(File.ReadAllText(fn));}));
 
-            var ps = PluginLoader.Load(Application.StartupPath + "\\Plugins");
-            var fs = PluginLoader.Call("init");
+            
             
             if (!Directory.Exists(string.Format("{0}\\data", p)))
             {
@@ -89,11 +88,15 @@ namespace POS
 
             SqlHelper.commit();
 
-            var r = DbContext.GetItems<Product>();
+            //var r = DbContext.GetItems<Product>();
 
             SqlHelper.close();
 
             var frm = new MainForm();
+
+            var ps = PluginLoader.Load(Application.StartupPath + "\\Plugins");
+            var fs = PluginLoader.Call("init");
+
             frm.Show();
 
             //hide this form

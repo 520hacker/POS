@@ -51,6 +51,11 @@ namespace POS.Models
                 }
             }
 
+            public static InvoiceCurrency Custom(string name)
+            {
+                return new InvoiceCurrency(name);
+            }
+
             public static InvoiceCurrency BTC
             {
                 get

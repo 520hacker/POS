@@ -1,5 +1,5 @@
 include(".\\Plugins\\test.js.inc");
-ns("clr.System", "system");
+ns("clr.System", "sys");
 
 function init() { return size_format(filesize(".\\Plugins\\test.js.inc"), 2); }
 function close() { }
@@ -14,6 +14,9 @@ var plugin =
 
 showHelloWorld();
 
-system.Windows.Forms.MessageBox.Show("hello from clr: " + plugin.name);
+var btn = new sys.Windows.Forms.Button();
+btn.Text = "Pay with Plugin";
+
+//add_pay_button(btn);
 
 plugin;
