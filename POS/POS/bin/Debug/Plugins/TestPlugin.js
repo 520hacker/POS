@@ -17,6 +17,6 @@ showHelloWorld();
 var btn = new sys.Windows.Forms.Button();
 btn.Text = "Pay with Plugin";
 
-//add_pay_button(btn);
+add_pay_button(btn);
 
 plugin;

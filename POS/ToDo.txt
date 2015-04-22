@@ -6,7 +6,6 @@ add custom file format for models
 	add append function to writer
 
 continue plugin system
-retruct to #hsql
 continue DbContext
 
 change pluginsystem to js,vb
