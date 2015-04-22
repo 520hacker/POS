@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GettextModule.cs" />
     <Compile Include="UtilitiesModule.cs" />
     <Compile Include="FileModule.cs" />
     <Compile Include="HSqlModule.cs" />

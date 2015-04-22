@@ -10,3 +10,4 @@ create standardlib
 	add asynchronus function
 
 	add function to add custom settings group
+	add gettext functions
