@@ -49,8 +49,12 @@
             this.ProductsPage = new Telerik.WinControls.UI.RadPageViewPage();
             this.productsView1 = new Telerik.WinControls.UI.RadGridView();
             this.SettingsPage = new Telerik.WinControls.UI.RadPageViewPage();
+            this.radScrollablePanel1 = new Telerik.WinControls.UI.RadScrollablePanel();
             this.btcddressTb = new Telerik.WinControls.UI.RadTextBox();
+            this.radDropDownButton1 = new Telerik.WinControls.UI.RadDropDownButton();
+            this.radMenuItem1 = new Telerik.WinControls.UI.RadMenuItem();
             this.radLabel1 = new Telerik.WinControls.UI.RadLabel();
+            this.radLabel3 = new Telerik.WinControls.UI.RadLabel();
             this.radPageViewItemPage1 = new Telerik.WinControls.UI.RadPageViewItemPage();
             this.BonDesignerPage = new Telerik.WinControls.UI.RadPageViewPage();
             this.radPanel1 = new Telerik.WinControls.UI.RadPanel();
@@ -63,9 +67,7 @@
             this.PropertiesBtn = new Telerik.WinControls.UI.CommandBarButton();
             this.radDesktopAlert1 = new Telerik.WinControls.UI.RadDesktopAlert(this.components);
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.radLabel3 = new Telerik.WinControls.UI.RadLabel();
-            this.radDropDownButton1 = new Telerik.WinControls.UI.RadDropDownButton();
-            this.radMenuItem1 = new Telerik.WinControls.UI.RadMenuItem();
+            this.collapsibleGroupBox1 = new UIToolbox.CollapsibleGroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.radPageView1)).BeginInit();
             this.radPageView1.SuspendLayout();
             this.HomePage.SuspendLayout();
@@ -83,14 +85,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.productsView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.productsView1.MasterTemplate)).BeginInit();
             this.SettingsPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.radScrollablePanel1)).BeginInit();
+            this.radScrollablePanel1.PanelContainer.SuspendLayout();
+            this.radScrollablePanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btcddressTb)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radDropDownButton1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).BeginInit();
             this.BonDesignerPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radPanel1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.propertyGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.AddImageBtn)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radDropDownButton1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             this.SuspendLayout();
             // 
@@ -104,7 +109,7 @@
             this.radPageView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radPageView1.Location = new System.Drawing.Point(0, 0);
             this.radPageView1.Name = "radPageView1";
-            this.radPageView1.SelectedPage = this.HomePage;
+            this.radPageView1.SelectedPage = this.SettingsPage;
             this.radPageView1.Size = new System.Drawing.Size(926, 409);
             this.radPageView1.TabIndex = 0;
             this.radPageView1.Text = "radPageView1";
@@ -297,10 +302,7 @@
             // 
             // SettingsPage
             // 
-            this.SettingsPage.Controls.Add(this.radDropDownButton1);
-            this.SettingsPage.Controls.Add(this.btcddressTb);
-            this.SettingsPage.Controls.Add(this.radLabel3);
-            this.SettingsPage.Controls.Add(this.radLabel1);
+            this.SettingsPage.Controls.Add(this.radScrollablePanel1);
             this.SettingsPage.Image = global::POS.Properties.Resources.application_x_desktop;
             this.SettingsPage.Location = new System.Drawing.Point(205, 4);
             this.SettingsPage.Name = "SettingsPage";
@@ -308,23 +310,68 @@
             this.SettingsPage.Text = "Einstellungen";
             this.SettingsPage.TextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // radScrollablePanel1
+            // 
+            this.radScrollablePanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.radScrollablePanel1.Location = new System.Drawing.Point(0, 0);
+            this.radScrollablePanel1.Name = "radScrollablePanel1";
+            // 
+            // radScrollablePanel1.PanelContainer
+            // 
+            this.radScrollablePanel1.PanelContainer.Controls.Add(this.radDropDownButton1);
+            this.radScrollablePanel1.PanelContainer.Controls.Add(this.radLabel3);
+            this.radScrollablePanel1.PanelContainer.Controls.Add(this.collapsibleGroupBox1);
+            this.radScrollablePanel1.PanelContainer.Controls.Add(this.btcddressTb);
+            this.radScrollablePanel1.PanelContainer.Controls.Add(this.radLabel1);
+            this.radScrollablePanel1.PanelContainer.Size = new System.Drawing.Size(715, 363);
+            this.radScrollablePanel1.Size = new System.Drawing.Size(717, 401);
+            this.radScrollablePanel1.TabIndex = 4;
+            this.radScrollablePanel1.ThemeName = "TelerikMetroTouch";
+            // 
             // btcddressTb
             // 
-            this.btcddressTb.Location = new System.Drawing.Point(121, 9);
+            this.btcddressTb.Location = new System.Drawing.Point(125, 18);
             this.btcddressTb.Name = "btcddressTb";
             this.btcddressTb.Size = new System.Drawing.Size(578, 30);
             this.btcddressTb.TabIndex = 1;
             this.btcddressTb.ThemeName = "TelerikMetroTouch";
             this.btcddressTb.TextChanged += new System.EventHandler(this.btcddressTb_TextChanged);
             // 
+            // radDropDownButton1
+            // 
+            this.radDropDownButton1.Items.AddRange(new Telerik.WinControls.RadItem[] {
+            this.radMenuItem1});
+            this.radDropDownButton1.Location = new System.Drawing.Point(111, 110);
+            this.radDropDownButton1.Name = "radDropDownButton1";
+            this.radDropDownButton1.Size = new System.Drawing.Size(212, 32);
+            this.radDropDownButton1.TabIndex = 3;
+            this.radDropDownButton1.ThemeName = "TelerikMetroTouch";
+            // 
+            // radMenuItem1
+            // 
+            this.radMenuItem1.AccessibleDescription = "Deutsch";
+            this.radMenuItem1.AccessibleName = "Deutsch";
+            this.radMenuItem1.Name = "radMenuItem1";
+            this.radMenuItem1.Text = "Deutsch";
+            this.radMenuItem1.Visibility = Telerik.WinControls.ElementVisibility.Visible;
+            // 
             // radLabel1
             // 
-            this.radLabel1.Location = new System.Drawing.Point(4, 9);
+            this.radLabel1.Location = new System.Drawing.Point(8, 18);
             this.radLabel1.Name = "radLabel1";
             this.radLabel1.Size = new System.Drawing.Size(111, 23);
             this.radLabel1.TabIndex = 0;
             this.radLabel1.Text = "Bitcoin-Adresse";
             this.radLabel1.ThemeName = "TelerikMetroTouch";
+            // 
+            // radLabel3
+            // 
+            this.radLabel3.Location = new System.Drawing.Point(27, 110);
+            this.radLabel3.Name = "radLabel3";
+            this.radLabel3.Size = new System.Drawing.Size(61, 23);
+            this.radLabel3.TabIndex = 2;
+            this.radLabel3.Text = "Sprache";
+            this.radLabel3.ThemeName = "TelerikMetroTouch";
             // 
             // radPageViewItemPage1
             // 
@@ -445,32 +492,14 @@
             this.notifyIcon1.Text = "POS";
             this.notifyIcon1.Visible = true;
             // 
-            // radLabel3
+            // collapsibleGroupBox1
             // 
-            this.radLabel3.Location = new System.Drawing.Point(4, 45);
-            this.radLabel3.Name = "radLabel3";
-            this.radLabel3.Size = new System.Drawing.Size(61, 23);
-            this.radLabel3.TabIndex = 2;
-            this.radLabel3.Text = "Sprache";
-            this.radLabel3.ThemeName = "TelerikMetroTouch";
-            // 
-            // radDropDownButton1
-            // 
-            this.radDropDownButton1.Items.AddRange(new Telerik.WinControls.RadItem[] {
-            this.radMenuItem1});
-            this.radDropDownButton1.Location = new System.Drawing.Point(121, 43);
-            this.radDropDownButton1.Name = "radDropDownButton1";
-            this.radDropDownButton1.Size = new System.Drawing.Size(212, 32);
-            this.radDropDownButton1.TabIndex = 3;
-            this.radDropDownButton1.ThemeName = "TelerikMetroTouch";
-            // 
-            // radMenuItem1
-            // 
-            this.radMenuItem1.AccessibleDescription = "Deutsch";
-            this.radMenuItem1.AccessibleName = "Deutsch";
-            this.radMenuItem1.Name = "radMenuItem1";
-            this.radMenuItem1.Text = "Deutsch";
-            this.radMenuItem1.Visibility = Telerik.WinControls.ElementVisibility.Visible;
+            this.collapsibleGroupBox1.Caption = null;
+            this.collapsibleGroupBox1.ContainsTrashCan = false;
+            this.collapsibleGroupBox1.Location = new System.Drawing.Point(20, 139);
+            this.collapsibleGroupBox1.Name = "collapsibleGroupBox1";
+            this.collapsibleGroupBox1.Size = new System.Drawing.Size(700, 149);
+            this.collapsibleGroupBox1.TabIndex = 4;
             // 
             // MainForm
             // 
@@ -508,16 +537,19 @@
             ((System.ComponentModel.ISupportInitialize)(this.productsView1.MasterTemplate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.productsView1)).EndInit();
             this.SettingsPage.ResumeLayout(false);
-            this.SettingsPage.PerformLayout();
+            this.radScrollablePanel1.PanelContainer.ResumeLayout(false);
+            this.radScrollablePanel1.PanelContainer.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.radScrollablePanel1)).EndInit();
+            this.radScrollablePanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.btcddressTb)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radDropDownButton1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radLabel1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).EndInit();
             this.BonDesignerPage.ResumeLayout(false);
             this.BonDesignerPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.radPanel1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.propertyGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.AddImageBtn)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radLabel3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radDropDownButton1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
             this.ResumeLayout(false);
 
@@ -561,5 +593,7 @@
         private Telerik.WinControls.UI.RadDropDownButton radDropDownButton1;
         private Telerik.WinControls.UI.RadMenuItem radMenuItem1;
         public Telerik.WinControls.UI.RadLabel radLabel3;
+        private Telerik.WinControls.UI.RadScrollablePanel radScrollablePanel1;
+        private UIToolbox.CollapsibleGroupBox collapsibleGroupBox1;
     }
 }

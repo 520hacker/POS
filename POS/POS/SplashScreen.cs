@@ -45,6 +45,8 @@ namespace POS
 
             var p = Application.StartupPath;
 
+            ServiceLocator.LanguageCatalog.Load(p + "\\locale\\de_DE.mo");
+
             PluginLoader.AddObject("include", new Action<string>(fn => {PluginLoader.Eval(File.ReadAllText(fn));}));
             
             if (!Directory.Exists(string.Format("{0}\\data", p)))

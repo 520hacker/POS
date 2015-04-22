@@ -30,3 +30,8 @@ C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.exe
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.pdb
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.csprojResolveAssemblyReference.cache
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.Internals.StatusWindow.resources
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.UI.Expander.CollapseBox.resources
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\UIToolbox.CollapsibleGroupBox.resources
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.UI.Expander.ExpandingPanel.resources
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.UI.Expander.ImageButton.resources
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.UI.Expander.OwnerDrawButton.resources

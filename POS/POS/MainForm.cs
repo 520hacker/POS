@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -20,7 +19,9 @@ namespace POS
         public MainForm()
         {
             this.InitializeComponent();
-            
+
+            SettingsPage.Text = ServiceLocator.LanguageCatalog.GetString("Settings");
+
             var f = new Panel();
             f.BorderStyle = BorderStyle.FixedSingle;
             f.Visible = true;
@@ -162,7 +163,7 @@ namespace POS
                 if (sWindow != null)
                 {
                     var ctrl = new Label();
-                    ctrl.Text = "Danke für Ihren Einkauf";
+                    ctrl.Text = ServiceLocator.LanguageCatalog.GetString("Thanks for your Payment");
                     ctrl.Font = new Font("Arial", 24);
 
                     sWindow.SetDisplay(ctrl);

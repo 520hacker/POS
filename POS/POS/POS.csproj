@@ -610,6 +610,21 @@
     <Compile Include="UI\DigitalDisplayControl.designer.cs">
       <DependentUpon>DigitalDisplayControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Expander\CollapseBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Expander\CollapsibleGroupBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Expander\ExpandingPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Expander\ImageButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Expander\OwnerDrawButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI\HistoryView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -914,6 +929,21 @@
     <EmbeddedResource Include="SplashScreen.resx">
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Expander\CollapseBox.resx">
+      <DependentUpon>CollapseBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Expander\CollapsibleGroupBox.resx">
+      <DependentUpon>CollapsibleGroupBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Expander\ExpandingPanel.resx">
+      <DependentUpon>ExpandingPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Expander\ImageButton.resx">
+      <DependentUpon>ImageButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Expander\OwnerDrawButton.resx">
+      <DependentUpon>OwnerDrawButton.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
     <Compile Include="Internals\Price.cs" />
     <None Include="Internals\NDatabase\Meta\ODBType.cs.orig" />
@@ -929,6 +959,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="currency_dollar_red.ico" />
+    <Content Include="UI\Expander\CollapsibleGroupBox.bmp" />
+    <Content Include="UI\Expander\TRASH01.ICO" />
+    <Content Include="UI\Expander\TRASH01_Pressed.ICO" />
     <None Include="Resources\Undo-icon.png" />
     <None Include="Resources\Redo-icon.png" />
     <None Include="Resources\stock_folder_properties.ico" />

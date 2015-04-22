@@ -1,0 +1,29 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Furesoft POS\n"
+"POT-Creation-Date: 2015-04-22 18:03+0100\n"
+"PO-Revision-Date: 2015-04-22 18:03+0100\n"
+"Last-Translator: Chris Anders <filmee24@gmail.com>\n"
+"Language-Team: Furesoft\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.6\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: ServiceLocator.LanguageCatalog.GetString\n"
+"X-Poedit-SearchPath-0: C:\\Users\\filmee24\\Documents\\GitHub\\POS\\POS"
+"\\POS\n"
+
+#: C:\Users\filmee24\Documents\GitHub\POS\POS\POS/MainForm.cs:23
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: C:\Users\filmee24\Documents\GitHub\POS\POS\POS/MainForm.cs:166
+msgid "Thanks for your Payment"
+msgstr "Vielen Dank für Ihren Einkauf"
+
+#~ msgid "Danke für Ihren Einkauf"
+#~ msgstr "Danke für Ihren Einkauf"
