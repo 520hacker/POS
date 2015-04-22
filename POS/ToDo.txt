@@ -1,15 +1,7 @@
 Gutscheinsystem einbauen 
 
 add multilanguage
-add save invoices in seperate folder per day
-add custom file format for models
-	add append function to writer
 
-continue plugin system
-continue DbContext
-
-change pluginsystem to js,vb
-add pluginloader
 
 create standardlib
 	add eval func
@@ -17,4 +9,4 @@ create standardlib
 	add using func
 	add asynchronus function
 
-add window to represent status and prices in second monitor
+	add function to add custom settings group

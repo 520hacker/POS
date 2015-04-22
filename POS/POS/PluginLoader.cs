@@ -14,6 +14,8 @@ namespace POS
     {
         private static JScriptEngine _engine = new JScriptEngine();
 
+        public static dynamic Script { get { return _engine.Script; } }
+
         public static List<dynamic> Plugins { get; set; }
 
         public static void Eval(string src)
