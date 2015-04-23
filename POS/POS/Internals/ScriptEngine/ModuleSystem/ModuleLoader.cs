@@ -14,10 +14,15 @@ namespace POS.Internals.ScriptEngine.ModuleSystem
         {
             var ca = t.GetCustomAttribute<ScriptModuleAttribute>();
 
-            var tmp = Activator.CreateInstance(t);
-
             if (ca != null)
             {
+                object tmp;
+                try
+                {
+                    tmp = Activator.CreateInstance(t);
+                }
+                catch { tmp = 12; }
+
                 if (ca.AsType)
                 {
                     se.AddHostType(ca.Name != null ? ca.Name : t.Name, t);
@@ -34,14 +39,14 @@ namespace POS.Internals.ScriptEngine.ModuleSystem
                         }
                     }
                 }
-            }
 
-            foreach (var me in t.GetProperties())
-            {
-                var meca = me.GetCustomAttribute<ScriptMemberAttribute>();
-                if (meca != null)
+                foreach (var me in t.GetProperties())
                 {
-                    se.AddHostObject(meca.Name != null ? meca.Name : me.Name, me.GetValue(tmp, null));
+                    var meca = me.GetCustomAttribute<ScriptMemberAttribute>();
+                    if (meca != null)
+                    {
+                        se.AddHostObject(meca.Name != null ? meca.Name : me.Name, me.GetValue(tmp, null));
+                    }
                 }
             }
         }

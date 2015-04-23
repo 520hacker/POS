@@ -34,9 +34,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SharpHsql">
-      <HintPath>..\..\..\..\..\Downloads\SharpHSQL_1_0_3_3_bin\SharpHsql.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms" />
@@ -47,13 +44,47 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Internals\Html\crc32.cs" />
+    <Compile Include="Internals\Html\EncodingFoundException.cs" />
+    <Compile Include="Internals\Html\HtmlAttribute.cs" />
+    <Compile Include="Internals\Html\HtmlAttributeCollection.cs" />
+    <Compile Include="Internals\Html\HtmlCmdLine.cs" />
+    <Compile Include="Internals\Html\HtmlCommentNode.cs" />
+    <Compile Include="Internals\Html\HtmlConsoleListener.cs" />
+    <Compile Include="Internals\Html\HtmlDocument.cs" />
+    <Compile Include="Internals\Html\HtmlDocument.PathMethods.cs" />
+    <Compile Include="Internals\Html\HtmlDocument.Xpath.cs" />
+    <Compile Include="Internals\Html\HtmlElementFlag.cs" />
+    <Compile Include="Internals\Html\HtmlEntity.cs" />
+    <Compile Include="Internals\Html\HtmlNameTable.cs" />
+    <Compile Include="Internals\Html\HtmlNode.cs" />
+    <Compile Include="Internals\Html\HtmlNode.Xpath.cs" />
+    <Compile Include="Internals\Html\HtmlNodeCollection.cs" />
+    <Compile Include="Internals\Html\HtmlNodeNavigator.cs" />
+    <Compile Include="Internals\Html\HtmlNodeType.cs" />
+    <Compile Include="Internals\Html\HtmlParseError.cs" />
+    <Compile Include="Internals\Html\HtmlParseErrorCode.cs" />
+    <Compile Include="Internals\Html\HtmlTextNode.cs" />
+    <Compile Include="Internals\Html\HtmlWeb.cs" />
+    <Compile Include="Internals\Html\HtmlWeb.Xpath.cs" />
+    <Compile Include="Internals\Html\HtmlWebException.cs" />
+    <Compile Include="Internals\Html\IOLibrary.cs" />
+    <Compile Include="Internals\Html\MixedCodeDocument.cs" />
+    <Compile Include="Internals\Html\MixedCodeDocumentCodeFragment.cs" />
+    <Compile Include="Internals\Html\MixedCodeDocumentFragment.cs" />
+    <Compile Include="Internals\Html\MixedCodeDocumentFragmentList.cs" />
+    <Compile Include="Internals\Html\MixedCodeDocumentFragmentType.cs" />
+    <Compile Include="Internals\Html\MixedCodeDocumentTextFragment.cs" />
+    <Compile Include="Internals\Html\NameValuePair.cs" />
+    <Compile Include="Internals\Html\NameValuePairList.cs" />
+    <Compile Include="Internals\Html\Trace.cs" />
+    <Compile Include="Internals\Html\Trace.FullFramework.cs" />
+    <Compile Include="Internals\Html\Utilities.cs" />
     <Compile Include="XmlModule.cs" />
     <Compile Include="TaskModule.cs" />
     <Compile Include="GettextModule.cs" />
     <Compile Include="UtilitiesModule.cs" />
     <Compile Include="FileModule.cs" />
-    <Compile Include="HSqlModule.cs" />
-    <Compile Include="Internals\SqlHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XmlHttpRequest.cs" />
   </ItemGroup>
@@ -63,6 +94,7 @@
       <Name>POS</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

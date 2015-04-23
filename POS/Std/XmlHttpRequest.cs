@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Net;
-using Microsoft.ClearScript;
 using Pos.Internals.ScriptEngine.ModuleSystem;
 
 namespace Std

@@ -8,3 +8,6 @@ create standardlib
 
 	add function to add custom settings group
 	add gettext functions
+
+add class for ui represantation and all ui functions for scripting
+	ui.add_pay_button(btn);
