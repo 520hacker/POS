@@ -7,7 +7,5 @@ convert bitcoin integration into plugin
 add dodgecoin, litecoin etc. plugins
 
 create standardlib
-	add asynchronus function
-
 	add function to add custom settings group
-	add gettext functions
+	add settingslib
