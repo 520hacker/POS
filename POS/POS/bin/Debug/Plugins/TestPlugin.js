@@ -20,8 +20,8 @@ req.send(null);
 showHelloWorld();
 
 var btn = new sys.Windows.Forms.Button();
-btn.Text = "Pay with Plugin";
+btn.Text = "Plugin";
 
-add_pay_button(btn);
+ui.AddPayButton(btn);
 
 plugin;

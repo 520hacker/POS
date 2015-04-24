@@ -598,6 +598,7 @@
       <DependentUpon>StatusWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Internals\Taskbar.cs" />
+    <Compile Include="Internals\UiClass.cs" />
     <Compile Include="Internals\UndoRedo\CommandDoneEventArgs.cs" />
     <Compile Include="Internals\UndoRedo\CommandDoneType.cs" />
     <Compile Include="Internals\WindowManager.cs" />

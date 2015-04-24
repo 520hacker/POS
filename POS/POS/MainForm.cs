@@ -92,7 +92,7 @@ namespace POS
             Cursor.Hide();
             #endif
 
-            PluginLoader.AddObject("add_pay_button", new Action<Button>(AddPayButton));
+            PluginLoader.AddObject("ui", new UiClass(this));
         }
 
         public void AddPayButton(Button btn)

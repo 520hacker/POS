@@ -2,12 +2,12 @@ Gutscheinsystem einbauen
 
 add multilanguage
 
+convert bitcoin integration into plugin
+
+add dodgecoin, litecoin etc. plugins
 
 create standardlib
 	add asynchronus function
 
 	add function to add custom settings group
 	add gettext functions
-
-add class for ui represantation and all ui functions for scripting
-	ui.add_pay_button(btn);
