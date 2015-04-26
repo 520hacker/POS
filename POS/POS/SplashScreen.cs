@@ -76,12 +76,12 @@ namespace POS
 
             DbContext.Open(p + "\\data\\data");
 
-            ServiceLocator.ProductCategories = DbContext.GetItems<ProductCategory>().ToList<ProductCategory>();
-            ServiceLocator.Products = DbContext.GetItems<Product>().ToList<Product>();
-            ServiceLocator.Invoices = DbContext.GetItems<Invoice>().ToList<Invoice>();
+            ServiceLocator.ProductCategories = DbContext.ProductCategoryCollection.FindAll().ToList();
+            ServiceLocator.Products = DbContext.ProductCollection.FindAll().ToList();
+            ServiceLocator.Invoices = DbContext.InvoiceCollection.FindAll().ToList();
             ServiceLocator.Coupons = DbContext.CouponCollection.FindAll().ToList();
 
-            ServiceLocator.Products.Add(new Product { Category = 0, ID = "Rose", Price = 0.81, Tax = 0.19, Image = Resources.box.ToBytes(ImageFormat.Png) });
+            ServiceLocator.Products.Add(new Product { ID = "Rose", Price = 0.81, Tax = 0.19, Image = Resources.box.ToBytes(ImageFormat.Png) });
 
             var frm = new MainForm();
 

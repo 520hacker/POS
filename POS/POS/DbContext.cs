@@ -17,6 +17,36 @@ namespace POS
             }
         }
 
+        public static LiteCollection<Invoice> InvoiceCollection
+        {
+            get
+            {
+                if (IsOpened)
+                    return GetCollection<Invoice>("Invoices");
+                return null;
+            }
+        }
+
+        public static LiteCollection<Product> ProductCollection
+        {
+            get
+            {
+                if (IsOpened)
+                    return GetCollection<Product>("Products");
+                return null;
+            }
+        }
+
+        public static LiteCollection<ProductCategory> ProductCategoryCollection
+        {
+            get
+            {
+                if (IsOpened)
+                    return GetCollection<ProductCategory>("ProductCategories");
+                return null;
+            }
+        }
+
         private static LiteDatabase db;
 
         public static bool IsOpened { get; set; }

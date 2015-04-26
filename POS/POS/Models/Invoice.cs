@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using POS.Internals;
+using LiteDB;
 
 namespace POS.Models
 {
     public class Invoice
     {
-        public string ID { get; set; }
+        [BsonId(true)]
+        public int ID { get; set; }
 
         public DateTime Date { get; set; }
 
@@ -23,7 +25,6 @@ namespace POS.Models
 
             ret.Date = DateTime.Now;
             ret.Products = new List<Product>();
-            ret.ID = VoucherID.NewID().ToString();
 
             return ret;
         }
