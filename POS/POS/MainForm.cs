@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 using POS.Internals;
 using POS.Internals.Designer;
@@ -93,6 +94,13 @@ namespace POS
             #endif
 
             PluginLoader.AddObject("ui", new UiClass(this));
+            PluginLoader.AddObject("import", new Action<string>(c => {
+                var ass = Assembly.LoadFile(c);
+                foreach (var t in ass.GetTypes())
+                {
+                    PluginLoader.AddType(t.Name, t);
+                }
+            }));
         }
 
         public void AddPayButton(Button btn)

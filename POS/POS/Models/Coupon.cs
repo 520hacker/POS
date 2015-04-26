@@ -1,4 +1,5 @@
 ﻿using System;
+using LiteDB;
 using POS.Internals;
 
 namespace POS.Models
@@ -12,6 +13,7 @@ namespace POS.Models
             Special
         }
 
+        [BsonId]
         public VoucherID Code { get; set; }
 
         public bool IsValid
@@ -24,6 +26,7 @@ namespace POS.Models
 
         public DateTime ExpireDate { get; set; }
 
+        [BsonIgnore]
         public bool IsExpired
         {
             get

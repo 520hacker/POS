@@ -1,39 +1,45 @@
-﻿using Creek.Database.Api;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
+using LiteDB;
+using POS.Models;
 
 namespace POS
 {
     public class DbContext
     {
-        private static IOdb db;
+        public static LiteCollection<Coupon> CouponCollection
+        {
+            get
+            {
+                if (IsOpened)
+                    return GetCollection<Coupon>("Coupons");
+                return null;
+            }
+        }
+
+        private static LiteDatabase db;
+
+        public static bool IsOpened { get; set; }
 
         public static void Open(string filename)
         {
-            db = Creek.Database.OdbFactory.Open(filename);
+            db = new LiteDatabase("Filename=" + filename);
+            IsOpened = true;
+            db.BeginTrans();
         }
 
-        public static void Add(object obj)
-        {
-            db.Store(obj);
-        }
-
-        public static IObjectSet<T> GetItems<T>()
+        public static LiteCollection<T> GetCollection<T>(string name)
             where T : new()
         {
-            return db.QueryAndExecute<T>();
-        }
-
-        public static void Delete(object obj)
-        {
-            db.Delete(obj);
+            return db.GetCollection<T>(name);
         }
 
         public static void Close()
         {
-            if(!db.IsClosed())
-                db.Close();
+            db.Commit();
+
+            db.Dispose();
+            IsOpened = false;
         }
     }
 }

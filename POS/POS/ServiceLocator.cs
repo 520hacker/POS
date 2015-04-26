@@ -17,6 +17,8 @@ namespace POS
 
         public static List<Invoice> Invoices { get; set; }
 
+        public static List<Coupon> Coupons { get; set; }
+
         public static string DataPath
         {
             get

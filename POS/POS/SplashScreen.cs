@@ -16,6 +16,7 @@ using POS.Properties;
 using Pos.Internals.Extensions;
 using Telerik.WinControls;
 using POS.Internals.Database;
+using LiteDB;
 
 namespace POS
 {
@@ -69,15 +70,18 @@ namespace POS
                 ThemeResolutionService.LoadPackageFile(f);
             }
 
+            BsonMapper.Global.RegisterAutoId<VoucherID>(
+                isEmpty: (value) => VoucherID.IsEmpty(value),
+                newId: (collection) => VoucherID.NewID());
+
             DbContext.Open(p + "\\data\\data");
 
             ServiceLocator.ProductCategories = DbContext.GetItems<ProductCategory>().ToList<ProductCategory>();
             ServiceLocator.Products = DbContext.GetItems<Product>().ToList<Product>();
             ServiceLocator.Invoices = DbContext.GetItems<Invoice>().ToList<Invoice>();
+            ServiceLocator.Coupons = DbContext.CouponCollection.FindAll().ToList();
 
             ServiceLocator.Products.Add(new Product { Category = 0, ID = "Rose", Price = 0.81, Tax = 0.19, Image = Resources.box.ToBytes(ImageFormat.Png) });
-
-            //var r = DbContext.GetItems<Product>();
 
             var frm = new MainForm();
 

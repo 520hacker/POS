@@ -6,6 +6,11 @@ namespace POS.Internals
     {
         private string _id;
 
+        public static bool IsEmpty(VoucherID id)
+        {
+            return id._id.Length == 0;
+        }
+
         public static VoucherID Empty
         {
             get
