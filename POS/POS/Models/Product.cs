@@ -9,12 +9,9 @@ namespace POS.Models
 
         public DbRef<ProductCategory> Category { get; set; }
 
-        public Product()
-        {
-            Category = new DbRef<ProductCategory>("ProductCategories", "id");
-        }
-
         [BsonId]
+        public int _id { get; set; }
+
         public string ID { get; set; }
 
         public double Price { get; set; }

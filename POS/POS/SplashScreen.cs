@@ -74,14 +74,15 @@ namespace POS
                 isEmpty: (value) => VoucherID.IsEmpty(value),
                 newId: (collection) => VoucherID.NewID());
 
-            DbContext.Open(p + "\\data\\data");
+            DbContext.Open(p + "\\data.db");
 
-            ServiceLocator.ProductCategories = DbContext.ProductCategoryCollection.FindAll().ToList();
-            ServiceLocator.Products = DbContext.ProductCollection.FindAll().ToList();
-            ServiceLocator.Invoices = DbContext.InvoiceCollection.FindAll().ToList();
-            ServiceLocator.Coupons = DbContext.CouponCollection.FindAll().ToList();
+            var pP = new Product { Category = new DbRef<ProductCategory>(DbContext.ProductCategoryCollection, 1), ID = "Rose", Price = 0.81, Tax = 0.19, Image = Resources.box.ToBytes(ImageFormat.Png) };
+            
+            DbContext.ProductCategoryCollection.Insert(new ProductCategory() { Name = "Pflanze" });
+            DbContext.ProductCollection.Insert(pP);
+            DbContext.Commit();
 
-            ServiceLocator.Products.Add(new Product { ID = "Rose", Price = 0.81, Tax = 0.19, Image = Resources.box.ToBytes(ImageFormat.Png) });
+            var c = DbContext.ProductCollection.Include(cc => cc.Category.Fetch(DbContext.DB)).FindAll();
 
             var frm = new MainForm();
 

@@ -47,29 +47,34 @@ namespace POS
             }
         }
 
-        private static LiteDatabase db;
+        public static LiteDatabase DB;
 
         public static bool IsOpened { get; set; }
 
         public static void Open(string filename)
         {
-            db = new LiteDatabase("Filename=" + filename);
+            DB = new LiteDatabase("Filename=" + filename);
             IsOpened = true;
-            db.BeginTrans();
+            DB.BeginTrans();
         }
 
         public static LiteCollection<T> GetCollection<T>(string name)
             where T : new()
         {
-            return db.GetCollection<T>(name);
+            return DB.GetCollection<T>(name);
         }
 
         public static void Close()
         {
-            db.Commit();
+            DB.Commit();
 
-            db.Dispose();
+            DB.Dispose();
             IsOpened = false;
+        }
+
+        public static void Commit()
+        {
+            DB.Commit();
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using POS.Internals;
 using POS.Internals.I18N;
@@ -10,14 +9,6 @@ namespace POS
     public static class ServiceLocator
     {
         public static History<Product> ProductHistory = new History<Product>();
-
-        public static List<ProductCategory> ProductCategories { get; set; }
-
-        public static List<Product> Products { get; set; }
-
-        public static List<Invoice> Invoices { get; set; }
-
-        public static List<Coupon> Coupons { get; set; }
 
         public static string DataPath
         {

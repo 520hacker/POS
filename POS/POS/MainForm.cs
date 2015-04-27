@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
@@ -64,14 +65,14 @@ namespace POS
                 this.historyView1.Invalidate();
             };
 
-            this.productsView1.DataSource = ServiceLocator.Products;
+            this.productsView1.DataSource = DbContext.ProductCollection;
             this.productsView1.BestFitColumns();
 
-            foreach (var pc in ServiceLocator.ProductCategories)
+            foreach (var pc in DbContext.ProductCategoryCollection.FindAll())
             {
                 var tmp = new TileGroupElement() { Name = pc.Name, Visibility = Telerik.WinControls.ElementVisibility.Visible, Text = pc.Name, Tag = pc.id };
 
-                foreach (var p in ServiceLocator.Products)
+                foreach (var p in DbContext.ProductCollection.FindAll())
                 {
                     var tmpItem = new RadTileElement() { Text = p.ID, Image = Image.FromStream(new MemoryStream(p.Image)), Name = p.ID, Tag = p.TotalPrice, Visibility = Telerik.WinControls.ElementVisibility.Visible };
 
@@ -149,17 +150,13 @@ namespace POS
         private void Pay(Invoice.InvoiceCurrency curr, Action<double> callback)
         {
             var inv = Invoice.New();
-            inv.Products = ServiceLocator.Products;
+            inv.Products = new List<Product>(DbContext.ProductCollection.FindAll());
             inv.TotalPrice = Price.NumberValue;
             inv.Currency = curr;
 
             if (callback != null)
                 callback(inv.TotalPrice);
 
-            ServiceLocator.Invoices.Add(inv);
-
-            ServiceLocator.ProductHistory.Clear();
-            ServiceLocator.Products.Clear();
             Price.Clear();
         }
 
