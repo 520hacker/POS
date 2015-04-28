@@ -104,11 +104,19 @@ namespace POS
             }));
         }
 
-        public void AddPayButton(Button btn)
+        public void AddPayButton(RadButton btn)
         {
             btn.Dock = DockStyle.Right;
 
             payFooter.Controls.Add(btn);
+        }
+
+        public void InfoWindow(string title, string content)
+        {
+            radDesktopAlert1.ContentText = content;
+            radDesktopAlert1.CaptionText = title;
+
+            radDesktopAlert1.Show();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)

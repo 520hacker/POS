@@ -19,9 +19,6 @@ req.send(null);
 
 showHelloWorld();
 
-var btn = new sys.Windows.Forms.Button();
-btn.Text = "Plugin";
-
-ui.AddPayButton(btn);
+ui.AddPayButton("Plugin", function (sender) { ui.Info("Bezahlt", "Es wurde mit " + plugin.name + " bezahlt!"); });
 
 plugin;

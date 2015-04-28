@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using System.Windows.Forms;
+using Telerik.WinControls.UI;
 
 namespace POS.Internals
 {
@@ -13,8 +13,17 @@ namespace POS.Internals
             this.mfrm = mfrm;
         }
 
-        public void AddPayButton(Button btn)
+        public void Info(string title, string content)
         {
+            mfrm.InfoWindow(title, content);
+        }
+
+        public void AddPayButton(string title, dynamic callback)
+        {
+            var btn = new RadButton();
+            btn.Text = title;
+            btn.Click += (s, e) => callback(s);
+
             mfrm.AddPayButton(btn);
         }
     }
