@@ -1,8 +1,6 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using POS;
 using POS.Internals;
 using Pos.Internals.ScriptEngine.ModuleSystem;
 

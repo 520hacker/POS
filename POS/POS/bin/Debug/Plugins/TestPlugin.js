@@ -18,7 +18,8 @@ req.open("get", "http://www.google.de/?q=c++");
 req.send(null);
 
 showHelloWorld();
+ui.Info("Plugin", JSON.stringify(plugin));
 
-ui.AddPayButton("Plugin", function (sender) { ui.Info("Bezahlt", "Es wurde mit " + plugin.name + " bezahlt!"); });
+ui.AddPayButton("Plugin", function (sender) { ui.Info("Bezahlt", "Es wurde mit " + plugin.name + " bezahlt!" + "\r" + base64_encode("Chris Anders")); });
 
 plugin;

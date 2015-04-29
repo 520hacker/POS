@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ZipModule.cs" />
+    <Compile Include="JsonModule.cs" />
     <Compile Include="Internals\Html\crc32.cs" />
     <Compile Include="Internals\Html\EncodingFoundException.cs" />
     <Compile Include="Internals\Html\HtmlAttribute.cs" />

@@ -34,6 +34,5 @@ C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\UIToolbox.Collapsib
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.UI.Expander.ExpandingPanel.resources
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.UI.Expander.ImageButton.resources
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.UI.Expander.OwnerDrawButton.resources
-C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.csprojResolveAssemblyReference.cache
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\LiteDB.dll
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\LiteDB.xml
