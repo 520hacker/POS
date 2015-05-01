@@ -12,8 +12,13 @@ var plugin =
     onClose: close
 };
 
-//throw new Error("error from script");
 
+try {
+    throw new Error("error");
+} catch (e) {
+    alert(e.message);
+}
+new Event();
 var req = new XMLHttpRequest();
 req.open("get", "http://www.google.de/?q=c++");
 
@@ -24,7 +29,7 @@ var zip = new ZipFile(zStrm);
 var tmp = temp_file();
 fwrite(tmp, "Hello world from Tmp!!\r :D :D :D");
 
-zip.AddFile(tmp, "main.txt");
+//zip.AddFile(tmp, "main.txt");
 
 showHelloWorld();
 
