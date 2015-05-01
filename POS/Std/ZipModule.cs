@@ -17,6 +17,11 @@ namespace Std
             _zip = new ZipFile(filename);
         }
 
+        public void Close()
+        {
+            _zip.Close();
+        }
+
         public Stream ReadFile(string name)
         {
             return _zip.GetInputStream(_zip.GetEntry(name));
@@ -33,9 +38,9 @@ namespace Std
             }
         }
 
-        public void AddFile(string filename)
+        public void AddFile(string filename, string entryName)
         {
-            _zip.Add(filename);
+            _zip.Add(filename, entryName);
         }
     }
 }

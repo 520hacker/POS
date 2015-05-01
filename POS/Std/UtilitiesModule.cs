@@ -15,6 +15,12 @@ namespace Std
             return Pos.Internals.Extensions.StringExtensions.Base64Encode(raw);
         }
 
+        [ScriptFunction(Name = "temp_file")]
+        public static string TempFile(string raw)
+        {
+            return System.IO.Path.GetTempFileName();
+        }
+
         [ScriptFunction(Name = "size_format")]
         public static string SizeFormat(int target, int deci)
         {
