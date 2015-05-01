@@ -1,5 +1,3 @@
-debugger;
-
 include(".\\Plugins\\test.js.inc");
 ns("clr.System", "sys");
 
@@ -31,7 +29,11 @@ var zip = new ZipFile(zStrm);
 var tmp = temp_file();
 fwrite(tmp, "Hello world from Tmp!!\r :D :D :D");
 
-//zip.AddFile(tmp, "main.txt");
+zip.AddFile(tmp, "main.txt");
+
+var r = zip.ReadFile("main.txt");
+
+alert(strm_read(r));
 
 showHelloWorld();
 

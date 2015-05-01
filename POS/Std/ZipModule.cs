@@ -40,7 +40,9 @@ namespace Std
 
         public void AddFile(string filename, string entryName)
         {
+            _zip.BeginUpdate();
             _zip.Add(filename, entryName);
+            _zip.CommitUpdate();
         }
     }
 }

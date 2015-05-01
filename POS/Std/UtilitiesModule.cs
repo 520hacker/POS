@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using POS.Internals;
@@ -31,6 +32,12 @@ namespace Std
         public static void Alert(string content)
         {
             MessageBox.Show(content);
+        }
+
+        [ScriptFunction(Name = "strm_read")]
+        public static string StrmRead(Stream strm)
+        {
+            return new StreamReader(strm).ReadToEnd();
         }
 
         [ScriptFunction(Name = "base64_decode")]

@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BinaryReaderModule.cs" />
     <Compile Include="Internals\Compression\BZip2\BZip2.cs" />
     <Compile Include="Internals\Compression\BZip2\BZip2Constants.cs" />
     <Compile Include="Internals\Compression\BZip2\BZip2Exception.cs" />
