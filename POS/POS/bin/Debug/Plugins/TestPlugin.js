@@ -1,3 +1,5 @@
+debugger;
+
 include(".\\Plugins\\test.js.inc");
 ns("clr.System", "sys");
 
@@ -18,7 +20,7 @@ try {
 } catch (e) {
     alert(e.message);
 }
-new Event();
+
 var req = new XMLHttpRequest();
 req.open("get", "http://www.google.de/?q=c++");
 
