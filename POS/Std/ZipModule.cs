@@ -12,7 +12,7 @@ namespace Std
     {
         ZipFile _zip;
 
-        public ZipModule(string filename)
+        public ZipModule(Stream filename)
         {
             _zip = new ZipFile(filename);
         }

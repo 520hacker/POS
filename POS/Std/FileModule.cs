@@ -15,6 +15,12 @@ namespace Std
             return new FileStream(filename, FileMode.OpenOrCreate, FAccess(access));
         }
 
+        [ScriptFunction(Name = "fwrite")]
+        public static void FWrite(string filename, string content)
+        {
+            File.WriteAllText(filename, content);
+        }
+
         [ScriptFunction(Name = "fread")]
         public static string FRead(FileStream s, int count)
         {

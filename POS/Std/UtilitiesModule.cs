@@ -16,7 +16,7 @@ namespace Std
         }
 
         [ScriptFunction(Name = "temp_file")]
-        public static string TempFile(string raw)
+        public static string TempFile()
         {
             return System.IO.Path.GetTempFileName();
         }

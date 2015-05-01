@@ -105,6 +105,7 @@
     <Compile Include="Internals\Compression\Zip\ZipInputStream.cs" />
     <Compile Include="Internals\Compression\Zip\ZipNameTransform.cs" />
     <Compile Include="Internals\Compression\Zip\ZipOutputStream.cs" />
+    <Compile Include="ErrorType.cs" />
     <Compile Include="ZipModule.cs" />
     <Compile Include="JsonModule.cs" />
     <Compile Include="Internals\Html\crc32.cs" />

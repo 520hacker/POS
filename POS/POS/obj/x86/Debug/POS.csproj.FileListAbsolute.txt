@@ -36,3 +36,4 @@ C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.UI.Expander.Ima
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.UI.Expander.OwnerDrawButton.resources
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\LiteDB.dll
 C:\Users\filmee24\Documents\GitHub\POS\POS\POS\bin\Debug\LiteDB.xml
+C:\Users\filmee24\Documents\GitHub\POS\POS\POS\obj\x86\Debug\POS.csprojResolveAssemblyReference.cache
